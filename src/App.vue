@@ -30,4 +30,9 @@
         min-height: 100vh;
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }
+
+    ::-webkit-scrollbar {
+        width: 0px; /* remove scrollbar space */
+        background: transparent; /* optional: just make scrollbar invisible */
+    }
 </style>

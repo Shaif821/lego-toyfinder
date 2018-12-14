@@ -1,42 +1,42 @@
 <template>
 
-        <div class="screensaver_container">
+    <div class="screensaver_container animated zoomIn">
 
-            <div class="screensaver_section-1">
-                <p>Ik wil dit jaar een...</p>
-            </div>
-
-            <div class="screensaver_section-2">
-                <div class="speech_bubble_container">
-                    <img class="animated tada" :src="legoImages[counter].speech">
-                    <img class="animated tada" src="../assets/images/screensaver/speech-bubble.png">
-                </div>
-                <transition enter-active-class="animated slideInLeft" leave-active-class="animated slideOutRight">
-                    <img class="screensaver_lego " :src="legoImages[counter].url">
-                </transition>
-            </div>
-
-            <div class="screensaver_section-3">
-                <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
-            </div>
-
-            <button @click="increment()">test</button>
-
-
-            <div class="screensaver_section-4">
-                <router-link to="/">
-                    <img class="animated pulse infinite" src="../assets/images/layout/touch.png">
-                </router-link>
-                <router-link to="/" class="product_button_container">
-                    <div class="product_text_wrapper">
-                        <p>Productoverzicht</p>
-                        <div class="button_circle animated tada">
-                            <img class="animated tada" src="../assets/images/layout/activity-icon-02.png">
-                        </div>
-                    </div>
-                </router-link>
-            </div>
+        <div class="screensaver_section-1">
+            <p>Ik wil dit jaar een...</p>
         </div>
+
+        <div class="screensaver_section-2">
+
+            <div class="speech_bubble_container">
+                <img class="animated pulse infinite" :style="{margin: legoImages[counter].speechPos}"
+                     :src="legoImages[counter].speech">
+                <img class="animated pulse infinite" src="../assets/images/screensaver/speech-bubble.png">
+            </div>
+
+            <img class="screensaver_lego animated flipInY" :style="{ marginBottom: legoImages[counter].margin}"
+                 :src="legoImages[counter].url">
+        </div>
+
+        <div class="screensaver_section-3">
+            <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
+        </div>
+
+
+        <div class="screensaver_section-4" @click="increment()">
+            <router-link to="/">
+                <img class="animated wobble infinite" src="../assets/images/layout/touch.png">
+            </router-link>
+            <router-link to="/" class="product_button_container">
+                <div class="product_text_wrapper">
+                    <p>Productoverzicht</p>
+                    <div class="button_circle animated tada">
+                        <img class="animated tada infinite" src="../assets/images/layout/activity-icon-02.png">
+                    </div>
+                </div>
+            </router-link>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -49,28 +49,41 @@
                 legoImages: [
                     {
                         url: require('../assets/images/screensaver/lego-head-girl.png'),
-                        speech: require('../assets/images/screensaver/plant.png')
+                        speech: require('../assets/images/screensaver/plant.png'),
+                        margin: '120px',
+                        speechPos: '80px 51px 55px 45px'
                     },
                     {
                         url: require('../assets/images/screensaver/lego-head-mummy.png'),
-                        speech: require('../assets/images/screensaver/skateboard.png')
+                        speech: require('../assets/images/screensaver/skateboard.png'),
+                        margin: '166px',
+                        speechPos: '135px 45px 85px 45px'
                     },
                     {
                         url: require('../assets/images/screensaver/lego-head-mexican-wrestler.png'),
-                        speech: require('../assets/images/screensaver/cub.png')
+                        speech: require('../assets/images/screensaver/cub.png'),
+                        margin: '166px',
+                        speechPos: '89px 56px 51px 54px'
                     }
                 ]
             }
         },
 
         methods: {
-            increment(){
-                if(this.counter === 2){
-                    this.counter = 0;
-                } else {
-                    this.counter++
-                }
+            increment() {
+                let v = this;
+                setInterval(function () {
+                    if (v.counter === 2) {
+                        v.counter = 0;
+                    } else {
+                        v.counter++
+                    }
+                }, 5000)
             }
+        },
+
+        mounted: function () {
+            this.increment();
         }
     }
 </script>
@@ -95,7 +108,7 @@
         margin: 0;
     }
 
-    .screensaver_lego  {
+    .screensaver_lego {
         margin-top: 128px;
         /*width: 477px;*/
         /*height: 440px;*/
@@ -108,14 +121,12 @@
 
     .speech_bubble_container img:first-child {
         position: absolute;
-        margin: 80px 51px 55px 45px;
         z-index: 1;
     }
 
-
     .speech_bubble_container img:nth-child(2) {
         margin-top: 30px;
-        margin-right:750px;
+        margin-right: 750px;
         width: 250px;
         height: 250px;
     }
@@ -124,7 +135,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 92px auto 0;
+        margin: 0 auto;
         font-family: 'Ubuntu', 'sans-serif';
         background: url('../assets/images/layout/separator.png') no-repeat 100% center;
         background-size: contain;
@@ -156,9 +167,11 @@
         align-items: center;
     }
 
-    .screensaver_section-4 > *:nth-child(2){flex: 0.9;}
+    .screensaver_section-4 > *:nth-child(2) {
+        flex: 0.9;
+    }
 
-    .product_button_container  {
+    .product_button_container {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
@@ -178,7 +191,9 @@
         margin-right: -100px;
     }
 
-    .product_text_wrapper > *:first-child {margin-right: 23px;}
+    .product_text_wrapper > *:first-child {
+        margin-right: 23px;
+    }
 
     .button_circle {
         display: flex;
