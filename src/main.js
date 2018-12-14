@@ -1,8 +1,15 @@
 import Vue from 'vue'
+import router from './router'
+
+import VAnimateCss from 'v-animate-css';
+
 import App from './App.vue'
+
+Vue.use(VAnimateCss);
 
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app')
