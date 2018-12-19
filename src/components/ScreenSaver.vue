@@ -6,17 +6,21 @@
             <p>Ik wil dit jaar een...</p>
         </div>
 
-        <div class="screensaver_section-2">
+        <!--<transition enter-active-class="animated rollIn"-->
+                    <!--leave-active-class="animated rollOut" mode="out-in">-->
+            <div class="screensaver_section-2 animated" :key="counter">
+                <div class="speech_bubble_container">
+                    <img class="animated pulse infinite" :style="{margin: legoImages[counter].speechPos}"
+                         :src="legoImages[counter].speech">
+                    <img class="animated pulse infinite" src="../assets/images/screensaver/speech-bubble.png">
+                </div>
 
-            <div class="speech_bubble_container">
-                <img class="animated pulse infinite" :style="{margin: legoImages[counter].speechPos}"
-                     :src="legoImages[counter].speech">
-                <img class="animated pulse infinite" src="../assets/images/screensaver/speech-bubble.png">
+
+                <img class="screensaver_lego" :style="{ marginBottom: legoImages[counter].margin}"
+                     :src="legoImages[counter].url">
             </div>
+        <!--</transition>-->
 
-            <img class="screensaver_lego animated flipInY" :style="{ marginBottom: legoImages[counter].margin}"
-                 :src="legoImages[counter].url">
-        </div>
 
         <div class="screensaver_section-3">
             <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
@@ -24,17 +28,18 @@
 
 
         <div class="screensaver_section-4" @click="increment()">
-            <router-link to="/">
-                <img class="animated wobble infinite" src="../assets/images/layout/touch.png">
+            <div></div>
+            <router-link class="hand" to="/survey">
+                <img  src="../assets/images/layout/touch.png">
             </router-link>
-            <router-link to="/" class="product_button_container">
-                <div class="product_text_wrapper">
+            <div class="product_button_container">
+                <router-link class="product_text_wrapper" to="/">
                     <p>Productoverzicht</p>
-                    <div class="button_circle animated tada">
-                        <img class="animated tada infinite" src="../assets/images/layout/activity-icon-02.png">
+                    <div class="button_circle">
+                        <img class="animated" src="../assets/images/layout/activity-icon-02.png">
                     </div>
-                </div>
-            </router-link>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -97,7 +102,7 @@
     }
 
     .screensaver_container {
-        min-height: 83.5vh;
+        /*min-height: 86.1%;*/
         font-family: BlueSheepLego, 'sans-serif';
     }
 
@@ -108,10 +113,14 @@
         margin: 0;
     }
 
+    .screensaver_section-2 {
+        height: 638px;
+        justify-content: center;
+        align-items: center;
+    }
+
     .screensaver_lego {
         margin-top: 128px;
-        /*width: 477px;*/
-        /*height: 440px;*/
     }
 
     .speech_bubble_container {
@@ -156,19 +165,17 @@
         margin: 0 auto;
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .screensaver_section-4 > * {
+        flex: 1;
+    }
+
+    .hand {
+        display: flex;
         justify-content: center;
         align-items: center;
-    }
-
-    .screensaver_section-4 > *:first-child {
-        flex: 0.95;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    .screensaver_section-4 > *:nth-child(2) {
-        flex: 0.9;
     }
 
     .product_button_container {
@@ -177,14 +184,14 @@
         justify-content: flex-end;
         align-items: center;
         height: 197px;
-        font-family: 'Ubuntu', 'sans-serif';
-        font-size: 25px;
-        color: #ffc600;
-        text-decoration: none;
         margin: 0 auto;
     }
 
     .product_text_wrapper {
+        font-family: 'Ubuntu', 'sans-serif';
+        font-size: 25px;
+        color: #ffc600;
+        text-decoration: none;
         justify-content: space-between;
         display: flex;
         flex-direction: row;
@@ -204,5 +211,4 @@
         height: 72px;
         background: #ffc600;
     }
-
 </style>
