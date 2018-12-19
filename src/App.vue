@@ -4,15 +4,15 @@
                           leave-active-class="animated slideOutDown"
                           mode="out-in" enter>
             <CardBoard :key="$route.fullPath" v-if="this.$router.currentRoute.name === 'screen-saver'"/>
-            <router-view :key="$route.fullPath"/>
-            <CardBoard :key="$route.fullPath" v-if="this.$router.currentRoute.name !== 'screen-saver'"/>
+            <!--<router-view :key="$route.fullPath"/>-->
+            <!--<CardBoard :key="$route.fullPath" v-if="this.$router.currentRoute.name !== 'screen-saver'"/>-->
         </transition-group>
 
     </div>
 </template>
 
 <script>
-    import CardBoard from './components/CardBoard'
+    import CardBoard from './components/layout/CardBoard'
 
     export default {
         name: 'app',
@@ -21,6 +21,10 @@
 </script>
 
 <style>
+    @font-face {
+        font-family: 'BlueSheepLego';
+        src: url("assets/fonts/BlueSheepLego-Regular.otf");
+    }
 
     body {
         padding: 0;

@@ -12,7 +12,7 @@
                 <div class="speech_bubble_container">
                     <img class="animated pulse infinite" :style="{margin: legoImages[counter].speechPos}"
                          :src="legoImages[counter].speech">
-                    <img class="animated pulse infinite" src="../assets/images/screensaver/speech-bubble.png">
+                    <img class="animated pulse infinite" src="../../assets/images/screensaver/speech-bubble.png">
                 </div>
 
 
@@ -30,13 +30,13 @@
         <div class="screensaver_section-4" @click="increment()">
             <div></div>
             <router-link class="hand" to="/survey">
-                <img  src="../assets/images/layout/touch.png">
+                <img  src="../../assets/images/layout/touch.png">
             </router-link>
             <div class="product_button_container">
                 <router-link class="product_text_wrapper" to="/">
                     <p>Productoverzicht</p>
                     <div class="button_circle">
-                        <img class="animated" src="../assets/images/layout/activity-icon-02.png">
+                        <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
                     </div>
                 </router-link>
             </div>
@@ -53,20 +53,20 @@
                 counter: 0,
                 legoImages: [
                     {
-                        url: require('../assets/images/screensaver/lego-head-girl.png'),
-                        speech: require('../assets/images/screensaver/plant.png'),
+                        url: require('../../assets/images/screensaver/lego-head-girl.png'),
+                        speech: require('../../assets/images/screensaver/plant.png'),
                         margin: '120px',
                         speechPos: '80px 51px 55px 45px'
                     },
                     {
-                        url: require('../assets/images/screensaver/lego-head-mummy.png'),
-                        speech: require('../assets/images/screensaver/skateboard.png'),
+                        url: require('../../assets/images/screensaver/lego-head-mummy.png'),
+                        speech: require('../../assets/images/screensaver/skateboard.png'),
                         margin: '166px',
                         speechPos: '135px 45px 85px 45px'
                     },
                     {
-                        url: require('../assets/images/screensaver/lego-head-mexican-wrestler.png'),
-                        speech: require('../assets/images/screensaver/cub.png'),
+                        url: require('../../assets/images/screensaver/lego-head-mexican-wrestler.png'),
+                        speech: require('../../assets/images/screensaver/cub.png'),
                         margin: '166px',
                         speechPos: '89px 56px 51px 54px'
                     }
@@ -95,11 +95,6 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
-
-    @font-face {
-        font-family: 'BlueSheepLego';
-        src: url("../assets/fonts/BlueSheepLego-Regular.otf");
-    }
 
     .screensaver_container {
         /*min-height: 86.1%;*/
@@ -146,7 +141,7 @@
         align-items: center;
         margin: 0 auto;
         font-family: 'Ubuntu', 'sans-serif';
-        background: url('../assets/images/layout/separator.png') no-repeat 100% center;
+        background: url('../../assets/images/layout/separator.png') no-repeat 100% center;
         background-size: contain;
         width: 1587px;
     }

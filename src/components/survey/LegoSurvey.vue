@@ -2,7 +2,7 @@
     <div class="survey_container">
         <div class="survey_section-1">
             <router-link to="/">
-                <img class="animated pulse infinite" src="../assets/images/layout/close.png">
+                <img class="animated pulse infinite" src="../../assets/images/layout/close.png">
             </router-link>
         </div>
 
@@ -22,14 +22,14 @@
 <script>
     import SurveyAge from './SurveyAge'
     import SurveyInterest from './SurveyInterest'
-    import SUrveyTheme from './SurveyTheme'
+    import SurveyTheme from './SurveyTheme'
 
     export default {
         name: "LegoSurvey",
         components: {
             'SurveyAge' : SurveyAge,
             'SurveyInterest' : SurveyInterest,
-            'SurveyTheme' : SUrveyTheme
+            'SurveyTheme' : SurveyTheme
         },
 
         data() {
@@ -54,6 +54,12 @@
                 }
 
             },
+        },
+
+        mounted(){
+            if(this.$router.currentRoute.name === 'survey-theme') {
+                this.view = 'SurveyTheme'
+            }
         }
     }
 </script>

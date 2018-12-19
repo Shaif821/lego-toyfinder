@@ -1,9 +1,9 @@
 <template>
     <div :class="[this.$router.currentRoute.name !== 'screen-saver' ? 'footer_position' : 'header_position']" class="cardboard_container">
-        <img src="../assets/images/layout/slider-border.png">
+        <img src="../../assets/images/layout/slider-border.png">
         <div v-if="this.$router.currentRoute.name !== 'screen-saver'">
            <div class="skip">
-               <router-link to="/" class="skip_text">Overslaan</router-link>
+               <router-link to="/survey/theme" class="skip_text">Overslaan</router-link>
            </div>
         </div>
     </div>
@@ -18,6 +18,7 @@
 <style scoped>
     .cardboard_container {
         width: 100%;
+
     }
 
     .header_position {

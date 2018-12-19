@@ -10,7 +10,7 @@
             <div class="survey_wrapper" v-for="(legoAge, index) in legoAgeImages" :key="index">
                 <router-link to="/survey/interest" class="bitmap-small">
                     <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
-                    <img class="animated flipInY slower" src="../assets/images/layout/bitmap-small.png">
+                    <img class="animated flipInY slower" src="../../assets/images/layout/bitmap-small.png">
                 </router-link>
                 <p>{{legoAge.text}}</p>
             </div>
@@ -28,52 +28,52 @@
             return {
                 legoAgeImages: [
                     {
-                        url: require('../assets/images/survey/group-107.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-107.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Avontuur',
                         pos: '49px 50px 53px 50px'
                     },
                     {
 
-                        url: require('../assets/images/survey/group-43.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-43.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Dieren',
                         pos: '49px 50px 53px 50px'
                     },
                     {
-                        url: require('../assets/images/survey/group-34.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-34.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Fantasie',
                         pos: '49px 50px 53px 50px'
                     },
                     {
-                        url: require('../assets/images/survey/group-44.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-44.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Roboto',
                         pos: '49px 50px 53px 50px'
                     },
                     {
-                        url: require('../assets/images/survey/group-107.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-107.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Stad & gebouw',
                         pos: '49px 50px 53px 50px'
                     },
                     {
 
-                        url: require('../assets/images/survey/group-43.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-43.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Superhelden',
                         pos: '49px 50px 53px 50px'
                     },
                     {
-                        url: require('../assets/images/survey/group-34.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-34.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Voertuigen',
                         pos: '49px 50px 53px 50px'
                     },
                     {
-                        url: require('../assets/images/survey/group-44.png'),
-                        speech: require('../assets/images/layout/bitmap-small.png'),
+                        url: require('../../assets/images/survey/group-44.png'),
+                        speech: require('../../assets/images/layout/bitmap-small.png'),
                         text: 'Vrijetijd',
                         pos: '49px 50px 53px 50px'
                     },

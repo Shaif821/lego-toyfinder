@@ -10,7 +10,7 @@
             <div class="survey_wrapper" v-for="(legoAge, index) in legoAgeImages" :key="index">
                 <div class="bitmap">
                     <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
-                    <img class="animated flipInY slower" src="../assets/images/layout/bitmap.png">
+                    <img class="animated flipInY slower" src="../../assets/images/layout/bitmap.png">
                 </div>
                 <p>{{legoAge.text}}</p>
             </div>
@@ -26,27 +26,27 @@
             return {
                 legoAgeImages: [
                     {
-                        url: require('../assets/images/survey/group-107.png'),
-                        speech: require('../assets/images/layout/bitmap.png'),
+                        url: require('../../assets/images/survey/group-107.png'),
+                        speech: require('../../assets/images/layout/bitmap.png'),
                         text: '1 - 2 jaar',
                         pos: '82px 103px 100px 94px'
                     },
                     {
 
-                        url: require('../assets/images/survey/group-43.png'),
-                        speech: require('../assets/images/layout/bitmap.png'),
+                        url: require('../../assets/images/survey/group-43.png'),
+                        speech: require('../../assets/images/layout/bitmap.png'),
                         text: '2 - 6 jaar',
                         pos: '70px 80px 92px 77px'
                     },
                     {
-                        url: require('../assets/images/survey/group-34.png'),
-                        speech: require('../assets/images/layout/bitmap.png'),
+                        url: require('../../assets/images/survey/group-34.png'),
+                        speech: require('../../assets/images/layout/bitmap.png'),
                         text: '6 - 12 jaar',
                         pos: '78px 90px 87px 88px'
                     },
                     {
-                        url: require('../assets/images/survey/group-44.png'),
-                        speech: require('../assets/images/layout/bitmap.png'),
+                        url: require('../../assets/images/survey/group-44.png'),
+                        speech: require('../../assets/images/layout/bitmap.png'),
                         text: '12+',
                         pos: '76px 68px 88px 66px'
                     },
