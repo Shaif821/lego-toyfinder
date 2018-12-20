@@ -6,16 +6,19 @@
             </router-link>
         </div>
 
+        {{surveyOptions}}
 
-        <transition enter-active-class="animated slideInLeft faster"
-                    leave-active-class="animated slideOutRight faster"
-                    enter mode="out-in">
-            <component :is="view"></component>
+        <transition enter-active-class="animated slideInRight faster"
+                    leave-active-class="animated slideOutLeft faster"
+                    enter mode="out-in" >
+            <component  :is="view"></component>
         </transition>
 
 
-        <div class="filler_3"><p @click="changeView()">test</p>
-            <p @click="changeView(true)">theme</p></div>
+        <div class="filler_3">
+            <p @click="changeView()">{{surveyOptions}}</p>
+            <p @click="changeView(true)">{{test}}</p>
+        </div>
     </div>
 </template>
 
@@ -35,24 +38,29 @@
         data() {
             return {
                 index: true,
-                view:'SurveyAge'
+                view:'SurveyAge',
+                test: 'test',
+                surveyOptions: [{
+                    age : [],
+                    interest: [],
+                }]
             }
         },
 
         methods: {
-            changeView(test){
-                if(!test) {
+            changeView(choice){
+                // if(!test) {
                     if(this.view === 'SurveyAge') {
+                        this.surveyOptions[0].age.push(choice);
                         this.view = 'SurveyInterest'
                     }
                     else {
-                        this.view = 'SurveyAge'
+                        this.surveyOptions[0].interest.push(choice);
                     }
-                }
-                else {
-                    this.view = 'SurveyTheme'
-                }
-
+                // }
+                // else {
+                //     this.view = 'SurveyTheme'
+                // }
             },
         },
 

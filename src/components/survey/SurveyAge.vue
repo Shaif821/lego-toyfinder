@@ -7,10 +7,12 @@
         <div class="filler_2"></div>
 
         <div class="survey_section-3">
-            <div class="survey_wrapper" v-for="(legoAge, index) in legoAgeImages" :key="index">
+            <div class="survey_wrapper" v-for="(legoAge, indexAge) in legoAgeImages" :key="indexAge + 'SA'">
                 <div class="bitmap">
-                    <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
-                    <img class="animated flipInY slower" src="../../assets/images/layout/bitmap.png">
+                    <div @click="saveChoice(indexAge)">
+                        <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
+                        <img class="animated flipInY slower" src="../../assets/images/layout/bitmap.png">
+                    </div>
                 </div>
                 <p>{{legoAge.text}}</p>
             </div>
@@ -53,6 +55,13 @@
 
                 ]
             }
+        },
+
+        methods: {
+            saveChoice(index) {
+                // this.$store.state.surveyOptions[0].age.push(index);
+                this.$parent.changeView(index);
+            },
         }
     }
 </script>
@@ -66,8 +75,6 @@
         justify-content: flex-end;
         align-items: flex-end;
     }
-
-
 
     .filler_2 {
         height: 136px;
@@ -89,13 +96,16 @@
     }
 
     .bitmap img:first-child {
-        cursor: pointer;
         position: absolute;
         z-index: 1;
     }
 
+    .bitmap img {
+        cursor: pointer;
+    }
+
     .survey_section-3 > * {
-        flex:1 1 auto;
+        flex: 1 1 auto;
     }
 
 </style>

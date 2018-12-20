@@ -10,9 +10,9 @@
             <div>
                 <!-- swiper -->
                 <swiper  class="teste" :options="swiperOption">
-                    <swiper-slide class="theme_image_wrapper" v-for="(legoTheme, themeIndex) in legoThemeImages" :key="themeIndex">
+                    <swiper-slide class="theme_image_wrapper" v-for="(legoTheme, themeIndex) in legoThemeImages" :key="themeIndex + 'STH'">
                         <img style="width: 288px; height: 376px; margin: 25px 24px 24px 22px; border: 5px solid black;" :src="legoTheme.url">
-                        <img src="../../assets/images/layout/border.svg">
+                        <img src="../../assets/images/layout/border.png">
                     </swiper-slide>
                 </swiper>
             </div>
@@ -40,47 +40,49 @@
                 legoThemeImages: [
                     {
                         url: require('../../assets/images/themes/architecture.jpeg'),
-                        theme: 'architecture'
+                        theme: 'Architecture'
                     },
                     {
                         url: require('../../assets/images/themes/batman_movie.jpeg'),
-                        theme: 'batman_movie'
+                        theme: 'THE LEGO® BATMAN MOVIE'
                     },
                     {
                         url: require('../../assets/images/themes/boost.jpeg'),
-                        theme: 'boost'
+                        theme: 'BOOST'
                     },
                     {
                         url: require('../../assets/images/themes/brickheadz_starwars.jpeg'),
-                        theme: 'brickheadz_starwars'
+                        theme: 'BrickHeadz',
+                        subTheme: 'Star wars'
                     },
                     {
                         url: require('../../assets/images/themes/city_arctic.jpeg'),
-                        theme: 'city_artic'
+                        theme: 'City',
+                        subTheme: 'Arctic'
                     },
                     {
                         url: require('../../assets/images/themes/classic.jpeg'),
-                        theme: 'classic'
+                        theme: 'Classic'
                     },
                     {
                         url: require('../../assets/images/themes/creator_3in1.jpeg'),
-                        theme: 'creator_3in1'
+                        theme: 'Creator3In1'
                     },
                     {
                         url: require('../../assets/images/themes/creator_expert.jpeg'),
-                        theme: 'creator_expert'
+                        theme: 'Creator'
                     },
                     {
                         url: require('../../assets/images/themes/disney_tangled.jpeg'),
-                        theme: 'disney_tangled'
+                        theme: 'Disney'
                     },
                     {
                         url: require('../../assets/images/themes/duplo.jpeg'),
-                        theme: 'duplo'
+                        theme: 'Duplo'
                     },
                     {
                         url: require('../../assets/images/themes/elves.jpeg'),
-                        theme: 'elves'
+                        theme: 'Elves'
                     },
                     {
                         url: require('../../assets/images/themes/friends_bigraceday_.jpeg'),

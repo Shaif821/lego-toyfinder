@@ -1,13 +1,11 @@
 <template>
     <div id="app">
-        <transition-group enter-active-class="animated slideInDown"
-                          leave-active-class="animated slideOutDown"
-                          mode="out-in" enter>
-            <CardBoard :key="$route.fullPath" v-if="this.$router.currentRoute.name === 'screen-saver'"/>
-            <!--<router-view :key="$route.fullPath"/>-->
-            <!--<CardBoard :key="$route.fullPath" v-if="this.$router.currentRoute.name !== 'screen-saver'"/>-->
-        </transition-group>
-
+        <transition enter-active-class="animated slideInDown"
+                    leave-active-class="animated slideOutDown"
+                    mode="out-in" enter>
+            <router-view :key="$route.fullPath"/>
+        </transition>
+        <CardBoard :key="$route.fullPath + 'HC'"/>
     </div>
 </template>
 
@@ -31,6 +29,7 @@
         margin: 0;
         height: 1080px;
         width: 1920px;
+        overflow: hidden;
     }
 
     #app {

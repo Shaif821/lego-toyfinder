@@ -7,12 +7,14 @@
         <div class="filler_2"></div>
 
         <div class="survey_section-3">
-            <div class="survey_wrapper" v-for="(legoAge, index) in legoAgeImages" :key="index">
-                <router-link to="/survey/interest" class="bitmap-small">
-                    <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
+            <div class="survey_wrapper" v-for="(legoInterest, indexInterest) in legoInterestImages"
+                 :key="indexInterest + 'ST'">
+                <div @click="saveChoice(indexInterest)" class="bitmap-small">
+                    <img class="animated flipInY slower" :src="legoInterest.url"
+                         :style="{margin: legoInterest.pos}">
                     <img class="animated flipInY slower" src="../../assets/images/layout/bitmap-small.png">
-                </router-link>
-                <p>{{legoAge.text}}</p>
+                </div>
+                <p>{{legoInterest.text}}</p>
             </div>
         </div>
 
@@ -26,7 +28,7 @@
 
         data() {
             return {
-                legoAgeImages: [
+                legoInterestImages: [
                     {
                         url: require('../../assets/images/survey/group-107.png'),
                         speech: require('../../assets/images/layout/bitmap-small.png'),
@@ -80,13 +82,22 @@
 
                 ]
             }
+        },
+
+        methods: {
+            saveChoice(index) {
+                // this.$store.state.surveyOptions[0].age.push(index);
+                this.$parent.changeView(index);
+            },
         }
     }
 </script>
 
 <style scoped>
-class=animated flipinX
+    class
 
+    =
+    animated flipinX
     .survey_section-2 p {
         font-size: 72px;
         color: white;

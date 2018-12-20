@@ -1,6 +1,8 @@
 <template>
 
-    <div class="screensaver_container animated zoomIn">
+    <div class="screensaver_container">
+
+        <div class="filler_extra" style="height: 96px; "></div>
 
         <div class="screensaver_section-1">
             <p>Ik wil dit jaar een...</p>
@@ -10,9 +12,9 @@
                     <!--leave-active-class="animated rollOut" mode="out-in">-->
             <div class="screensaver_section-2 animated" :key="counter">
                 <div class="speech_bubble_container">
-                    <img class="animated pulse infinite" :style="{margin: legoImages[counter].speechPos}"
+                    <img class="animated " :style="{margin: legoImages[counter].speechPos}"
                          :src="legoImages[counter].speech">
-                    <img class="animated pulse infinite" src="../../assets/images/screensaver/speech-bubble.png">
+                    <img class="animated " src="../../assets/images/screensaver/speech-bubble.png">
                 </div>
 
 
@@ -97,6 +99,8 @@
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
     .screensaver_container {
+        position: relative;
+        z-index: 999;
         /*min-height: 86.1%;*/
         font-family: BlueSheepLego, 'sans-serif';
     }
