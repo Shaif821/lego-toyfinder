@@ -1,54 +1,58 @@
 <template>
+    <div>
+        <!--<CardBoard class="header_position"></CardBoard>-->
 
-    <div class="screensaver_container">
+        <div class="screensaver_container">
 
-        <div class="filler_extra" style="height: 96px; "></div>
-
-        <div class="screensaver_section-1">
-            <p>Ik wil dit jaar een...</p>
-        </div>
-
-        <!--<transition enter-active-class="animated rollIn"-->
-                    <!--leave-active-class="animated rollOut" mode="out-in">-->
-            <div class="screensaver_section-2 animated" :key="counter">
-                <div class="speech_bubble_container">
-                    <img class="animated " :style="{margin: legoImages[counter].speechPos}"
-                         :src="legoImages[counter].speech">
-                    <img class="animated " src="../../assets/images/screensaver/speech-bubble.png">
-                </div>
-
-
-                <img class="screensaver_lego" :style="{ marginBottom: legoImages[counter].margin}"
-                     :src="legoImages[counter].url">
+            <div class="screensaver_section-1">
+                <p>Ik wil dit jaar een...</p>
             </div>
-        <!--</transition>-->
 
-
-        <div class="screensaver_section-3">
-            <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
-        </div>
-
-
-        <div class="screensaver_section-4" @click="increment()">
-            <div></div>
-            <router-link class="hand" to="/survey">
-                <img  src="../../assets/images/layout/touch.png">
-            </router-link>
-            <div class="product_button_container">
-                <router-link class="product_text_wrapper" to="/">
-                    <p>Productoverzicht</p>
-                    <div class="button_circle">
-                        <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
+            <transition enter-active-class="animated slideInLeft"
+                        leave-active-class="animated slideOutRight" mode="out-in">
+                <div class="screensaver_section-2 animated" :key="counter">
+                    <div class="speech_bubble_container">
+                        <img class="animated " :style="{margin: legoImages[counter].speechPos}"
+                             :src="legoImages[counter].speech">
+                        <img class="animated " src="../../assets/images/screensaver/speech-bubble.png">
                     </div>
-                </router-link>
+
+                    <img class="screensaver_lego" :style="{ marginBottom: legoImages[counter].margin}"
+                         :src="legoImages[counter].url">
+                </div>
+            </transition>
+
+
+            <div class="screensaver_section-3">
+                <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
+            </div>
+
+
+            <div class="screensaver_section-4" @click="increment()">
+                <div></div>
+                <div class="hand animated bounce infinite">
+                    <img  src="../../assets/images/layout/touch.png">
+                </div>
+                <div class="product_button_container">
+                    <router-link class="product_text_wrapper" to="/products">
+                        <p>Productoverzicht</p>
+                        <div class="button_circle">
+                            <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
+                        </div>
+                    </router-link>
+                </div>
             </div>
         </div>
     </div>
+
 </template>
 
 <script>
+    import CardBoard from '../layout/CardBoard'
+
     export default {
         name: "ScreenSaver",
+        components: {'CardBoard' : CardBoard},
 
         data() {
             return {
@@ -99,10 +103,13 @@
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
     .screensaver_container {
-        position: relative;
-        z-index: 999;
-        /*min-height: 86.1%;*/
+        overflow: hidden;
+        height: 930px;
         font-family: BlueSheepLego, 'sans-serif';
+    }
+
+    .screensaver_section-1 {
+        height: 72px;
     }
 
     .screensaver_section-1 p {

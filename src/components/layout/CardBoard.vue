@@ -1,38 +1,49 @@
 <template>
-    <div class="cardboard_container" :class="[this.$router.currentRoute.name !== 'screen-saver' ? 'footer_position' : 'header_position']">
+    <div class="cardboard_container"
+         :class="{'headerHeight' : (this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name === 'products-age-interest')}">
         <img src="../../assets/images/layout/slider-border.png">
-        <div v-if="this.$router.currentRoute.name !== 'screen-saver'">
-           <div class="skip">
-               <router-link to="/survey/theme" class="skip_text">Overslaan</router-link>
-           </div>
+        {{currentIndex}}
+        <!--Als de index een 0 is (dus de survey pagina), dan wordt het volgende getoond:-->
+        <div v-if="index === 0">
+            <div class="skip">
+                <p @click="changeTheme" style="cursor: pointer;" class="skip_text">Overslaan</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "CardBoard"
+        name: "CardBoard",
+        props: ['index'],
+
+        methods: {
+            changeTheme(){
+                this.$store.state.legoTheme = true  //Hiermee wordt legoTheme weergegven in de LegoSurvey component
+            }
+        }
     }
 </script>
 
 <style scoped>
     .cardboard_container {
-        position: absolute;
+        height: 150px;
+        /*position: absolute;*/
         width: 100%;
-        height: 28px;
         padding: 0;
         margin: 0;
         z-index: 1;
     }
 
+    .headerHeight {
+        height: 28px;
+    }
+
     .header_position {
         top: 0;
-        animation: footerToHeader 0.5s;
-        animation-fill-mode: forwards;
     }
 
     .footer_position {
-        background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
         bottom: 0;
         animation-name: headerToFooter;
         animation-duration: 2s;
@@ -45,37 +56,35 @@
         animation-timing-function: linear;
     }
 
-    @keyframes headerToFooter {
-        0% {
-            z-index: 3;
-            height: 100vh;
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-        }
-        100% {
-            bottom: 0;
-            z-index: 3;
-            height: 110px;
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-            /*transform: translateY(100%);*/
-        }
-    }
+    /*@keyframes headerToFooter {*/
+    /*0% {*/
+    /*z-index: 3;*/
+    /*height: 100vh;*/
+    /*}*/
+    /*100% {*/
+    /*position: relative;*/
+    /*bottom: 0;*/
+    /*z-index: 3;*/
+    /*height: 110px;*/
+    /*}*/
+    /*}*/
 
-    @keyframes footerToHeader  {
-        0% {
-            bottom: 0;
-            z-index: 3;
-            height: 120vh;
-        }
-        50% {
-            bottom: 0;
-            z-index: 9;
-        }
-        100% {
-            height: 27px;
-            bottom: 0;
-            z-index: 9;
-        }
-    }
+    /*@keyframes footerToHeader  {*/
+    /*0% {*/
+    /*bottom: 0;*/
+    /*z-index: 3;*/
+    /*height: 120vh;*/
+    /*}*/
+    /*50% {*/
+    /*bottom: 0;*/
+    /*z-index: 9;*/
+    /*}*/
+    /*100% {*/
+    /*height: 27px;*/
+    /*bottom: 0;*/
+    /*z-index: 9;*/
+    /*}*/
+    /*}*/
 
     .skip {
         display: flex;

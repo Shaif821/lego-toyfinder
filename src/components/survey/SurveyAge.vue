@@ -7,7 +7,7 @@
         <div class="filler_2"></div>
 
         <div class="survey_section-3">
-            <div class="survey_wrapper" v-for="(legoAge, indexAge) in legoAgeImages" :key="indexAge + 'SA'">
+            <div class="survey_wrapper" v-for="(legoAge, indexAge) in this.$store.state.ages" :key="indexAge + 'SA'">
                 <div class="bitmap">
                     <div @click="saveChoice(indexAge)">
                         <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
@@ -26,42 +26,15 @@
 
         data() {
             return {
-                legoAgeImages: [
-                    {
-                        url: require('../../assets/images/survey/group-107.png'),
-                        speech: require('../../assets/images/layout/bitmap.png'),
-                        text: '1 - 2 jaar',
-                        pos: '82px 103px 100px 94px'
-                    },
-                    {
 
-                        url: require('../../assets/images/survey/group-43.png'),
-                        speech: require('../../assets/images/layout/bitmap.png'),
-                        text: '2 - 6 jaar',
-                        pos: '70px 80px 92px 77px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-34.png'),
-                        speech: require('../../assets/images/layout/bitmap.png'),
-                        text: '6 - 12 jaar',
-                        pos: '78px 90px 87px 88px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-44.png'),
-                        speech: require('../../assets/images/layout/bitmap.png'),
-                        text: '12+',
-                        pos: '76px 68px 88px 66px'
-                    },
-
-                ]
             }
         },
 
         methods: {
             saveChoice(index) {
                 // this.$store.state.surveyOptions[0].age.push(index);
-                this.$parent.changeView(index);
-            },
+                this.$parent.changeView(index);   //De view wordt verandert naar de SurveyInterest met de index van de gekozen
+            },                                    //leeftijdsgroep.
         }
     }
 </script>

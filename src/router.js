@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-
-import ScreenSaver from './components/layout/ScreenSaver'
+import SlideScreenSurvey from './components/SlideScreenSurvey'
+// import ScreenSaver from './components/layout/ScreenSaver'
 import LegoSurvey from './components/survey/LegoSurvey'
+import ProductList from './components/product/ProductList'
 
 
 Vue.use(Router);
@@ -16,7 +17,7 @@ export default new Router({
         {
             path: '/',
             name: 'screen-saver',
-            component: ScreenSaver
+            component: SlideScreenSurvey
         },
         {
           path: '/survey',
@@ -27,6 +28,17 @@ export default new Router({
             path: '/survey/theme',
             name: 'survey-theme',
             component: LegoSurvey
-        }
+        },
+        {
+            path: '/products',
+            name: 'products-all',
+            component: ProductList
+        },
+        {
+            path: '/products/age/:age/interest/:interest',
+            name: 'products-age-interest',
+            component: ProductList
+        },
     ]
 })
+

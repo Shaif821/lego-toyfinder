@@ -1,20 +1,18 @@
 <template>
-    <div id="app">
-        <transition enter-active-class="animated slideInDown"
+    <!--De achtergrond kleur verandert aan de hand van de huidige route-->
+    <div id="app" :class="[(this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name ===  'products-age-interest') ? 'products_background' : 'rest_background']">
+        <transition-group enter-active-class="animated slideInDown"
                     leave-active-class="animated slideOutDown"
                     mode="out-in" enter>
             <router-view :key="$route.fullPath"/>
-        </transition>
-        <CardBoard :key="$route.fullPath + 'HC'"/>
+        </transition-group>
     </div>
 </template>
 
 <script>
-    import CardBoard from './components/layout/CardBoard'
 
     export default {
         name: 'app',
-        components: {CardBoard}
     }
 </script>
 
@@ -29,7 +27,6 @@
         margin: 0;
         height: 1080px;
         width: 1920px;
-        overflow: hidden;
     }
 
     #app {
@@ -39,7 +36,19 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
+        transition: 0.3s ease-in-out;
+        z-index: 0;
+        overflow: hidden;
+    }
+
+    .rest_background {
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+        transition: 0.3s ease-in-out;
+    }
+
+    .products_background {
+        background-color: #edf5f7;
+        transition: 0.3s ease-in-out;
     }
 
     ::-webkit-scrollbar {

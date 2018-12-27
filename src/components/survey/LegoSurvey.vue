@@ -1,24 +1,23 @@
 <template>
-    <div class="survey_container">
-        <div class="survey_section-1">
-            <router-link to="/">
-                <img class="animated pulse infinite" src="../../assets/images/layout/close.png">
-            </router-link>
+    <div>
+        <div class="survey_container">
+            <div class="survey_section-1">
+                <div style="cursor: pointer;" class="first-slide">
+                    <img class="animated pulse infinite" src="../../assets/images/layout/close.png">
+                </div>
+            </div>
+
+            <transition enter-active-class="animated slideInRight faster"
+                        leave-active-class="animated slideOutLeft faster"
+                        enter mode="out-in">
+                <component :is="view"></component>
+            </transition>
+
+
+            <div class="filler_3">
+            </div>
         </div>
 
-        {{surveyOptions}}
-
-        <transition enter-active-class="animated slideInRight faster"
-                    leave-active-class="animated slideOutLeft faster"
-                    enter mode="out-in" >
-            <component  :is="view"></component>
-        </transition>
-
-
-        <div class="filler_3">
-            <p @click="changeView()">{{surveyOptions}}</p>
-            <p @click="changeView(true)">{{test}}</p>
-        </div>
     </div>
 </template>
 
@@ -30,43 +29,51 @@
     export default {
         name: "LegoSurvey",
         components: {
-            'SurveyAge' : SurveyAge,
-            'SurveyInterest' : SurveyInterest,
-            'SurveyTheme' : SurveyTheme
+            'SurveyAge': SurveyAge,
+            'SurveyInterest': SurveyInterest,
+            'SurveyTheme': SurveyTheme,
         },
 
         data() {
             return {
                 index: true,
-                view:'SurveyAge',
+                view: 'SurveyAge',
                 test: 'test',
                 surveyOptions: [{
-                    age : [],
+                    age: [],
                     interest: [],
                 }]
             }
         },
 
         methods: {
-            changeView(choice){
-                // if(!test) {
-                    if(this.view === 'SurveyAge') {
-                        this.surveyOptions[0].age.push(choice);
-                        this.view = 'SurveyInterest'
-                    }
-                    else {
-                        this.surveyOptions[0].interest.push(choice);
-                    }
-                // }
-                // else {
-                //     this.view = 'SurveyTheme'
-                // }
+            changeView(choice) {
+                //Bij de if en else wordt bij beiden de indexen gepusht naar de surveyOptions object.
+                //Bij de else statement wordt de surveyOptions opgeslagen in de store filterOptions.
+                //Daarna wordt route aangeroepen met de indexen in de url
+                if (this.view === 'SurveyAge') {
+                    this.surveyOptions[0].age.push(choice);
+                    this.view = 'SurveyInterest'
+                }
+                else {
+                    this.surveyOptions[0].interest.push(choice);
+                    this.$store.state.filterOptions = this.surveyOptions;
+                    this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
+                }
             },
         },
 
-        mounted(){
-            if(this.$router.currentRoute.name === 'survey-theme') {
-                this.view = 'SurveyTheme'
+        computed: {
+            checkThemeChange() {
+                return this.$store.state.legoTheme
+            }
+        },
+
+        watch: {
+            checkThemeChange(){
+                if(this.$store.state.legoTheme){
+                    this.view = 'SurveyTheme'
+                }
             }
         }
     }
@@ -82,6 +89,7 @@
     }
 
     .survey_section-1 img {
+        cursor: pointer;
         margin-top: 10px;
         margin-right: 55px;
     }

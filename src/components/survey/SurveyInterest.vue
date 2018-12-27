@@ -7,7 +7,7 @@
         <div class="filler_2"></div>
 
         <div class="survey_section-3">
-            <div class="survey_wrapper" v-for="(legoInterest, indexInterest) in legoInterestImages"
+            <div class="survey_wrapper" v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
                 <div @click="saveChoice(indexInterest)" class="bitmap-small">
                     <img class="animated flipInY slower" :src="legoInterest.url"
@@ -26,69 +26,10 @@
     export default {
         name: "SurveyInterest",
 
-        data() {
-            return {
-                legoInterestImages: [
-                    {
-                        url: require('../../assets/images/survey/group-107.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Avontuur',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-
-                        url: require('../../assets/images/survey/group-43.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Dieren',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-34.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Fantasie',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-44.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Roboto',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-107.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Stad & gebouw',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-
-                        url: require('../../assets/images/survey/group-43.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Superhelden',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-34.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Voertuigen',
-                        pos: '49px 50px 53px 50px'
-                    },
-                    {
-                        url: require('../../assets/images/survey/group-44.png'),
-                        speech: require('../../assets/images/layout/bitmap-small.png'),
-                        text: 'Vrijetijd',
-                        pos: '49px 50px 53px 50px'
-                    },
-
-                ]
-            }
-        },
-
         methods: {
             saveChoice(index) {
-                // this.$store.state.surveyOptions[0].age.push(index);
-                this.$parent.changeView(index);
-            },
+                this.$parent.changeView(index);   //De route wordt verandert naar de producten pagina
+            },                                    //en de index van het gekozen interesse wordt meegegven
         }
     }
 </script>
