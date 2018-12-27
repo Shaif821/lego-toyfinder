@@ -7,6 +7,8 @@ const store = new Vuex.Store({
     state: {
         filterOptions: [],
         legoTheme: false,
+        activateLoader: false,
+        productRoute: null,
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),

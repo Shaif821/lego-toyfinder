@@ -2,7 +2,7 @@
     <div>
         <div class="survey_container">
             <div class="survey_section-1">
-                <div style="cursor: pointer;" class="first-slide">
+                <div style="cursor: pointer;" @click="resetData()" class="first-slide">
                     <img class="animated pulse infinite" src="../../assets/images/layout/close.png">
                 </div>
             </div>
@@ -13,9 +13,7 @@
                 <component :is="view"></component>
             </transition>
 
-
-            <div class="filler_3">
-            </div>
+            <div class="filler_3"></div>
         </div>
 
     </div>
@@ -58,9 +56,17 @@
                 else {
                     this.surveyOptions[0].interest.push(choice);
                     this.$store.state.filterOptions = this.surveyOptions;
-                    this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
+                    this.$store.state.productRoute = '/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest;
+                    this.$store.state.activateLoader = true;
                 }
             },
+
+            resetData(){
+                this.$store.state.filterOptions = []
+                this.surveyOptions = []
+                this.surveyOptions = [{age:[], interest:[]}]
+                this.view = 'SurveyAge'
+            }
         },
 
         computed: {

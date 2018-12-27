@@ -1,61 +1,67 @@
 <template>
-    <div>
-        <CardBoard></CardBoard>
-        <div class="product_list_container">
-            <div class="filler_first"></div>
-            <div class="product_list_section-1">
-                <div class="tetetet">
-                    <p>212 resultaten</p>
-                    <div>
-                        <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
-                        <button class="filter_buttons"><p>Beschikbaarheid</p></button>
-                        <button class="filter_buttons"><p>Prijs</p></button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="filler_second"></div>
-
-            <div class="product_list_section-2">
-                <Slick :options="slickOptions" style="width: 1920px;">
-                    <div class="product_wrapper" v-for="i in 10" :key="i" @click="expandProduct($event)">
-                        <div class="product_image">
-                            <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
-                        </div>
+    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
+        <div>
+            <CardBoard></CardBoard>
+            <div class="product_list_container">
+                <div class="filler_first"></div>
+                <div class="product_list_section-1">
+                    <div class="tetetet">
+                        <p>212 resultaten</p>
                         <div>
-                            <hr class="product_seperator">
-                            <p class="product_name">Bugatti Chiron</p>
-                            <p class="product_price">€399,99</p>
+                            <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
+                            <button class="filter_buttons"><p>Beschikbaarheid</p></button>
+                            <button class="filter_buttons"><p>Prijs</p></button>
+                        </div>
+                    </div>
 
-                            <div class="product_buttons">
-                                <div class="product_details_button">
-                                    <img src="../../assets/images/layout/magnifying-glass.png">
-                                    Bekijk dit product
-                                </div>
-                                <div class="product_favorite">
-                                    <img src="../../assets/images/layout/favorited_star.png">
+                </div>
+                <div class="filler_second"></div>
+
+                <div class="product_list_section-2">
+                    <Slick :options="slickOptions" style="width: 1920px;">
+                        <div class="product_wrapper" v-for="i in 10" :key="i" @click="expandProduct($event)">
+                            <div class="product_image">
+                                <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
+                            </div>
+                            <div>
+                                <hr class="product_seperator">
+                                <p class="product_name">Bugatti Chiron</p>
+                                <p class="product_price">€399,99</p>
+
+                                <div class="product_buttons">
+                                    <div class="product_details_button">
+                                        <img src="../../assets/images/layout/magnifying-glass.png">
+                                        Bekijk dit product
+                                    </div>
+                                    <div class="product_favorite">
+                                        <img src="../../assets/images/layout/favorited_star.png">
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </Slick>
+                </div>
+
+                <div class="product_list_section-3_filler"></div>
+
+                <div class="product_list_section-4">
+
+                    <div v-if="themeGroup" class="product_bottom_button product_bottom_button_active">{{
+                        getTheme(this.themeGroup) }}
                     </div>
-                </Slick>
-            </div>
+                    <div v-else class="product_bottom_button product_bottom_button_active">Kies een thema</div>
 
-            <div class="product_list_section-3_filler"></div>
+                    <div v-if="ageGroup" class="product_bottom_button">Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
+                    </div>
+                    <div v-else class="product_bottom_button">Wat is je leeftijd?</div>
 
-            <div class="product_list_section-4">
-
-                <div v-if="themeGroup" class="product_bottom_button product_bottom_button_active">{{ getTheme(this.themeGroup) }}</div>
-                <div v-else class="product_bottom_button product_bottom_button_active">Kies een thema</div>
-
-                <div v-if="ageGroup" class="product_bottom_button">Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span></div>
-                <div v-else class="product_bottom_button">Wat is je leeftijd?</div>
-
-                <div v-if="interestGroup" class="product_bottom_button">Ik hou van <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span></div>
-                <div v-else class="product_bottom_button">Wat vind je leuk?</div>
+                    <div v-if="interestGroup" class="product_bottom_button">Ik hou van <span
+                            class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span></div>
+                    <div v-else class="product_bottom_button">Wat vind je leuk?</div>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
 </template>
 
 <script>
@@ -104,16 +110,22 @@
                 });
             },
 
-            getTheme(id) { return this.$store.state.themes[id].text},
-            getAge(id)  { return this.$store.state.ages[id].text},
-            getInterest(id) { return this.$store.state.interests[id].text}
+            getTheme(id) {
+                return this.$store.state.themes[id].text
+            },
+            getAge(id) {
+                return this.$store.state.ages[id].text
+            },
+            getInterest(id) {
+                return this.$store.state.interests[id].text
+            }
         },
 
         mounted() {
-            if(this.$route.params.theme) {
+            if (this.$route.params.theme) {
                 this.themeGroup = this.$route.params.theme
             }
-            if(this.$route.params.age) {
+            if (this.$route.params.age) {
                 this.ageGroup = this.$route.params.age
             }
             if (this.$route.params.interest) {

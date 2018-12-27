@@ -1,17 +1,28 @@
 <template>
     <div>
+        <div v-if="fixSlideOrder === 0">{{check()}}</div>
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
                 style="min-height: 1080px; padding: 0; margin: 0; overflow: hidden">
-            <swiper-slide><LegoSurvey></LegoSurvey></swiper-slide>
-            <swiper-slide><CardBoard :index="currentSlide"></CardBoard></swiper-slide>
-            <swiper-slide><ScreenSaver></ScreenSaver></swiper-slide>
+            <swiper-slide v-if="loadIsActive">
+                <LegoSurvey></LegoSurvey>
+            </swiper-slide>
+
+            <swiper-slide>
+                <CardBoard :index="currentSlide"></CardBoard>
+            </swiper-slide>
+
+            <swiper-slide>
+                <ScreenLoader v-if="this.$store.state.activateLoader"></ScreenLoader>
+                <ScreenSaver v-else></ScreenSaver>
+            </swiper-slide>
         </swiper>
     </div>
 </template>
 
 <script>
+    import ScreenLoader from './layout/ScreenLoader'
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
     import CardBoard from './layout/CardBoard'
@@ -19,11 +30,9 @@
     export default {
         name: "SlideScreenSurvey",
         components: {
-            ScreenSaver,
-            LegoSurvey,
-            CardBoard,
+            ScreenLoader, ScreenSaver,
+            LegoSurvey, CardBoard,
         },
-
 
         data() {
             return {
@@ -38,14 +47,17 @@
                     },                             //dat de volgende slide wordt opgeroepen
                 },
                 currentSlide: null,
+                fixSlideOrder: 0,
+                loadIsActive: true,
             }
         },
 
         methods: {
-            check() {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
+            check(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
-                    this.swiper.slideNext(500)
+                    this.swiper.slideTo(1, time, false);
                 })
+                this.fixSlideOrder = 1;
             },
 
             changeSwiperIndex() {                                  //Wanneer een swipe plaatst vindt,
@@ -58,11 +70,27 @@
         computed: {
             swiper() {
                 return this.$refs.mySwiper.swiper //Hiermee wordt de instantie voor mySwiper gemaakt
+            },
+
+            checkLoader() {
+                return this.$store.state.activateLoader
             }
         },
 
         mounted() {
+            this.check(false);
             this.changeSwiperIndex();  //Tijdens het opstarten wordt gekeken welke index het huidige is
+        },
+
+        watch: {
+            checkLoader() {
+                if (this.$store.state.activateLoader) {
+                    this.check(900);
+                    setTimeout(function () {
+                        this.loadIsActive = false;
+                    }.bind(this), 900)
+                }
+            }
         }
     }
 </script>

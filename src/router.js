@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import SlideScreenSurvey from './components/SlideScreenSurvey'
-// import ScreenSaver from './components/layout/ScreenSaver'
 import LegoSurvey from './components/survey/LegoSurvey'
 import ProductList from './components/product/ProductList'
 

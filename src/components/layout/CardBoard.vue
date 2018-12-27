@@ -1,14 +1,12 @@
 <template>
     <div class="cardboard_container"
-         :class="{'headerHeight' : (this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name === 'products-age-interest')}">
+         :class="{'headerHeight' : (this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name === 'products-age-interest'), 'animateBackground' : this.$store.state.activateLoader === true}">
         <img src="../../assets/images/layout/slider-border.png">
-        {{currentIndex}}
-        <!--Als de index een 0 is (dus de survey pagina), dan wordt het volgende getoond:-->
-        <div v-if="index === 0">
+        <transition enter-active-class="animated zoomIn" v-if="index === 0">
             <div class="skip">
                 <p @click="changeTheme" style="cursor: pointer;" class="skip_text">Overslaan</p>
             </div>
-        </div>
+        </transition>
     </div>
 </template>
 
@@ -19,7 +17,7 @@
 
         methods: {
             changeTheme(){
-                this.$store.state.legoTheme = true  //Hiermee wordt legoTheme weergegven in de LegoSurvey component
+                this.$store.state.legoTheme = true  //Hiermee wordt legoTheme weergegeven in de LegoSurvey component
             }
         }
     }
@@ -33,6 +31,31 @@
         padding: 0;
         margin: 0;
         z-index: 1;
+        transition: ease-in-out 0.3s;
+    }
+
+    .animateBackground {
+        animation-name: changeBackground;
+        animation-duration: 4s;
+        -webkit-animation-fill-mode: both;
+        -moz-animation-fill-mode: both;
+        -o-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation-iteration-count: 2;
+        -webkit-animation-iteration-count: 2;
+        animation-timing-function: ease-in-out;
+    }
+
+    @keyframes changeBackground {
+        0% {
+            background-color: #edf5f7;
+        }
+        50% {
+            background-color: transparent;
+        }
+        100% {
+            background-color: #edf5f7;
+        }
     }
 
     .headerHeight {
@@ -55,36 +78,6 @@
         -webkit-animation-iteration-count: 1;
         animation-timing-function: linear;
     }
-
-    /*@keyframes headerToFooter {*/
-    /*0% {*/
-    /*z-index: 3;*/
-    /*height: 100vh;*/
-    /*}*/
-    /*100% {*/
-    /*position: relative;*/
-    /*bottom: 0;*/
-    /*z-index: 3;*/
-    /*height: 110px;*/
-    /*}*/
-    /*}*/
-
-    /*@keyframes footerToHeader  {*/
-    /*0% {*/
-    /*bottom: 0;*/
-    /*z-index: 3;*/
-    /*height: 120vh;*/
-    /*}*/
-    /*50% {*/
-    /*bottom: 0;*/
-    /*z-index: 9;*/
-    /*}*/
-    /*100% {*/
-    /*height: 27px;*/
-    /*bottom: 0;*/
-    /*z-index: 9;*/
-    /*}*/
-    /*}*/
 
     .skip {
         display: flex;
