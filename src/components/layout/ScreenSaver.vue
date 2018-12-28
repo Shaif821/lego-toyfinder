@@ -1,25 +1,30 @@
 <template>
     <div>
-        <!--<CardBoard class="header_position"></CardBoard>-->
-
         <div class="screensaver_container">
 
             <div class="screensaver_section-1">
                 <p>Ik wil dit jaar een...</p>
             </div>
 
-            <transition enter-active-class="animated slideInLeft"
-                        leave-active-class="animated slideOutRight" mode="out-in">
-                <div class="screensaver_section-2 animated" :key="counter">
-                    <div class="speech_bubble_container">
-                        <img class="animated " :style="{margin: legoImages[counter].speechPos}"
+            <transition enter-active-class="animated bounceInLeft"
+                        leave-active-class="animated bounceOutRight"
+                        @before-enter="beforeEnter"
+                        @before-leave="beforeLeave"
+                        style="animation-delay: 0.3s"
+                        mode="out-in">
+
+                <div class="screensaver_section-2" :key="counter">
+                    <div class="speech_bubble_container bounceInLeft animated" style="animation-delay: 0.3s">
+                        <img class="testen" :style="{margin: legoImages[counter].speechPos}"
                              :src="legoImages[counter].speech">
-                        <img class="animated " src="../../assets/images/screensaver/speech-bubble.png">
+                        <img  src="../../assets/images/screensaver/speech-bubble.png">
                     </div>
 
-                    <img class="screensaver_lego" :style="{ marginBottom: legoImages[counter].margin}"
+                    <img class="screensaver_lego animated bounceInLeft"
+                         :style="{marginBottom: legoImages[counter].margin}"
                          :src="legoImages[counter].url">
                 </div>
+
             </transition>
 
 
@@ -30,8 +35,8 @@
 
             <div class="screensaver_section-4" @click="increment()">
                 <div></div>
-                <div class="hand animated bounce infinite">
-                    <img  src="../../assets/images/layout/touch.png">
+                <div class="hand animated bounce infinite" style=" animation-duration: 3s;">
+                    <img src="../../assets/images/layout/touch.png">
                 </div>
                 <div class="product_button_container">
                     <router-link class="product_text_wrapper" to="/products">
@@ -48,15 +53,14 @@
 </template>
 
 <script>
-    import CardBoard from '../layout/CardBoard'
 
     export default {
         name: "ScreenSaver",
-        components: {'CardBoard' : CardBoard},
 
         data() {
             return {
                 counter: 0,
+                transition: true,
                 legoImages: [
                     {
                         url: require('../../assets/images/screensaver/lego-head-girl.png'),
@@ -89,8 +93,20 @@
                     } else {
                         v.counter++
                     }
-                }, 5000)
-            }
+                }, 4000)
+            },
+
+            beforeEnter: function (el) {
+                this.transition = true;
+            },
+
+            beforeLeave: function (el) {
+                let test = el.querySelector('.screensaver_lego');
+                test.classList.remove('animated', 'bounceInLeft');
+                test.classList.add('animated', 'bounceOutRight');
+                test.setAttribute('style', 'animation-delay: -0.1s');
+            },
+
         },
 
         mounted: function () {
@@ -101,6 +117,10 @@
 
 <style scoped>
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+    .faster {
+        animation-delay: 0.3s;
+    }
 
     .screensaver_container {
         overflow: hidden;

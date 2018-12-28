@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         legoTheme: false,
         activateLoader: false,
         productRoute: null,
+        productLoaded: null,
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),

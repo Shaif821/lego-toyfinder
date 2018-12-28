@@ -14,8 +14,9 @@
                 let vm = this
                 // this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
                 setTimeout(function (){
-                    vm.$router.push({path:  vm.$store.state.productRoute})
-                }, 2000)
+                    vm.$store.state.productLoaded = true
+                    // vm.$router.push({path:  vm.$store.state.productRoute})
+                }, 4000)
             }
         },
 
@@ -46,8 +47,8 @@
         -moz-animation-fill-mode: both;
         -o-animation-fill-mode: both;
         animation-fill-mode: both;
-        animation-iteration-count: 2;
-        -webkit-animation-iteration-count: 2;
+        animation-iteration-count: 1;
+        -webkit-animation-iteration-count: 1;
         animation-timing-function: ease-in-out;
     }
 
@@ -59,6 +60,7 @@
             background-color: transparent;
         }
         100% {
+            height: 1015px;
             background-color: #edf5f7;
         }
     }

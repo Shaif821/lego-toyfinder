@@ -1,9 +1,9 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
         <div>
-            <CardBoard></CardBoard>
+            <!--<CardBoard></CardBoard>-->
             <div class="product_list_container">
-                <div class="filler_first"></div>
+                <!--<div class="filler_first"></div>-->
                 <div class="product_list_section-1">
                     <div class="tetetet">
                         <p>212 resultaten</p>
@@ -18,8 +18,8 @@
                 <div class="filler_second"></div>
 
                 <div class="product_list_section-2">
-                    <Slick :options="slickOptions" style="width: 1920px;">
-                        <div class="product_wrapper" v-for="i in 10" :key="i" @click="expandProduct($event)">
+                    <swiper :options="swiperOptions" style="width: 1920px;">
+                        <swiper-slide class="product_wrapper animated slideInUp" v-for="i in 10" :key="i">
                             <div class="product_image">
                                 <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
                             </div>
@@ -38,8 +38,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Slick>
+                        </swiper-slide>
+                    </swiper>
                 </div>
 
                 <div class="product_list_section-3_filler"></div>
@@ -65,28 +65,15 @@
 </template>
 
 <script>
-    import CardBoard from '../layout/CardBoard'
-    import Slick from 'vue-slick';
-    import jQuery from "jquery";
-
     export default {
         name: "ProductList",
-        components: {
-            'CardBoard': CardBoard,
-            'Slick': Slick,
-            'jQuery': jQuery
-        },
 
         data() {
             return {
-                slickOptions: {
-                    slidesToShow: 3.5,
-                    infinite: false,
-                    variableWidth: true,
-                    slidesToScroll: 1,
-                    swipeToSlide: true,
-                    touchThreshold: 100,
-                    dots: false,
+                swipeOptions: {
+                    speed: 900,                    //De snelheid
+                    slidesPerView: 3.5,         //Hiermee wordt automatisch bepaald hoeveel slides er
+                    freeMode: true,
                 },
                 ageGroup: null,
                 interestGroup: null,
@@ -95,21 +82,6 @@
         },
 
         methods: {
-            next() {
-                this.$refs.slick.next();
-            },
-
-            prev() {
-                this.$refs.slick.prev();
-            },
-
-            reInit() {
-                // Helpful if you have to deal with v-for to update dynamic lists
-                this.$nextTick(() => {
-                    this.$refs.slick.reSlick();
-                });
-            },
-
             getTheme(id) {
                 return this.$store.state.themes[id].text
             },
@@ -139,7 +111,8 @@
     @import '../../../node_modules/slick-carousel/slick/slick.css';
 
     .product_list_container {
-        height: 1051px;
+        background-color: #edf5f7;
+        height: 1015px;
         font-family: Ubuntu, sans-serif;
     }
 
@@ -148,7 +121,7 @@
     }
 
     .filler_second {
-        height: 66px;
+        height: 75px;
     }
 
     .product_list_section-1 {
@@ -308,7 +281,7 @@
     }
 
     .product_list_section-3_filler {
-        height: 78px;
+        height: 92px;
     }
 
     .product_list_section-4 {
@@ -347,6 +320,7 @@
     }
 
     .product_bottom_button_active {
+        color: white;
         background: #33a0ff;
         box-shadow: 0 -2px 0 0 #33a0ff, inset 0 -6px 0 0 rgba(0, 0, 0, 0.5);
         transition: 0.3s ease-in-out;

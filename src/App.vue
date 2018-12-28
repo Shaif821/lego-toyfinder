@@ -1,6 +1,6 @@
 <template>
     <!--De achtergrond kleur verandert aan de hand van de huidige route-->
-    <div id="app" :class="[(this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name ===  'products-age-interest') ? 'products_background' : 'rest_background']">
+    <div id="app" :class="[this.$store.state.activateLoader === true ? 'products_background' : 'rest_background']">
         <transition-group enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
                     mode="out-in" enter>

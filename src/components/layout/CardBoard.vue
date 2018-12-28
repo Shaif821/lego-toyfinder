@@ -41,8 +41,8 @@
         -moz-animation-fill-mode: both;
         -o-animation-fill-mode: both;
         animation-fill-mode: both;
-        animation-iteration-count: 2;
-        -webkit-animation-iteration-count: 2;
+        animation-iteration-count: 1;
+        -webkit-animation-iteration-count: 1;
         animation-timing-function: ease-in-out;
     }
 
@@ -54,6 +54,7 @@
             background-color: transparent;
         }
         100% {
+            height: 65px;
             background-color: #edf5f7;
         }
     }

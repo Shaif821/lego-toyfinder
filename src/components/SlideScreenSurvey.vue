@@ -14,8 +14,13 @@
             </swiper-slide>
 
             <swiper-slide>
-                <ScreenLoader v-if="this.$store.state.activateLoader"></ScreenLoader>
-                <ScreenSaver v-else></ScreenSaver>
+                <div v-if="!this.$store.state.productLoaded">
+                    <ScreenLoader v-if="this.$store.state.activateLoader"></ScreenLoader>
+                    <ScreenSaver v-else></ScreenSaver>
+                </div>
+                <div v-else>
+                    <ProductList></ProductList>
+                </div>
             </swiper-slide>
         </swiper>
     </div>
@@ -23,6 +28,7 @@
 
 <script>
     import ScreenLoader from './layout/ScreenLoader'
+    import ProductList from './product/ProductList'
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
     import CardBoard from './layout/CardBoard'
@@ -32,6 +38,7 @@
         components: {
             ScreenLoader, ScreenSaver,
             LegoSurvey, CardBoard,
+            ProductList
         },
 
         data() {
