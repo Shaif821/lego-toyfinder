@@ -10,8 +10,8 @@
             <div class="survey_wrapper" v-for="(legoAge, indexAge) in this.$store.state.ages" :key="indexAge + 'SA'">
                 <div class="bitmap">
                     <div @click="saveChoice(indexAge)">
-                        <img class="animated flipInY slower" :src="legoAge.url" :style="{margin: legoAge.pos}">
-                        <img class="animated flipInY slower" src="../../assets/images/layout/bitmap.png">
+                        <img class="animated flipInY slower" style="animation-delay: 0.3s" :src="legoAge.url" :style="{margin: legoAge.pos}">
+                        <img class="animated flipInY slower" style="animation-delay: 0.3s" src="../../assets/images/layout/bitmap.png">
                     </div>
                 </div>
                 <p>{{legoAge.text}}</p>

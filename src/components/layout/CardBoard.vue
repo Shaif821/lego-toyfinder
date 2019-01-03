@@ -1,9 +1,8 @@
 <template>
-    <div class="cardboard_container"
-         :class="{'headerHeight' : (this.$router.currentRoute.name === 'products-all') || (this.$router.currentRoute.name === 'products-age-interest'), 'animateBackground' : this.$store.state.activateLoader === true}">
+    <div class="cardboard_container" :style="[this.$store.state.isActiveLoader ? {height: '66px'} : {height: '150px'}]">
         <img src="../../assets/images/layout/slider-border.png">
-        <transition enter-active-class="animated zoomIn" v-if="index === 0">
-            <div class="skip">
+        <transition leave-active-class="animated bounceOutRight" v-if="index === 0 && this.$store.state.isActiveLoader === false">
+            <div class="skip animated bounceInLeft ">
                 <p @click="changeTheme" style="cursor: pointer;" class="skip_text">Overslaan</p>
             </div>
         </transition>
@@ -17,7 +16,7 @@
 
         methods: {
             changeTheme(){
-                this.$store.state.legoTheme = true  //Hiermee wordt legoTheme weergegeven in de LegoSurvey component
+                this.$store.state.isActiveTheme = true  //Hiermee wordt legoTheme weergegeven in de LegoSurvey component
             }
         }
     }
@@ -25,8 +24,6 @@
 
 <style scoped>
     .cardboard_container {
-        height: 150px;
-        /*position: absolute;*/
         width: 100%;
         padding: 0;
         margin: 0;
@@ -35,8 +32,9 @@
     }
 
     .animateBackground {
+        background-color: #edf5f7;
         animation-name: changeBackground;
-        animation-duration: 4s;
+        animation-duration: 2s;
         -webkit-animation-fill-mode: both;
         -moz-animation-fill-mode: both;
         -o-animation-fill-mode: both;
@@ -48,10 +46,8 @@
 
     @keyframes changeBackground {
         0% {
-            background-color: #edf5f7;
-        }
-        50% {
             background-color: transparent;
+            height: 65px;
         }
         100% {
             height: 65px;

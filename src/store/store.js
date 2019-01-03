@@ -6,10 +6,12 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
     state: {
         filterOptions: [],
-        legoTheme: false,
-        activateLoader: false,
-        productRoute: null,
-        productLoaded: null,
+        isActiveTheme: false,
+        isActiveLoader: false,
+        isActiveProducts: false,
+        loadIsActive: true,
+        currentState: true,
+
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),
@@ -192,13 +194,13 @@ const store = new Vuex.Store({
                 url: require('../assets/images/themes/technic.jpeg'),
                 theme: 'Technic'
             },
-        ]
+        ],
     },
 
     getters: {
-        getLegoTheme (state){
+        getLegoTheme(state) {
             return state.legoTheme
-        }
+        },
     }
 })
 export default store;

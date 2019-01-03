@@ -1,11 +1,9 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
         <div>
-            <!--<CardBoard></CardBoard>-->
             <div class="product_list_container">
-                <!--<div class="filler_first"></div>-->
                 <div class="product_list_section-1">
-                    <div class="tetetet">
+                    <div class="animated slideInDown">
                         <p>212 resultaten</p>
                         <div>
                             <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
@@ -18,8 +16,8 @@
                 <div class="filler_second"></div>
 
                 <div class="product_list_section-2">
-                    <swiper :options="swiperOptions" style="width: 1920px;">
-                        <swiper-slide class="product_wrapper animated slideInUp" v-for="i in 10" :key="i">
+                    <swiper :options="swipeOptions" style="width: 1920px;">
+                        <swiper-slide class="product_wrapper" v-for="i in 10" :key="i">
                             <div class="product_image">
                                 <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
                             </div>
@@ -33,8 +31,14 @@
                                         <img src="../../assets/images/layout/magnifying-glass.png">
                                         Bekijk dit product
                                     </div>
-                                    <div class="product_favorite">
-                                        <img src="../../assets/images/layout/favorited_star.png">
+                                    <div class="product_favorite" @click="addToFavorite(i)">
+                                        <transition enter-active-class="animated bounceIn"
+                                                    leave-active-class="animated bounceOut"
+                                                     mode="out-in">
+                                            <img v-if="favorites.includes(i)" class="animated bounceIn"
+                                                 src="../../assets/images/layout/favorited_star.png">
+                                            <img v-else src="../../assets/images/layout/un)star.png">
+                                        </transition>
                                     </div>
                                 </div>
                             </div>
@@ -44,12 +48,15 @@
 
                 <div class="product_list_section-3_filler"></div>
 
-                <div class="product_list_section-4">
+                <div class="product_list_section-4 animated slideInUp">
 
-                    <div v-if="themeGroup" class="product_bottom_button product_bottom_button_active">{{
-                        getTheme(this.themeGroup) }}
+                    <div @click="goToTheme()" v-if="themeGroup"
+                         class="product_bottom_button product_bottom_button_active">
+                        {{getTheme(this.themeGroup) }}
                     </div>
-                    <div v-else class="product_bottom_button product_bottom_button_active">Kies een thema</div>
+                    <div @click="goToTheme()" v-else class="product_bottom_button product_bottom_button_active">Kies een
+                        thema
+                    </div>
 
                     <div v-if="ageGroup" class="product_bottom_button">Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
                     </div>
@@ -78,30 +85,49 @@
                 ageGroup: null,
                 interestGroup: null,
                 themeGroup: null,
+                favorites: []
             }
         },
 
         methods: {
             getTheme(id) {
-                return this.$store.state.themes[id].text
+                return this.$store.state.themes[id].theme
             },
             getAge(id) {
                 return this.$store.state.ages[id].text
             },
             getInterest(id) {
                 return this.$store.state.interests[id].text
+            },
+
+            goToTheme() {
+                this.$store.state.loadIsActive = true
+                this.$store.state.isActiveLoader = false
+                this.$store.state.isActiveProducts = false
+            },
+
+            addToFavorite(index) {
+                if(this.favorites.includes(index)){
+                    let pos = this.favorites.findIndex(x => x.id === index);
+                    this.favorites.splice(pos, 1);
+                }
+                else {
+                    if(this.favorites.length <= 4){
+                        this.favorites.push(index)
+                    }
+                }
             }
         },
 
         mounted() {
-            if (this.$route.params.theme) {
-                this.themeGroup = this.$route.params.theme
+            if (this.$store.state.filterOptions[0].age[0] !== null) {
+                this.ageGroup = this.$store.state.filterOptions[0].age[0]
             }
-            if (this.$route.params.age) {
-                this.ageGroup = this.$route.params.age
+            if (this.$store.state.filterOptions[0].interest[0] !== null) {
+                this.interestGroup = this.$store.state.filterOptions[0].interest[0]
             }
-            if (this.$route.params.interest) {
-                this.interestGroup = this.$route.params.interest
+            if (this.$store.state.filterOptions[0].theme[0] !== null) {
+                this.themeGroup = this.$store.state.filterOptions[0].theme[0]
             }
         }
     }
@@ -121,7 +147,7 @@
     }
 
     .filler_second {
-        height: 75px;
+        height: 76px;
     }
 
     .product_list_section-1 {

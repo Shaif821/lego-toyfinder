@@ -14,9 +14,9 @@
                 let vm = this
                 // this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
                 setTimeout(function (){
-                    vm.$store.state.productLoaded = true
+                    vm.$store.state.isActiveProducts = true
                     // vm.$router.push({path:  vm.$store.state.productRoute})
-                }, 4000)
+                }, 2500)
             }
         },
 
@@ -32,7 +32,7 @@
     .screen-loader_container {
         transition: ease-in-out 0.3s;
         overflow: hidden;
-        height: 930px;
+        height: 1015px;
         font-family: Ubuntu, 'sans-serif';
         font-size: 28px;
         font-weight: bold;
@@ -42,7 +42,7 @@
         justify-content: center;
         align-items: center;
         animation-name: changeBackground;
-        animation-duration: 4s;
+        animation-duration: 2s;
         -webkit-animation-fill-mode: both;
         -moz-animation-fill-mode: both;
         -o-animation-fill-mode: both;
@@ -50,13 +50,12 @@
         animation-iteration-count: 1;
         -webkit-animation-iteration-count: 1;
         animation-timing-function: ease-in-out;
+        background-color: #edf5f7;
     }
 
     @keyframes changeBackground {
         0% {
-            background-color: #edf5f7;
-        }
-        50% {
+            height: 1015px;
             background-color: transparent;
         }
         100% {

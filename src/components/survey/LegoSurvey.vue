@@ -10,7 +10,7 @@
             <transition enter-active-class="animated slideInRight faster"
                         leave-active-class="animated slideOutLeft faster"
                         enter mode="out-in">
-                <component :is="view"></component>
+                <component v-if="indexAnimation === 0" :is="view"></component>
             </transition>
 
             <div class="filler_3"></div>
@@ -32,6 +32,8 @@
             'SurveyTheme': SurveyTheme,
         },
 
+        props: ['indexAnimation'],
+
         data() {
             return {
                 index: true,
@@ -40,6 +42,7 @@
                 surveyOptions: [{
                     age: [],
                     interest: [],
+                    theme: []
                 }]
             }
         },
@@ -49,15 +52,23 @@
                 //Bij de if en else wordt bij beiden de indexen gepusht naar de surveyOptions object.
                 //Bij de else statement wordt de surveyOptions opgeslagen in de store filterOptions.
                 //Daarna wordt route aangeroepen met de indexen in de url
-                if (this.view === 'SurveyAge') {
-                    this.surveyOptions[0].age.push(choice);
-                    this.view = 'SurveyInterest'
+
+                if(this.$store.state.isActiveTheme){
+                    this.surveyOptions[0].theme.push(choice);
+                    this.$store.state.filterOptions = this.surveyOptions;
+                    this.$store.state.isActiveLoader = true;
                 }
                 else {
-                    this.surveyOptions[0].interest.push(choice);
-                    this.$store.state.filterOptions = this.surveyOptions;
-                    this.$store.state.productRoute = '/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest;
-                    this.$store.state.activateLoader = true;
+                    if (this.view === 'SurveyAge') {
+                        this.surveyOptions[0].age.push(choice);
+                        this.view = 'SurveyInterest'
+                    }
+                    else {
+                        this.surveyOptions[0].interest.push(choice);
+                        this.$store.state.filterOptions = this.surveyOptions;
+                        this.$store.state.productRoute = '/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest;
+                        this.$store.state.isActiveLoader = true;
+                    }
                 }
             },
 
@@ -66,18 +77,22 @@
                 this.surveyOptions = []
                 this.surveyOptions = [{age:[], interest:[]}]
                 this.view = 'SurveyAge'
-            }
+                this.$store.state.isActiveTheme = false
+            },
+
+
         },
 
         computed: {
             checkThemeChange() {
-                return this.$store.state.legoTheme
+                return this.$store.state.isActiveTheme
             }
         },
 
+
         watch: {
             checkThemeChange(){
-                if(this.$store.state.legoTheme){
+                if(this.$store.state.isActiveTheme){
                     this.view = 'SurveyTheme'
                 }
             }

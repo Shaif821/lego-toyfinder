@@ -5,8 +5,13 @@
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
                 style="min-height: 1080px; padding: 0; margin: 0; overflow: hidden">
-            <swiper-slide v-if="loadIsActive">
-                <LegoSurvey></LegoSurvey>
+
+            <!--<swiper-slide v-if="this.$store.state.loadIsActive">-->
+                <!--<LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>-->
+            <!--</swiper-slide> -->
+
+            <swiper-slide v-if="this.$store.state.loadIsActive">
+                <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide>
@@ -14,14 +19,16 @@
             </swiper-slide>
 
             <swiper-slide>
-                <div v-if="!this.$store.state.productLoaded">
-                    <ScreenLoader v-if="this.$store.state.activateLoader"></ScreenLoader>
+                <div v-if="!this.$store.state.isActiveProducts">
+                    <ScreenLoader v-if="this.$store.state.isActiveLoader"></ScreenLoader>
                     <ScreenSaver v-else></ScreenSaver>
                 </div>
+
                 <div v-else>
                     <ProductList></ProductList>
                 </div>
             </swiper-slide>
+
         </swiper>
     </div>
 </template>
@@ -55,7 +62,6 @@
                 },
                 currentSlide: null,
                 fixSlideOrder: 0,
-                loadIsActive: true,
             }
         },
 
@@ -80,7 +86,7 @@
             },
 
             checkLoader() {
-                return this.$store.state.activateLoader
+                return this.$store.state.isActiveLoader
             }
         },
 
@@ -91,10 +97,10 @@
 
         watch: {
             checkLoader() {
-                if (this.$store.state.activateLoader) {
+                if (this.$store.state.isActiveLoader) {
                     this.check(900);
                     setTimeout(function () {
-                        this.loadIsActive = false;
+                        this.$store.state.loadIsActive = false;
                     }.bind(this), 900)
                 }
             }
@@ -103,7 +109,5 @@
 </script>
 
 <style scoped>
-    .carousel-cell {
-        width: 100%;
-    }
+
 </style>

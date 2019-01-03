@@ -7,12 +7,12 @@
         <div class="filler_2"></div>
 
         <div class="survey_section-3">
-            <div class="survey_wrapper" v-for="(legoInterest, indexInterest) in this.$store.state.interests"
+            <div @click="saveChoice(indexInterest)" class="survey_wrapper" style="cursor: pointer;" v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
-                <div @click="saveChoice(indexInterest)" class="bitmap-small">
-                    <img class="animated flipInY slower" :src="legoInterest.url"
+                <div  class="bitmap-small">
+                    <img class="animated flipInY" style="animation-delay: 0.4s" :src="legoInterest.url"
                          :style="{margin: legoInterest.pos}">
-                    <img class="animated flipInY slower" src="../../assets/images/layout/bitmap-small.png">
+                    <img class="animated flipInY" style="animation-delay: 0.4s" src="../../assets/images/layout/bitmap-small.png">
                 </div>
                 <p>{{legoInterest.text}}</p>
             </div>
@@ -35,10 +35,6 @@
 </script>
 
 <style scoped>
-    class
-
-    =
-    animated flipinX
     .survey_section-2 p {
         font-size: 72px;
         color: white;
