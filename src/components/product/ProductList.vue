@@ -1,6 +1,7 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
         <div>
+            <WishList :favorited="favorites"></WishList>
             <div class="product_list_container">
                 <div class="product_list_section-1">
                     <div class="animated slideInDown">
@@ -39,9 +40,9 @@
                                                 <transition enter-active-class="animated bounceIn"
                                                             leave-active-class="animated bounceOut"
                                                             mode="out-in">
-                                                    <img v-if="favorites.includes(i)" class="animated bounceIn"
+                                                    <img key="1" v-if="favorites.includes(i)" class="animated bounceIn"
                                                          src="../../assets/images/layout/favorited_star.png">
-                                                    <img v-else src="../../assets/images/layout/un)star.png">
+                                                    <img key="2" v-else src="../../assets/images/layout/un)star.png">
                                                 </transition>
                                             </div>
                                         </div>
@@ -115,9 +116,9 @@
                                                 <transition enter-active-class="animated bounceIn"
                                                             leave-active-class="animated bounceOut"
                                                             mode="out-in">
-                                                    <img v-if="favorites.includes(i)" class="animated bounceIn"
+                                                    <img :key="1" v-if="favorites.includes(i)" class="animated bounceIn"
                                                          src="../../assets/images/layout/favorited_star.png">
-                                                    <img v-else src="../../assets/images/layout/un)star.png">
+                                                    <img :key="2" v-else src="../../assets/images/layout/un)star.png">
                                                 </transition>
                                             </div>
                                         </div>
@@ -164,8 +165,11 @@
 </template>
 
 <script>
+    import WishList from './WishList'
+
     export default {
         name: "ProductList",
+        components: {'WishList' : WishList},
 
         data() {
             return {
@@ -421,6 +425,7 @@
     }
 
     .product_image_details {
+        margin-top: 20px;
         transition: 0.3s ease-in-out;
         height: 500px;
         width: 500px;
