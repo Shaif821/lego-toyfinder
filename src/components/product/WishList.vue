@@ -6,7 +6,8 @@
                             leave-active-class="animated bounceOut"
                             mode="out-in">
                     <img :key="1" v-if="favorited.length > 0" src="../../assets/images/layout/star-icon-mini.png">
-                    <img :key="2" v-else style="width: 28px; height: 29px;" src="../../assets/images/layout/un)star.png">
+                    <img :key="2" v-else style="width: 28px; height: 29px;"
+                         src="../../assets/images/layout/un)star.png">
                 </transition>
                 <img src="../../assets/images/layout/list-icon.png">
             </div>
@@ -23,9 +24,26 @@
 
             <div class="wishlist_phone">
                 <img src="../../assets/images/layout/lego-head.png">
+                <div class="phone_contents">
+                    <div v-for="i in 5" :key="i">
+                        <p>
+                            <transition enter-active-class="animated flipInY" leave-active-class="animated flipOutY"
+                                        class="contain_favorite_text" mode="out-in">
+
+                                <!--<p v-if="favorited.length > 0" :key="i + '-' + 'fave'">{{favorited[i]}}</p>-->
+
+                                <span v-if="favorited[i]">{{favorited[i]}}</span>
+                                <span v-else-if="i === 0">Je lijstje is nog leeg</span>
+                                <span v-else>{{i}}</span>
+                            </transition>
+                        </p>
+
+                    </div>
+                </div>
                 <img src="../../assets/images/layout/phone.png">
 
-                <div class="wishlist_share">
+
+                <div class="wishlist_share" :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
                     <p>
                         Deel het verlanglijstje
                     </p>
@@ -104,7 +122,7 @@
         margin-top: 37px;
     }
 
-    .wishlist_title p{
+    .wishlist_title p {
         padding: 0;
         margin: 0;
         font-family: BlueSheepLego, 'sans-serif';
@@ -130,22 +148,80 @@
         margin-top: -31px;
         height: 120px;
         width: 520px;
-        box-shadow: 0 -7px 28px 0 rgba(0, 0, 0, 0.5), inset 0 -6px 0 0 #cba219;
-        background: #ffc600 url('../../assets/images/layout/border-left.png') left no-repeat;
         z-index: 9;
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: 0.3s ease-in-out;
     }
 
     .wishlist_share p {
-        padding: 0;
-        font-family: Ubuntu, 'sans-serif';
-        font-size: 32px;
-        color: black;
         text-align: center;
         font-weight: bold;
         width: 100%;
+        padding: 0;
+        font-family: Ubuntu, 'sans-serif';
+        font-size: 32px;
+    }
+
+    .favorited {
+        transition: 0.3s ease-in-out;
+        background: #ffc600 url('../../assets/images/layout/border-left.png') left no-repeat;
+        box-shadow: 0 -7px 28px 0 rgba(0, 0, 0, 0.5), inset 0 -6px 0 0 #cba219;
+    }
+
+    .un_favorited {
+        transition: 0.3s ease-in-out;
+        background: #496078 url('../../assets/images/layout/border-left.png') left no-repeat;
+        box-shadow: 0 -7px 28px 0 rgba(0, 0, 0, 0.5), inset 0 -6px 0 0 #496078;
+    }
+
+    .un_favorited p {
+        color: white;
+        transition: 0.3s ease-in-out;
+    }
+
+    .favorited p {
+        transition: 0.3s ease-in-out;
+        color: black;
+    }
+
+    .phone_contents {
+        height: 606px;
+        width: 329px;
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        right: 50%;
+        bottom: -17%;
+        transform: translate(-50%, -50%);
+    }
+
+    .phone_contents div {
+        height: 114px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px dotted #979797;
+        background: url('../../assets/images/layout/path-copy-3.png') no-repeat center;
+        font-size: 20px;
+    }
+
+    .phone_contents div:first-child {
+        background: none;
+        font-size: 30px;
+    }
+
+    .phone_contents div:last-child {
+        border-bottom: none;
+    }
+
+    .phone_contents div p {
+        padding: 0;
+        font-family: BlueSheepLego, 'sans-serif';
+        color: #297fca;
+        line-height: 1.17;
+        width: 329px;
     }
 
 </style>

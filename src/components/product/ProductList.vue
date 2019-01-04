@@ -225,10 +225,6 @@
                     }
                 }
             },
-
-            // revealProductDetails(index) {
-            //
-            // }
         },
 
         mounted() {
