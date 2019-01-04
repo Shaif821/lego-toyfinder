@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!--<p>{{this.surveyOptions[0].age}} : {{this.surveyOptions[0].interest}} : {{this.surveyOptions[0].theme}}</p>-->
         <div class="survey_container">
             <div class="survey_section-1">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
@@ -15,7 +16,6 @@
 
             <div class="filler_3"></div>
         </div>
-
     </div>
 </template>
 
@@ -37,7 +37,7 @@
         data() {
             return {
                 index: true,
-                view: 'SurveyAge',
+                view: '',
                 test: 'test',
                 surveyOptions: [{
                     age: [],
@@ -49,35 +49,59 @@
 
         methods: {
             changeView(choice) {
-                //Bij de if en else wordt bij beiden de indexen gepusht naar de surveyOptions object.
-                //Bij de else statement wordt de surveyOptions opgeslagen in de store filterOptions.
-                //Daarna wordt route aangeroepen met de indexen in de url
+                if(this.$store.state.currentSurvey){
+                    this.addNewChoice(choice)
+                }
+                else {
+                    this.saveChoice(choice)
+                }
+            },
 
+            saveChoice(choice){
                 if(this.$store.state.isActiveTheme){
-                    this.surveyOptions[0].theme.push(choice);
-                    this.$store.state.filterOptions = this.surveyOptions;
+                    this.$store.state.themeChoice = choice
                     this.$store.state.isActiveLoader = true;
+                    this.$store.state.isActiveTheme = false;
                 }
                 else {
                     if (this.view === 'SurveyAge') {
-                        this.surveyOptions[0].age.push(choice);
+                        this.$store.state.ageChoice = choice
                         this.view = 'SurveyInterest'
                     }
                     else {
-                        this.surveyOptions[0].interest.push(choice);
-                        this.$store.state.filterOptions = this.surveyOptions;
-                        this.$store.state.productRoute = '/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest;
+                        this.$store.state.interestChoice = choice
                         this.$store.state.isActiveLoader = true;
+                        this.$store.state.isActiveTheme = false
                     }
                 }
             },
 
+            addNewChoice(choice){
+                switch(this.$store.state.currentSurvey) {
+                    case 'Age':
+                        this.$store.state.ageChoice = choice
+                        break;
+                    case 'Interest':
+                        this.$store.state.interestChoice = choice
+                        break;
+                    case 'Theme':
+                        this.$store.state.themeChoice = choice
+                        break;
+                }
+                this.$store.state.currentState = 'State-2'
+                this.$store.state.isActiveLoader = true;
+            },
+
             resetData(){
-                this.$store.state.filterOptions = []
-                this.surveyOptions = []
-                this.surveyOptions = [{age:[], interest:[]}]
                 this.view = 'SurveyAge'
+                this.$store.state.ageChoice = null
+                this.$store.state.interestChoice = null
+                this.$store.state.themeChoice = null
                 this.$store.state.isActiveTheme = false
+                if(this.$store.state.currentState !== 'State-1'){
+                    this.$parent.checkSlide(false);
+                }
+                this.$store.state.currentState = 'State-1'
             },
 
 
@@ -89,6 +113,20 @@
             }
         },
 
+        mounted() {
+          if(this.$store.state.currentSurvey === 'Age'){
+              this.view = 'SurveyAge'
+          }
+          else if (this.$store.state.currentSurvey === 'Interest') {
+              this.view = 'SurveyInterest'
+          }
+          else if (this.$store.state.currentSurvey === 'Theme') {
+              this.view = 'SurveyTheme'
+          }
+          else {
+              this.view = 'SurveyAge'
+          }
+        },
 
         watch: {
             checkThemeChange(){

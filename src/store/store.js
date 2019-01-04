@@ -5,12 +5,16 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        filterOptions: [],
+        // filterOptions: [],
+        ageChoice: null,
+        interestChoice: null,
+        themeChoice: null,
         isActiveTheme: false,
         isActiveLoader: false,
         isActiveProducts: false,
         loadIsActive: true,
-        currentState: true,
+        currentState: 'State-1',
+        currentSurvey: null,
 
         ages: [
             {

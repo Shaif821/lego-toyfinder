@@ -1,6 +1,6 @@
 <template>
     <!--De achtergrond kleur verandert als de isActiveLoader true is-->
-    <div id="app" :class="[this.$store.state.isActiveLoader === true ? 'products_background' : 'rest_background']">
+    <div id="app" :class="[{'products-background' : this.$store.state.currentState === 'State-3'}, {'rest-background' : this.$store.state.currentState !== 'State-3'}]">
         <transition-group enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
                     mode="out-in" enter>
@@ -45,28 +45,20 @@
         overflow: hidden;
     }
 
-    .rest_background {
+    .rest-background {
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-        transition: 0.3s ease-in-out;
     }
 
-    .products_background {
-        transition: 0.3s ease-in-out;
+    .products-background {
         animation-name: changeBackground;
-        animation-duration: 2s;
-        -webkit-animation-fill-mode: both;
-        -moz-animation-fill-mode: both;
-        -o-animation-fill-mode: both;
-        animation-fill-mode: both;
-        animation-iteration-count: 1;
-        -webkit-animation-iteration-count: 1;
-        animation-timing-function: ease-in-out;
+        animation-duration: 3s;
+        animation-fill-mode: forwards;
     }
 
     @keyframes changeBackground {
         0% {
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-            }
+            background-color: transparent;
+        }
         100% {
             background-color: #edf5f7;
         }

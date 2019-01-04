@@ -31,30 +31,6 @@
         transition: ease-in-out 0.3s;
     }
 
-    .animateBackground {
-        background-color: #edf5f7;
-        animation-name: changeBackground;
-        animation-duration: 2s;
-        -webkit-animation-fill-mode: both;
-        -moz-animation-fill-mode: both;
-        -o-animation-fill-mode: both;
-        animation-fill-mode: both;
-        animation-iteration-count: 1;
-        -webkit-animation-iteration-count: 1;
-        animation-timing-function: ease-in-out;
-    }
-
-    @keyframes changeBackground {
-        0% {
-            background-color: transparent;
-            height: 65px;
-        }
-        100% {
-            height: 65px;
-            background-color: #edf5f7;
-        }
-    }
-
     .headerHeight {
         height: 28px;
     }

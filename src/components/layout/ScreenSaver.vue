@@ -38,13 +38,13 @@
                 <div class="hand animated bounce infinite" style=" animation-duration: 3s;">
                     <img src="../../assets/images/layout/touch.png">
                 </div>
-                <div class="product_button_container">
-                    <router-link class="product_text_wrapper" to="/products">
+                <div @click="toProducts"  class="product_button_container">
+                    <div style="cursor: pointer" class="product_text_wrapper">
                         <p>Productoverzicht</p>
                         <div class="button_circle">
                             <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
                         </div>
-                    </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,6 +106,11 @@
                 test.classList.add('animated', 'bounceOutRight');
                 test.setAttribute('style', 'animation-delay: -0.1s');
             },
+
+            toProducts(){
+                this.$store.state.isActiveLoader = true
+                this.$store.state.currentState = 'State-3'
+            }
 
         },
 

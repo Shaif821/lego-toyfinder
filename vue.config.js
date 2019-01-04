@@ -1,3 +1,3 @@
 // module.exports = {
-//     baseUrl: "https://shaif.nl/lego-toyfinder/",
-// };
+// //     baseUrl: "https://shaif.nl/lego-toyfinder/",
+// // };

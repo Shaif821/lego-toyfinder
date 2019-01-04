@@ -17,28 +17,110 @@
 
                 <div class="product_list_section-2">
                     <swiper :options="swipeOptions" style="width: 1920px;">
-                        <swiper-slide class="product_wrapper" v-for="i in 10" :key="i">
-                            <div class="product_image">
-                                <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
-                            </div>
-                            <div>
-                                <hr class="product_seperator">
-                                <p class="product_name">Bugatti Chiron</p>
-                                <p class="product_price">€399,99</p>
-
-                                <div class="product_buttons">
-                                    <div class="product_details_button">
-                                        <img src="../../assets/images/layout/magnifying-glass.png">
-                                        Bekijk dit product
+                        <swiper-slide class="product_wrapper"  :class="{product_wrapper_details : selected === index}" v-for="(i, index) in 10" :key="index"
+                                      :style="{animationDelay: '0.' + i + 's'}">
+                            <div class="pre_product_details">
+                                <div :class="{product_all_image : selected === index}">
+                                    <div class="product_image_normal"
+                                         :class="[selected === index ? 'product_image_details' : 'product_image']">
+                                        <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
                                     </div>
-                                    <div class="product_favorite" @click="addToFavorite(i)">
-                                        <transition enter-active-class="animated bounceIn"
-                                                    leave-active-class="animated bounceOut"
-                                                     mode="out-in">
-                                            <img v-if="favorites.includes(i)" class="animated bounceIn"
-                                                 src="../../assets/images/layout/favorited_star.png">
-                                            <img v-else src="../../assets/images/layout/un)star.png">
-                                        </transition>
+                                    <div v-if="selected !== index">
+                                        <hr class="product_seperator">
+                                        <p class="product_name">Bugatti Chiron</p>
+                                        <p class="product_price">€399,99</p>
+
+                                        <div class="product_buttons">
+                                            <div @click="selected = index" class="product_details_button">
+                                                <img src="../../assets/images/layout/magnifying-glass.png">
+                                                Bekijk dit product
+                                            </div>
+                                            <div class="product_favorite" @click="addToFavorite(i)">
+                                                <transition enter-active-class="animated bounceIn"
+                                                            leave-active-class="animated bounceOut"
+                                                            mode="out-in">
+                                                    <img v-if="favorites.includes(i)" class="animated bounceIn"
+                                                         src="../../assets/images/layout/favorited_star.png">
+                                                    <img v-else src="../../assets/images/layout/un)star.png">
+                                                </transition>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div v-else class="product_more_images">
+                                        <div class="mini_images">
+                                            <div class="animated fadeIn">
+                                                <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
+                                            </div>
+                                            <div class="animated fadeIn">
+                                                <img src="https://prodimage.images-bn.com/pimages/0673419281973_p4_v5_s550x406.jpg">
+                                            </div>
+                                            <div class="animated fadeIn">
+                                                <img src="https://cdn.webshopapp.com/shops/213470/files/227846117/image.jpg">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-if="selected === index" class="product_description">
+                                    <div class="remove_details" @click="selected = undefined">
+                                        <img  src="../../assets/images/layout/path.png">
+                                        <img src="../../assets/images/layout/rectangle.png">
+                                    </div>
+
+                                    <div class="product_title">
+                                        <h1>De Grote Zaal van Zweinstein™</h1>
+                                        <p>Harry Potter™</p>
+                                    </div>
+
+                                    <div class="product_toy_details">
+                                        <p>
+                                            Reis naar LEGO® Harry Potter™ 75954 De Grote Zaal van Zweinstein™ voor
+                                            onvergetelijke magische avonturen! Kom bijeen in de Grote Zaal voor het
+                                            banket en de Sorteerceremonie en pak vervolgens je toverstok voor een duel
+                                            met Draco Malfidus™. Beklim de bewegende trappen om de toren met de Grote
+                                            Trap te verkennen, leer de kunst van toverdrankjes maken in het klaslokaal,
+                                            ontdek de steeds veranderende reflecties in de Spiegel van Neregeb™ en help
+                                            Harry, Hermelien en Ron het op te nemen tegen de boze Basilisk en Heer
+                                            Voldemort™ te verslaan!
+                                        </p>
+                                    </div>
+
+                                    <div class="product_rest_details">
+                                        <div class="details_wrapper">
+                                            <p>Leeftijd</p>
+                                            <p>9-14</p>
+                                        </div>
+
+                                        <div class="details_wrapper">
+                                            <p>Aantal stukjes</p>
+                                            <p>878</p>
+                                        </div>
+
+                                        <div class="details_wrapper">
+                                            <p>Interessegebied</p>
+                                            <p>Tovenaars</p>
+                                        </div>
+                                        <div class="details_wrapper">
+                                            <p></p>
+                                            <p class="price_details">€109,00</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="product_details_footer">
+                                        <p>Voeg toe aan verlanglijstje</p>
+
+                                        <div>
+                                            <div class="product_favorite" @click="addToFavorite(i)">
+                                                <transition enter-active-class="animated bounceIn"
+                                                            leave-active-class="animated bounceOut"
+                                                            mode="out-in">
+                                                    <img v-if="favorites.includes(i)" class="animated bounceIn"
+                                                         src="../../assets/images/layout/favorited_star.png">
+                                                    <img v-else src="../../assets/images/layout/un)star.png">
+                                                </transition>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -50,21 +132,31 @@
 
                 <div class="product_list_section-4 animated slideInUp">
 
-                    <div @click="goToTheme()" v-if="themeGroup"
-                         class="product_bottom_button product_bottom_button_active">
-                        {{getTheme(this.themeGroup) }}
-                    </div>
-                    <div @click="goToTheme()" v-else class="product_bottom_button product_bottom_button_active">Kies een
-                        thema
+                    <div @click="goToSurvey('Theme')" class="product_bottom_button product_bottom_button_active">
+                        <span v-if="themeGroup">
+                            {{getTheme(this.themeGroup) }}
+                        </span>
+
+                        <span v-else class="product_bottom_button product_bottom_button_active">
+                            Kies een thema
+                        </span>
                     </div>
 
-                    <div v-if="ageGroup" class="product_bottom_button">Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
-                    </div>
-                    <div v-else class="product_bottom_button">Wat is je leeftijd?</div>
 
-                    <div v-if="interestGroup" class="product_bottom_button">Ik hou van <span
-                            class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span></div>
-                    <div v-else class="product_bottom_button">Wat vind je leuk?</div>
+                    <div @click="goToSurvey('Age')" class="product_bottom_button">
+                        <span v-if="ageGroup">
+                            Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
+                        </span>
+
+                        <span v-else class="product_bottom_button">Wat is je leeftijd?</span>
+                    </div>
+
+                    <div @click="goToSurvey('Interest')" class="product_bottom_button">
+                        <span v-if="interestGroup"> Ik hou van
+                            <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span>
+                        </span>
+                        <span v-else class="product_bottom_button">Wat vind je leuk?</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,12 +172,18 @@
                 swipeOptions: {
                     speed: 900,                    //De snelheid
                     slidesPerView: 3.5,         //Hiermee wordt automatisch bepaald hoeveel slides er
-                    freeMode: true,
+                    preventClicks: true,
+                    preventClicksPropagation: false,
+                    onClick: (swiper, event) => {
+                        this.test(swiper, event)
+                    }
                 },
+                spaceBetween: 30,
                 ageGroup: null,
                 interestGroup: null,
                 themeGroup: null,
-                favorites: []
+                favorites: [],
+                selected: undefined
             }
         },
 
@@ -100,35 +198,51 @@
                 return this.$store.state.interests[id].text
             },
 
-            goToTheme() {
-                this.$store.state.loadIsActive = true
-                this.$store.state.isActiveLoader = false
-                this.$store.state.isActiveProducts = false
+            test() {
+                alert('test')
+            },
+
+            goToSurvey(survey) {
+                this.$store.state.isActiveLoader = false;
+                this.$store.state.currentSurvey = survey
+                this.$store.state.currentState = 'State-4'
+
+                // this.$store.state.isActiveProducts = false
             },
 
             addToFavorite(index) {
-                if(this.favorites.includes(index)){
+                if (this.favorites.includes(index)) {
                     let pos = this.favorites.findIndex(x => x.id === index);
                     this.favorites.splice(pos, 1);
                 }
                 else {
-                    if(this.favorites.length <= 4){
+                    if (this.favorites.length <= 4) {
                         this.favorites.push(index)
                     }
                 }
-            }
+            },
+
+            // revealProductDetails(index) {
+            //
+            // }
         },
 
         mounted() {
-            if (this.$store.state.filterOptions[0].age[0] !== null) {
-                this.ageGroup = this.$store.state.filterOptions[0].age[0]
+            if (this.$store.state.ageChoice !== null) {
+                this.ageGroup = this.$store.state.ageChoice
             }
-            if (this.$store.state.filterOptions[0].interest[0] !== null) {
-                this.interestGroup = this.$store.state.filterOptions[0].interest[0]
+            if (this.$store.state.interestChoice !== null) {
+                this.interestGroup = this.$store.state.interestChoice
             }
-            if (this.$store.state.filterOptions[0].theme[0] !== null) {
-                this.themeGroup = this.$store.state.filterOptions[0].theme[0]
+            if (this.$store.state.themeChoice !== null) {
+                this.themeGroup = this.$store.state.themeChoice
             }
+        },
+
+        computed: {
+            swiper() {
+                return this.$refs.mySwiper.swiper //Hiermee wordt de instantie voor mySwiper gemaakt
+            },
         }
     }
 </script>
@@ -137,7 +251,6 @@
     @import '../../../node_modules/slick-carousel/slick/slick.css';
 
     .product_list_container {
-        background-color: #edf5f7;
         height: 1015px;
         font-family: Ubuntu, sans-serif;
     }
@@ -223,25 +336,231 @@
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         width: 457px !important;
-        height: 100%;
+        height: 678px !important;
         display: flex;
         flex-direction: column;
         background: #ffffff;
         margin-left: 65px;
         transition: 0.5s ease-in-out;
+        cursor: pointer;
+        overflow: hidden;
     }
 
-    .product_image {
-        height: 406px;
-        width: 457px;
+    .product_wrapper_details {
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+        width: 1170px !important;
+        transition: 0.3s ease-in-out;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .pre_product_details {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_image_normal {
         display: flex;
         justify-content: center;
         align-items: center;
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_all_image {
+        margin-left: 20px;
+        width: 500px;
+        height: 676px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_more_images {
+        width: 100%;
+        transition: 0.3s ease-in-out;
+    }
+
+    .mini_images {
+        margin-top: 18px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        transition: 0.3s ease-in-out;
+    }
+
+    .mini_images div {
+        border: 1px solid rgba(0, 0, 0, 0.24);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        width: 140px;
+    }
+
+    .mini_images div:first-child {
+        border: 2px solid #297fca;
+    }
+
+    .mini_images img {
+        max-height: 100%;
+        max-width: 100%;
+        height: 75%;
+        width: 75%;
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_image {
+        transition: 0.3s ease-in-out;
+        height: 406px;
+        width: 457px;
+    }
+
+    .product_image_details {
+        transition: 0.3s ease-in-out;
+        height: 500px;
+        width: 500px;
+    }
+
+    .product_image_details img {
+        max-height: 100%;
+        max-width: 100%;
+        height: 90%;
+        width: 90%;
+        transition: 0.3s ease-in-out;
     }
 
     .product_image img {
+        transition: 0.3s ease-in-out;
         width: 307px;
         height: 276px;
+    }
+
+    .product_description {
+        position: relative;
+        width: 650px;
+        margin-left: 65px;
+    }
+
+    .remove_details {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .remove_details img:first-child {
+        position: absolute;
+        z-index: 1;
+        margin-left: 50px;
+        margin-top: 10px;
+    }
+
+    .product_title {
+        margin-top: 30px;
+        text-align: left;
+        font-family: Ubuntu, 'sans-serif';
+    }
+
+    .product_title h1 {
+        padding: 0;
+        margin: 0;
+        font-size: 30px;
+        font-weight: 500;
+        color: #020202;
+        letter-spacing: normal;
+    }
+
+    .product_title p {
+        font-size: 18px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        letter-spacing: normal;
+        margin: 0;
+        padding: 0;
+        color: #496078;
+    }
+
+    .product_toy_details {
+        text-align: left;
+        margin-top: 40px;
+        height: 348px;
+        font-family: Ubuntu, 'sans-serif';
+        font-size: 16px;
+        font-weight: 300;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 2;
+        letter-spacing: normal;
+        color: #020202;
+    }
+
+    .product_rest_details {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .details_wrapper {
+        margin-right: 30px;
+        text-align: left;
+    }
+
+    .details_wrapper p:first-child {
+        color: #496078;
+        font-size: 15px;
+        font-weight: 500;
+        font-style: normal;
+        font-stretch: normal;
+    }
+
+    .details_wrapper p:nth-child(2) {
+        font-size: 18px;
+        font-weight: bold;
+        color: #020202;
+
+    }
+
+    .details_wrapper:last-child {
+        flex: 2;
+        text-align: right;
+    }
+
+    .price_details {
+        font-size: 42px !important;
+        font-weight: 500;
+    }
+
+    .product_details_footer {
+        position: absolute;
+        bottom: 0;
+        height: 94px;
+        width: 100%;
+        box-shadow: inset 0 -6px 0 0 #2f3f50;
+        border-top-left-radius: 10px;
+        background-color: #496078;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .product_details_footer p{
+        margin-left: 10px;
+        margin-right: 10px;
+        font-size:28px;
+        font-weight: bold;
+        color:white;
+    }
+
+    .product_details_footer div:first-child {
+        width: 132px;
+    }
+
+    .product_details_footer .product_favorite {
+        border: none;
     }
 
     .product_seperator {
@@ -255,7 +574,7 @@
         font-size: 26px;
         text-align: left;
         width: 397px;
-        margin: 30px auto 0;
+        margin: 15px auto 0;
         font-weight: 500;
         color: black;
     }

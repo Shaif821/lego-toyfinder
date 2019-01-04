@@ -1,16 +1,14 @@
 <template>
     <div>
-        <div v-if="fixSlideOrder === 0">{{check()}}</div>
+        <div v-if="fixSlideOrder === 0">{{checkSlide()}}</div>
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
                 style="min-height: 1080px; padding: 0; margin: 0; overflow: hidden">
 
-            <!--<swiper-slide v-if="this.$store.state.loadIsActive">-->
-                <!--<LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>-->
-            <!--</swiper-slide> -->
-
-            <swiper-slide v-if="this.$store.state.loadIsActive">
+            <!--currentState zorgt ervoor welke component zichtbaar hoort te zijn-->
+            <swiper-slide
+                    v-if="(this.$store.state.currentState === 'State-1') || (this.$store.state.currentState === 'State-4')">
                 <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
@@ -19,13 +17,13 @@
             </swiper-slide>
 
             <swiper-slide>
-                <div v-if="!this.$store.state.isActiveProducts">
+                <div v-if="(this.$store.state.currentState === 'State-1') || (this.$store.state.currentState === 'State-2')">
                     <ScreenLoader v-if="this.$store.state.isActiveLoader"></ScreenLoader>
                     <ScreenSaver v-else></ScreenSaver>
                 </div>
 
                 <div v-else>
-                    <ProductList></ProductList>
+                    <ProductList v-if="this.$store.state.currentState === 'State-3'"></ProductList>
                 </div>
             </swiper-slide>
 
@@ -56,6 +54,7 @@
                     slidesPerView: 'auto',         //Hiermee wordt automatisch bepaald hoeveel slides er
                     mousewheel: true,              //-zichtbaar zijn, dus zoveel mogelijk slides die er in passen qua hoogte
                     autoHeight: true,              //De height staat niet vast
+                    resistanceRatio : 0.15,
                     navigation: {
                         nextEl: '.first-slide'     //De element die deze class bevat zorgt ervoor
                     },                             //dat de volgende slide wordt opgeroepen
@@ -66,7 +65,7 @@
         },
 
         methods: {
-            check(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
+            checkSlide(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
                     this.swiper.slideTo(1, time, false);
                 })
@@ -87,21 +86,41 @@
 
             checkLoader() {
                 return this.$store.state.isActiveLoader
+            },
+
+            checkState() {
+                return this.$store.state.currentState
             }
         },
 
         mounted() {
-            this.check(false);
+            this.checkSlide(false);
             this.changeSwiperIndex();  //Tijdens het opstarten wordt gekeken welke index het huidige is
+            if (this.$store.state.currentState === null) {
+                this.$store.state.currentState = 'State-1'
+            }
+
+            if (this.$store.state.currentState === 'State-4') {
+                this.$nextTick(() => {
+                    this.swiper.slideTo(0, false, false);
+                })
+                this.fixSlideOrder = 0;
+            }
         },
 
         watch: {
             checkLoader() {
                 if (this.$store.state.isActiveLoader) {
-                    this.check(900);
+                    this.checkSlide(900);
                     setTimeout(function () {
-                        this.$store.state.loadIsActive = false;
+                        this.$store.state.loadIsActive = 'State-2';
                     }.bind(this), 900)
+                }
+            },
+
+            checkState(){
+                if(this.$store.state.currentState === 'State-1'){
+                    this.checkSlide(900);
                 }
             }
         }
