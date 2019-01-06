@@ -1,6 +1,6 @@
 <template>
-    <div class="wish_list_container">
-        <div style="cursor: pointer;" class="wish_list_button">
+    <div :class="[isActiveWishList ? 'openWishList' : 'closeWishList']" class="wish_list_container">
+        <div @click="openWishList()"  style="cursor: pointer;" class="wish_list_button">
             <div class="clipBoard">
                 <transition enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut"
@@ -14,7 +14,7 @@
             <img src="../../assets/images/layout/wishlist.png">
         </div>
 
-        <div class="wishlist_phone_container">
+        <div class="wishlist_phone_container" :class="{add_shadow: isActiveWishList}">
             <div class="wishlist_title">
                 <img src="../../assets/images/layout/star.png">
                 <p>
@@ -26,17 +26,14 @@
                 <img src="../../assets/images/layout/lego-head.png">
                 <div class="phone_contents">
                     <div v-for="i in 5" :key="i">
-                        <p>
                             <transition enter-active-class="animated flipInY" leave-active-class="animated flipOutY"
                                         class="contain_favorite_text" mode="out-in">
 
-                                <!--<p v-if="favorited.length > 0" :key="i + '-' + 'fave'">{{favorited[i]}}</p>-->
+                                <p :key="i + ' -favorited'" v-if="favorited[i - 1]"  class="is_favorited">{{favorited[i - 1]}}</p>
+                                <p :key="i + ' -not_favorited'" v-else-if="!favorited[i - 1] && i - 1 === 0"  class="not_favorited" >Je lijstje is nog leeg</p>
+                                <p :key="i + '-has_star'" v-else class="has_star">{{i}}</p>
 
-                                <span v-if="favorited[i]">{{favorited[i]}}</span>
-                                <span v-else-if="i === 0">Je lijstje is nog leeg</span>
-                                <span v-else>{{i}}</span>
                             </transition>
-                        </p>
 
                     </div>
                 </div>
@@ -59,7 +56,19 @@
 <script>
     export default {
         name: "WishList",
-        props: ['favorited']
+        props: ['favorited'],
+
+        data() {
+          return {
+              isActiveWishList: false
+          }
+        },
+
+        methods: {
+            openWishList(){
+                this.isActiveWishList = !this.isActiveWishList
+            }
+        }
     }
 </script>
 
@@ -69,6 +78,34 @@
         top: 0;
         right: 0;
         width: 609px;
+    }
+
+    .closeWishList {
+        margin-right: -516px;
+        animation: noWishlist  0.4s forwards;
+    }
+
+    @keyframes noWishlist {
+        0% {
+            margin-right: 0;
+        }
+        100% {
+            margin-right: -516px;
+        }
+    }
+
+    .openWishList {
+        margin-right: 0;
+        animation: wishlist  0.4s forwards;
+    }
+
+    @keyframes wishlist {
+        0% {
+            margin-right: -516px;
+        }
+        100% {
+            margin-right: 0;
+        }
     }
 
     .wish_list_button {
@@ -101,13 +138,18 @@
         position: relative;
         z-index: 2;
         margin-top: -65px;
-        box-shadow: 0 0 96px 0 rgba(0, 0, 0, 0.8);
         right: 0;
         margin-left: 89px;
         background: white url('../../assets/images/layout/border-left.png') left no-repeat;
         display: flex;
         flex-direction: column;
         align-items: center;
+        transition: 0.3s ease-in-out;
+    }
+
+    .add_shadow {
+        transition: 0.3s ease-in-out;
+        box-shadow: 0 0 96px 0 rgba(0, 0, 0, 0.8);
     }
 
     .wishlist_title {
@@ -198,13 +240,14 @@
     }
 
     .phone_contents div {
+        border-bottom: 1px dotted #979797;
+    }
+
+    .phone_contents div, .phone_contents div p {
         height: 114px;
         display: flex;
         justify-content: center;
         align-items: center;
-        border-bottom: 1px dotted #979797;
-        background: url('../../assets/images/layout/path-copy-3.png') no-repeat center;
-        font-size: 20px;
     }
 
     .phone_contents div:first-child {
@@ -219,9 +262,23 @@
     .phone_contents div p {
         padding: 0;
         font-family: BlueSheepLego, 'sans-serif';
-        color: #297fca;
         line-height: 1.17;
         width: 329px;
+    }
+
+    .is_favorited {
+        color: black;
+        font-size: 30px;
+    }
+
+    .not_favorited {
+        font-size: 30px;
+        color: #297fca;
+    }
+
+    .has_star {
+        color: #297fca;
+        background: url('../../assets/images/layout/path-copy-3.png') no-repeat center;
     }
 
 </style>
