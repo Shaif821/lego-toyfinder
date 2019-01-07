@@ -1,11 +1,13 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
+
+
         <div>
             <WishList :favorited="favorites"></WishList>
             <div class="product_list_container">
                 <div class="product_list_section-1">
                     <div class="animated slideInDown">
-                        <p>212 resultaten</p>
+                        <p>{{shortProducts.length}} resultaten</p>
                         <div>
                             <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
                             <button class="filter_buttons"><p>Beschikbaarheid</p></button>
@@ -18,18 +20,20 @@
 
                 <div class="product_list_section-2">
                     <swiper :options="swipeOptions" style="width: 1920px;">
-                        <swiper-slide class="product_wrapper"  :class="{product_wrapper_details : selected === index}" v-for="(i, index) in 10" :key="index"
+                        <swiper-slide class="product_wrapper" :class="{product_wrapper_details : selected === index}"
+                                      v-for="(i, index) in shortProducts" :key="index"
                                       :style="{animationDelay: '0.' + i + 's'}">
-                            <div class="pre_product_details">
+                            <div class="pre_product_details swiper-lazy">
                                 <div :class="{product_all_image : selected === index}">
                                     <div class="product_image_normal"
                                          :class="[selected === index ? 'product_image_details' : 'product_image']">
-                                        <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
+                                        <!--<img :src="getImage(i['Product Number'])">-->
+                                        <img :src="require('../../assets/images/products/' + i['Product Number'] + '_box1_in.png')">
                                     </div>
                                     <div v-if="selected !== index">
                                         <hr class="product_seperator">
-                                        <p class="product_name">Bugatti Chiron</p>
-                                        <p class="product_price">€399,99</p>
+                                        <p class="product_name">{{ i['Product Name NL']}}</p>
+                                        <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                                         <div class="product_buttons">
                                             <div @click="selected = index" class="product_details_button">
@@ -65,54 +69,45 @@
 
                                 <div v-if="selected === index" class="product_description">
                                     <div class="remove_details" @click="selected = undefined">
-                                        <img  src="../../assets/images/layout/path.png">
+                                        <img src="../../assets/images/layout/path.png">
                                         <img src="../../assets/images/layout/rectangle.png">
                                     </div>
 
                                     <div class="product_title">
-                                        <h1>De Grote Zaal van Zweinstein™</h1>
-                                        <p>Harry Potter™</p>
+                                        <h1>{{ i['Product Name NL']}}</h1>
+                                        <p>{{ i['Theme']}}</p>
                                     </div>
 
                                     <div class="product_toy_details">
-                                        <p>
-                                            Reis naar LEGO® Harry Potter™ 75954 De Grote Zaal van Zweinstein™ voor
-                                            onvergetelijke magische avonturen! Kom bijeen in de Grote Zaal voor het
-                                            banket en de Sorteerceremonie en pak vervolgens je toverstok voor een duel
-                                            met Draco Malfidus™. Beklim de bewegende trappen om de toren met de Grote
-                                            Trap te verkennen, leer de kunst van toverdrankjes maken in het klaslokaal,
-                                            ontdek de steeds veranderende reflecties in de Spiegel van Neregeb™ en help
-                                            Harry, Hermelien en Ron het op te nemen tegen de boze Basilisk en Heer
-                                            Voldemort™ te verslaan!
-                                        </p>
+                                        <p>{{i['Product Description NL']}}</p>
                                     </div>
 
                                     <div class="product_rest_details">
                                         <div class="details_wrapper">
                                             <p>Leeftijd</p>
-                                            <p>9-14</p>
+                                            <p>{{i['Age Mark']}}</p>
                                         </div>
 
                                         <div class="details_wrapper">
                                             <p>Aantal stukjes</p>
-                                            <p>878</p>
+                                            <p>{{i['Number of Pieces']}}</p>
                                         </div>
 
                                         <div class="details_wrapper">
                                             <p>Interessegebied</p>
-                                            <p>Tovenaars</p>
+                                            <p>{{i['Interesse']}}</p>
                                         </div>
                                         <div class="details_wrapper">
                                             <p></p>
-                                            <p class="price_details">€109,00</p>
+                                            <p class="price_details">€ {{parseFloat(i['RRP'])}}</p>
                                         </div>
                                     </div>
 
-                                    <div class="product_details_footer">
+                                    <div @click="addToFavorite(i)" class="product_details_footer">
                                         <p>Voeg toe aan verlanglijstje</p>
 
                                         <div>
-                                            <div class="product_favorite" @click="addToFavorite(i)">
+                                            <div class="product_favorite">
                                                 <transition enter-active-class="animated bounceIn"
                                                             leave-active-class="animated bounceOut"
                                                             mode="out-in">
@@ -124,6 +119,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                             </div>
                         </swiper-slide>
                     </swiper>
@@ -132,13 +129,12 @@
                 <div class="product_list_section-3_filler"></div>
 
                 <div class="product_list_section-4 animated slideInUp">
-
-                    <div @click="goToSurvey('Theme')" class="product_bottom_button product_bottom_button_active">
+                    <div @click="goToSurvey('Theme')" class="product_bottom_button">
                         <span v-if="themeGroup">
                             {{getTheme(this.themeGroup) }}
                         </span>
 
-                        <span v-else class="product_bottom_button product_bottom_button_active">
+                        <span v-else>
                             Kies een thema
                         </span>
                     </div>
@@ -149,14 +145,14 @@
                             Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
                         </span>
 
-                        <span v-else class="product_bottom_button">Wat is je leeftijd?</span>
+                        <span v-else>Wat is je leeftijd?</span>
                     </div>
 
                     <div @click="goToSurvey('Interest')" class="product_bottom_button">
                         <span v-if="interestGroup"> Ik hou van
                             <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span>
                         </span>
-                        <span v-else class="product_bottom_button">Wat vind je leuk?</span>
+                        <span v-else>Wat vind je leuk?</span>
                     </div>
                 </div>
             </div>
@@ -166,18 +162,23 @@
 
 <script>
     import WishList from './WishList'
+    import productsJSON from '../../assets/products/lego-products'
 
     export default {
         name: "ProductList",
-        components: {'WishList' : WishList},
+        components: {'WishList': WishList},
 
         data() {
             return {
+                allProducts: productsJSON,
+                shortProducts: [],
                 swipeOptions: {
-                    speed: 900,                    //De snelheid
-                    slidesPerView: 3.5,         //Hiermee wordt automatisch bepaald hoeveel slides er
-                    preventClicks: true,
-                    preventClicksPropagation: false,
+                    speed: 900, //De snelheid
+                    loop: true,
+                    freeMode: true,
+                    // preventClicks: true,
+                    // preventClicksPropagation: false,
+                    lazy: true,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }
@@ -216,8 +217,7 @@
 
             addToFavorite(index) {
                 if (this.favorites.includes(index)) {
-                    let pos = this.favorites.findIndex(x => x.id === index);
-                    this.favorites.splice(pos, 1);
+                    this.favorites.splice(index, 1)
                 }
                 else {
                     if (this.favorites.length <= 4) {
@@ -225,6 +225,12 @@
                     }
                 }
             },
+
+            getProducts(){
+                for (let i = 0; i < 15; i++){
+                    this.shortProducts.push(this.allProducts[i])
+                }
+            }
         },
 
         mounted() {
@@ -237,6 +243,8 @@
             if (this.$store.state.themeChoice !== null) {
                 this.themeGroup = this.$store.state.themeChoice
             }
+
+            this.getProducts();
         },
 
         computed: {
@@ -329,9 +337,6 @@
         width: 100%;
     }
 
-    .first_product:first-child {
-        margin-left: 60px;
-    }
 
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
@@ -490,6 +495,7 @@
         text-align: left;
         margin-top: 40px;
         height: 348px;
+        width: 545px;
         font-family: Ubuntu, 'sans-serif';
         font-size: 16px;
         font-weight: 300;
@@ -548,12 +554,12 @@
         justify-content: flex-end;
     }
 
-    .product_details_footer p{
+    .product_details_footer p {
         margin-left: 10px;
         margin-right: 10px;
-        font-size:28px;
+        font-size: 28px;
         font-weight: bold;
-        color:white;
+        color: white;
     }
 
     .product_details_footer div:first-child {
@@ -646,7 +652,6 @@
         font-size: 25px;
         text-align: center;
         font-weight: bold;
-        color: #020202;
         box-shadow: inset 0 -6px 0 0 rgba(0, 0, 0, 0.5);
         transition: 0.3s ease-in-out;
         display: flex;
@@ -655,20 +660,39 @@
         cursor: pointer;
     }
 
+    .product_bottom_button > * {
+        color: #020202;
+    }
+
     .product_bottom_button > *:first-child {
         padding: 8px;
     }
 
-    .product_bottom_button:nth-child(even) {
+    .product_bottom_button {
         border-right: 4px solid #d9d9d9;
-        border-left: 4px solid #d9d9d9;
+        /*border-left: 4px solid #d9d9d9;*/
         box-shadow: inset 0 -6px 0 0 rgba(0, 0, 0, 0.5);
     }
 
-    .product_bottom_button_active {
+    .product_bottom_button:last-child {
+        border-right: none;
+    }
+
+    .product_bottom_button:hover {
+        border-right: 4px solid #33a0ff;
         color: white;
         background: #33a0ff;
         box-shadow: 0 -2px 0 0 #33a0ff, inset 0 -6px 0 0 rgba(0, 0, 0, 0.5);
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_bottom_button:hover span{
+        color: white;
+        transition: 0.3s ease-in-out;
+    }
+
+    .product_bottom_button:last-child:hover {
+        border-right: none;
         transition: 0.3s ease-in-out;
     }
 

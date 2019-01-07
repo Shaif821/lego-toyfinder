@@ -139,7 +139,7 @@ const store = new Vuex.Store({
             },
             {
                 url: require('../assets/images/themes/duplo.jpeg'),
-                theme: 'Duplo'
+                theme: 'DUPLO®'
             },
             {
                 url: require('../assets/images/themes/elves.jpeg'),

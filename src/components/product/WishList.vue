@@ -1,6 +1,6 @@
 <template>
     <div :class="[isActiveWishList ? 'openWishList' : 'closeWishList']" class="wish_list_container">
-        <div @click="openWishList()"  style="cursor: pointer;" class="wish_list_button">
+        <div @click="openWishList()" style="cursor: pointer;" class="wish_list_button">
             <div class="clipBoard">
                 <transition enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut"
@@ -25,15 +25,27 @@
             <div class="wishlist_phone">
                 <img src="../../assets/images/layout/lego-head.png">
                 <div class="phone_contents">
-                    <div v-for="i in 5" :key="i">
-                            <transition enter-active-class="animated flipInY" leave-active-class="animated flipOutY"
-                                        class="contain_favorite_text" mode="out-in">
+                    <div v-for="(i, index) in 5" :key="index">
+                        <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX"
+                                    class="contain_favorite_text" mode="out-in">
 
-                                <p :key="i + ' -favorited'" v-if="favorited[i - 1]"  class="is_favorited">{{favorited[i - 1]}}</p>
-                                <p :key="i + ' -not_favorited'" v-else-if="!favorited[i - 1] && i - 1 === 0"  class="not_favorited" >Je lijstje is nog leeg</p>
-                                <p :key="i + '-has_star'" v-else class="has_star">{{i}}</p>
+                            <span class="is_favorited" :key="i + ' -favorited'" v-if="favorited[i - 1]">
+                                    <p>
+                                    {{favorited[i - 1]['Product Name NL']}}
+                                    </p>
+                                    <img style="cursor: pointer" @click="removeFavorited(favorited[i - 1])"
+                                         src="../../assets/images/layout/close-yellow.png">
+                            </span>
 
-                            </transition>
+                            <span :key="i + ' -not_favorited'" v-else-if="!favorited[i - 1] && index === 0">
+                                  <p class="not_favorited">Je lijstje is nog leeg</p>
+                            </span>
+
+                            <span :key="i + '-has_star'" v-else >
+                                <p class="has_star">{{i}}</p>
+                            </span>
+
+                        </transition>
 
                     </div>
                 </div>
@@ -59,14 +71,18 @@
         props: ['favorited'],
 
         data() {
-          return {
-              isActiveWishList: false
-          }
+            return {
+                isActiveWishList: false
+            }
         },
 
         methods: {
-            openWishList(){
+            openWishList() {
                 this.isActiveWishList = !this.isActiveWishList
+            },
+
+            removeFavorited(index) {
+                this.$parent.addToFavorite(index)
             }
         }
     }
@@ -76,35 +92,39 @@
     .wish_list_container {
         position: absolute;
         top: 0;
-        right: 0;
         width: 609px;
+        transition: all 1s ease;
+        right: -26.85%;
     }
 
     .closeWishList {
-        margin-right: -516px;
-        animation: noWishlist  0.4s forwards;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        right: -26.85%;
+        animation: noWishlist 0.4s forwards;
     }
 
     @keyframes noWishlist {
         0% {
-            margin-right: 0;
+            right: 0;
         }
         100% {
-            margin-right: -516px;
+            right: -26.85%;
         }
     }
 
     .openWishList {
-        margin-right: 0;
-        animation: wishlist  0.4s forwards;
+        animation: wishlist 0.4s forwards;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both
     }
 
     @keyframes wishlist {
         0% {
-            margin-right: -516px;
+            right: -26.85%;
         }
         100% {
-            margin-right: 0;
+            right: 0;
         }
     }
 
@@ -267,8 +287,17 @@
     }
 
     .is_favorited {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 331px;
         color: black;
         font-size: 30px;
+    }
+
+    .is_favorited img {
+        width: 25px;
     }
 
     .not_favorited {
