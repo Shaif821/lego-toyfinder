@@ -1,3 +1,5 @@
-// module.exports = {
-// //     baseUrl: "https://shaif.nl/lego-toyfinder/",
-// // };
+module.exports = {
+    baseUrl: process.env.NODE_ENV === 'production'
+        ? '/lego-toyfinder/'
+        : '/'
+};

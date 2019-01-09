@@ -16,6 +16,7 @@ const store = new Vuex.Store({
         currentState: 'State-1',
         currentSurvey: null,
 
+
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="padding: 0; margin: 0;">
         <div v-if="fixSlideOrder === 0">{{checkSlide()}}</div>
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->

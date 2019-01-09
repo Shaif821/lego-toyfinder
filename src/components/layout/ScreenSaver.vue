@@ -6,18 +6,21 @@
                 <p>Ik wil dit jaar een...</p>
             </div>
 
-            <transition enter-active-class="animated bounceInLeft"
-                        leave-active-class="animated bounceOutRight"
-                        @before-enter="beforeEnter"
-                        @before-leave="beforeLeave"
-                        style="animation-delay: 0.3s"
-                        mode="out-in">
+
+            <transition
+                    leave-active-class="animated bounceOutRight"
+                    enter-active-class="animated bounceInLeft"
+                    @before-enter="beforeEnter"
+                    @before-leave="beforeLeave"
+                    style="animation-delay: 0.3s"
+                    mode="out-in">
 
                 <div class="screensaver_section-2" :key="counter">
-                    <div class="speech_bubble_container bounceInLeft animated" style="animation-delay: 0.3s">
-                        <img class="testen" :style="{margin: legoImages[counter].speechPos}"
+                    <div class="speech_bubble_container">
+                        <img class="testen animated rubberBandItem" style="animation-delay: 0.9s"
+                             :style="{margin: legoImages[counter].speechPos}"
                              :src="legoImages[counter].speech">
-                        <img  src="../../assets/images/screensaver/speech-bubble.png">
+                        <img src="../../assets/images/screensaver/speech-bubble.png">
                     </div>
 
                     <img class="screensaver_lego animated bounceInLeft"
@@ -38,7 +41,7 @@
                 <div class="hand animated bounce infinite" style=" animation-duration: 3s;">
                     <img src="../../assets/images/layout/touch.png">
                 </div>
-                <div @click="toProducts"  class="product_button_container">
+                <div @click="toProducts" class="product_button_container">
                     <div style="cursor: pointer" class="product_text_wrapper">
                         <p>Productoverzicht</p>
                         <div class="button_circle">
@@ -97,7 +100,9 @@
             },
 
             beforeEnter: function (el) {
-                this.transition = true;
+                if(el){
+                    this.transition = true;
+                }
             },
 
             beforeLeave: function (el) {
@@ -107,7 +112,7 @@
                 test.setAttribute('style', 'animation-delay: -0.1s');
             },
 
-            toProducts(){
+            toProducts() {
                 this.$store.state.isActiveLoader = true
                 this.$store.state.currentState = 'State-3'
             }
@@ -179,6 +184,75 @@
     .speech_bubble_container {
         position: absolute;
         width: 100%;
+    }
+
+    .speech_bubble_container img:nth-child(2) {
+        animation: testAnimation 0.5s ease-in-out;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation-delay: 0.4s;
+        transform: translate(+25%, +25%) scale(0);
+
+        /*transform: translate(+5%, +5%) scale(0);*/
+    }
+
+    @keyframes testAnimation {
+        /*from{*/
+        /*transform: translate(+55%, +55%) scale(0);*/
+        /*}*/
+        /*to {*/
+        /*transform: translate(0%, 0%) scale(1);*/
+        /*}*/
+        0% {
+            transform: translate(+55%, +55%) scale(0);
+        }
+        100% {
+            transform: translate(0%, 0%) scale(1);
+        }
+    }
+
+    @keyframes rubberBandItem {
+        from {
+            opacity: 0;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+
+        30% {
+            -webkit-transform: scale3d(1.25, 0.75, 1);
+            transform: scale3d(1.25, 0.75, 1);
+        }
+
+        40% {
+            -webkit-transform: scale3d(0.75, 1.25, 1);
+            transform: scale3d(0.75, 1.25, 1);
+        }
+
+        50% {
+            -webkit-transform: scale3d(1.15, 0.85, 1);
+            transform: scale3d(1.15, 0.85, 1);
+        }
+
+        65% {
+            -webkit-transform: scale3d(0.95, 1.05, 1);
+            transform: scale3d(0.95, 1.05, 1);
+        }
+
+        75% {
+            -webkit-transform: scale3d(1.05, 0.95, 1);
+            transform: scale3d(1.05, 0.95, 1);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: scale3d(1, 1, 1);
+            transform: scale3d(1, 1, 1);
+        }
+    }
+
+    .rubberBandItem {
+        -webkit-animation-name: rubberBandItem;
+        animation-name: rubberBandItem;
     }
 
     .speech_bubble_container img:first-child {

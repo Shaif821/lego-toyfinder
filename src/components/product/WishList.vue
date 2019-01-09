@@ -30,9 +30,7 @@
                                     class="contain_favorite_text" mode="out-in">
 
                             <span class="is_favorited" :key="i + ' -favorited'" v-if="favorited[i - 1]">
-                                    <p>
-                                    {{favorited[i - 1]['Product Name NL']}}
-                                    </p>
+                                    <p>{{favorited[i - 1]['ProductNameNL']}}</p>
                                     <img style="cursor: pointer" @click="removeFavorited(favorited[i - 1])"
                                          src="../../assets/images/layout/close-yellow.png">
                             </span>
@@ -41,7 +39,7 @@
                                   <p class="not_favorited">Je lijstje is nog leeg</p>
                             </span>
 
-                            <span :key="i + '-has_star'" v-else >
+                            <span :key="i + '-has_star'" v-else>
                                 <p class="has_star">{{i}}</p>
                             </span>
 
@@ -58,9 +56,7 @@
                     </p>
                 </div>
             </div>
-
         </div>
-
 
     </div>
 </template>

@@ -72,6 +72,7 @@
                         this.$store.state.interestChoice = choice
                         this.$store.state.isActiveLoader = true;
                         this.$store.state.isActiveTheme = false
+                        this.$store.state.currentState = 'State-2'
                     }
                 }
             },

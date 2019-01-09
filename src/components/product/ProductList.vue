@@ -24,15 +24,24 @@
                                       v-for="(i, index) in shortProducts" :key="index"
                                       :style="{animationDelay: '0.' + i + 's'}">
                             <div class="pre_product_details swiper-lazy">
+
                                 <div :class="{product_all_image : selected === index}">
+
                                     <div class="product_image_normal"
                                          :class="[selected === index ? 'product_image_details' : 'product_image']">
-                                        <!--<img :src="getImage(i['Product Number'])">-->
-                                        <img :src="require('../../assets/images/products/' + i['Product Number'] + '_box1_in.png')">
+
+                                        <transition v-if="testImage(i['ProductNumber']) !== false" enter-active-class="animated zoomIn"
+                                                    leave-active-class="animated zoomOut" mode="out-in">
+                                            <img v-if="selectImage === i['ProductNumber']" :key="singleImage"
+                                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
+                                            <img v-else :key="switchImage"
+                                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
+                                        </transition>
                                     </div>
+
                                     <div v-if="selected !== index">
                                         <hr class="product_seperator">
-                                        <p class="product_name">{{ i['Product Name NL']}}</p>
+                                        <p class="product_name">{{ i['ProductNameNL']}}</p>
                                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                                         <div class="product_buttons">
@@ -40,6 +49,7 @@
                                                 <img src="../../assets/images/layout/magnifying-glass.png">
                                                 Bekijk dit product
                                             </div>
+
                                             <div class="product_favorite" @click="addToFavorite(i)">
                                                 <transition enter-active-class="animated bounceIn"
                                                             leave-active-class="animated bounceOut"
@@ -49,19 +59,26 @@
                                                     <img key="2" v-else src="../../assets/images/layout/un)star.png">
                                                 </transition>
                                             </div>
+
                                         </div>
                                     </div>
 
                                     <div v-else class="product_more_images">
                                         <div class="mini_images">
-                                            <div class="animated fadeIn">
-                                                <img src="https://s.s-bol.com/imgbase0/imagebase3/large/FC/6/2/7/1/9200000075631726.jpg">
+                                            <div @click="changeImage('box', selectImage = i['ProductNumber'])"
+                                                 class="animated fadeIn mini_images_wrapper"
+                                                 :class="[singleImage === '_box1_in' ? 'mini_images_active' : '' ]">
+                                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
                                             </div>
-                                            <div class="animated fadeIn">
-                                                <img src="https://prodimage.images-bn.com/pimages/0673419281973_p4_v5_s550x406.jpg">
+
+                                            <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
+                                                 :class="[singleImage === '_prod' ? 'mini_images_active' : '' ]"
+                                                 class="mini_images_wrapper animated fadeIn">
+                                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')">
                                             </div>
-                                            <div class="animated fadeIn">
-                                                <img src="https://cdn.webshopapp.com/shops/213470/files/227846117/image.jpg">
+
+                                            <div class="animated fadeIn mini_images_wrapper">
+                                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
                                             </div>
                                         </div>
                                     </div>
@@ -74,23 +91,23 @@
                                     </div>
 
                                     <div class="product_title">
-                                        <h1>{{ i['Product Name NL']}}</h1>
+                                        <h1>{{ i['ProductNameNL']}}</h1>
                                         <p>{{ i['Theme']}}</p>
                                     </div>
 
                                     <div class="product_toy_details">
-                                        <p>{{i['Product Description NL']}}</p>
+                                        <p>{{i['ProductDescriptionNL']}}</p>
                                     </div>
 
                                     <div class="product_rest_details">
                                         <div class="details_wrapper">
                                             <p>Leeftijd</p>
-                                            <p>{{i['Age Mark']}}</p>
+                                            <p>{{i['AgeMark']}}</p>
                                         </div>
 
                                         <div class="details_wrapper">
                                             <p>Aantal stukjes</p>
-                                            <p>{{i['Number of Pieces']}}</p>
+                                            <p>{{i['NumberOfPieces']}}</p>
                                         </div>
 
                                         <div class="details_wrapper">
@@ -119,8 +136,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
                             </div>
                         </swiper-slide>
                     </swiper>
@@ -148,7 +163,7 @@
                         <span v-else>Wat is je leeftijd?</span>
                     </div>
 
-                    <div @click="goToSurvey('Interest')" class="product_bottom_button">
+                    <div @click="goToSurvey('Interest') " class="product_bottom_button">
                         <span v-if="interestGroup"> Ik hou van
                             <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span>
                         </span>
@@ -156,13 +171,15 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </transition>
 </template>
 
 <script>
     import WishList from './WishList'
-    import productsJSON from '../../assets/products/lego-products'
+    import productsJSON from '../../assets/products/products'
+    import currentProductsJSON from '../../assets/products/current-products'
 
     export default {
         name: "ProductList",
@@ -171,24 +188,28 @@
         data() {
             return {
                 allProducts: productsJSON,
+                currentProducts: currentProductsJSON,
                 shortProducts: [],
                 swipeOptions: {
-                    speed: 900, //De snelheid
-                    loop: true,
-                    freeMode: true,
-                    // preventClicks: true,
-                    // preventClicksPropagation: false,
+                    slidesPerView: '3.5',
                     lazy: true,
+                    speed: 900, //De snelheid
+                    // loop: true,
+                    preventClicks: true,
+                    preventClicksPropagation: false,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }
                 },
-                spaceBetween: 30,
+                activateFreeMode: false,
                 ageGroup: null,
                 interestGroup: null,
                 themeGroup: null,
                 favorites: [],
-                selected: undefined
+                selected: undefined,
+                switchImage: undefined,
+                singleImage: '_box1_in',
+                selectImage: undefined,
             }
         },
 
@@ -203,21 +224,19 @@
                 return this.$store.state.interests[id].text
             },
 
-            test() {
-                alert('test')
-            },
-
             goToSurvey(survey) {
                 this.$store.state.isActiveLoader = false;
                 this.$store.state.currentSurvey = survey
                 this.$store.state.currentState = 'State-4'
-
                 // this.$store.state.isActiveProducts = false
             },
 
+
             addToFavorite(index) {
+                let pos = undefined;
                 if (this.favorites.includes(index)) {
-                    this.favorites.splice(index, 1)
+                    pos = this.favorites.indexOf(index)
+                    this.favorites.splice(pos, 1)
                 }
                 else {
                     if (this.favorites.length <= 4) {
@@ -226,11 +245,40 @@
                 }
             },
 
-            getProducts(){
-                for (let i = 0; i < 15; i++){
-                    this.shortProducts.push(this.allProducts[i])
+            getProducts() {
+                for (let i = 0; i < 10; i++) {
+                    this.shortProducts.push(this.allProducts['products']['product'][i])
+                }
+            },
+
+            changeImage(type, id) {
+                if (id) {
+                    if (type === 'prod') {
+                        this.singleImage = '_prod'
+                    }
+                    else if (type === 'box') {
+                        this.singleImage = '_box1_in'
+                    }
+                }
+                else if (type === 'reset') {
+                    this.selectImage = undefined
+                    this.singleImage = '_box_in'
+                }
+                else {
+                    this.switchImage = '_box1_in'
+                }
+            },
+
+            testImage(product) {
+                try {
+                    require('../../assets/images/products/' + product + this.singleImage + '.png')
+                    return product
+                    // return require('../statics/icons/svg/' + this.coinData.symbol + '.svg')
+                } catch (e) {
+                    return false;
                 }
             }
+
         },
 
         mounted() {
@@ -245,6 +293,7 @@
             }
 
             this.getProducts();
+            this.changeImage();
         },
 
         computed: {
@@ -257,6 +306,13 @@
 
 <style scoped>
     @import '../../../node_modules/slick-carousel/slick/slick.css';
+
+    .zoomOut, .zoomIn {
+        -webkit-animation-duration: 0.4s;
+        animation-duration: 0.4s;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
 
     .product_list_container {
         height: 1015px;
@@ -337,7 +393,6 @@
         width: 100%;
     }
 
-
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         width: 457px !important;
@@ -398,16 +453,18 @@
         transition: 0.3s ease-in-out;
     }
 
-    .mini_images div {
-        border: 1px solid rgba(0, 0, 0, 0.24);
+    .mini_images_wrapper {
+        border: 2px solid rgba(0, 0, 0, 0.24);
         display: flex;
         justify-content: center;
         align-items: center;
         height: 120px;
         width: 140px;
+        transition: 0.3s ease-in-out;
     }
 
-    .mini_images div:first-child {
+    .mini_images_active {
+        transition: 0.3s ease-in-out;
         border: 2px solid #297fca;
     }
 
@@ -496,6 +553,7 @@
         margin-top: 40px;
         height: 348px;
         width: 545px;
+        overflow: auto;
         font-family: Ubuntu, 'sans-serif';
         font-size: 16px;
         font-weight: 300;
@@ -686,7 +744,7 @@
         transition: 0.3s ease-in-out;
     }
 
-    .product_bottom_button:hover span{
+    .product_bottom_button:hover span {
         color: white;
         transition: 0.3s ease-in-out;
     }
