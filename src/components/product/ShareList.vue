@@ -2,9 +2,12 @@
     <div class="sharelist-container swiper-no-swiping"
          :class="[test ? 'sharelist-container__animation-open' : 'sharelist-container__animation-close']">
         <div class="sharelist-container__section-1" :class="{'move-close-button' : writeMail}">
-            <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft" style="cursor: pointer;"  >
-                <img @click="closeShareList()" v-if="!writeMail" class="animated pulse infinite" style="transition: 0.7s ease-in-out" src="../../assets/images/layout/close.png">
-                <img @click="writeMail = false" v-else class="animated pulse infinite" src="../../assets/images/layout/close-copy.png">
+            <transition enter-active-class="animated slideInRight" leave-active-class="animated slideOutLeft"
+                        style="cursor: pointer;">
+                <img @click="closeShareList()" v-if="!writeMail" class="animated pulse infinite"
+                     style="transition: 0.7s ease-in-out" src="../../assets/images/layout/close.png">
+                <img @click="writeMail = false, mailResponse = false" v-else class="animated pulse infinite"
+                     src="../../assets/images/layout/close-copy.png">
             </transition>
         </div>
 
@@ -12,40 +15,60 @@
             <p>Deel jouw verlanglijstje</p>
         </div>
 
-            <div class="sharelist-container__section-3">
+        <div class="sharelist-container__section-3">
 
-                <div class="section-3-row" :class="[!writeMail ? 'section-3-row' : 'section-3-row-out']">
-                    <p class="section-3-row__title">Deel via link</p>
+            <div class="section-3-row" :class="[!writeMail ? 'section-3-row' : 'section-3-row-out']">
+                <p class="section-3-row__title">Deel via link</p>
 
-                    <div class="section-3-row__middle section-3-row__QR-code">
-                        <q-r-code :text="url"></q-r-code>
-                    </div>
-
-                    <p class="section-3-row__bottom-title">
-                        Scan deze QR-code met je telefoon en deel de link met familie en vrienden.
-                    </p>
-                </div>
-                <div :class="{'animated fadeOut' : writeMail}" class="section-3-row__border animated fadeIn">
-                    <p :class="{'animated fadeOut' : writeMail}" class="animated fadeIn border__text">OF</p>
+                <div class="section-3-row__middle section-3-row__QR-code">
+                    <q-r-code :text="url"></q-r-code>
                 </div>
 
-                <form @submit.prevent="sendMail()" autocomplete="off" class="section-3-row" @click="writeMail = true" :class="{'section-3-row__center' : writeMail}">
+                <p class="section-3-row__bottom-title">
+                    Scan deze QR-code met je telefoon en deel de link met familie en vrienden.
+                </p>
+            </div>
+                <div :class="[!writeMail ? 'section-3-row__border' : 'section-3-row__border-out']" class="section-3-row__border">
+                    <p :class="{'border__text-out' : writeMail}" class="border__text">OF</p>
+                </div>
+
+            <transition mode="out-in" enter-active-class="animated fadeIn"
+                        leave-active-class="animated fadeOut" :class="{'section-3-row__center' : writeMail}">
+                <form :key="1" v-if="!mailResponse" @submit.prevent="sendMail()"  autocomplete="off" class="section-3-row"
+                      @click="writeMail = true"
+                      :class="{'section-3-row__center' : writeMail}">
                     <p class="section-3-row__title">Deel over de mail:</p>
 
-                    <input  v-validate="'email'" data-vv-as="email" name="email_field" type="text" v-model="userMail"
-                            class="section-3-row__middle section-3-row__input" placeholder="Mijn emailadres">
-
                     <transition mode="out-in" enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
-                        <p :key="1" class="section-3-row__bottom-title" v-if="errors.has('email_field')">Voer een geldige emailadres in</p>
+                        <input :key="1" v-if="!isSending" v-validate="'email'" data-vv-as="email" name="email_field" type="text" v-model="userMail"
+                               class="section-3-row__middle section-3-row__input" placeholder="Mijn emailadres">
+                        <div :key="2" v-else>
+                            <br>
+                            <i class="fas fa-spinner animated rotateIn infinite" style="color: white; font-size: 50px;"></i>
+                        </div>
+                    </transition>
+
+
+                    <transition mode="out-in" enter-active-class="animated flipInX"
+                                leave-active-class="animated flipOutX">
+                        <p :key="1" class="section-3-row__bottom-title" v-if="errors.has('email_field')">Voer een
+                            geldige
+                            emailadres in</p>
                         <p :key="2" v-else class="section-3-row__bottom-title">
                             Vul hierboven jouw emailadres is en druk op verstuur en ontvang direct jouw lijstje in je
                             mailbox.
                         </p>
                     </transition>
-
-
                 </form>
-            </div>
+
+                <div :key="2" v-else class="section-3-row" :class="{'section-3-row__center' : writeMail}">
+                    <p class="section-3-row__title">Het is gelukt!</p>
+                    <p class="section-3-row__bottom-title">
+                        Er is een mailtje verstuurt naar jouw emailadres.
+                    </p>
+                </div>
+            </transition>
+        </div>
 
 
         <div class="sharelist-container__lego-image" :class="{'sharelist-container__lego-image-out' : writeMail}">
@@ -60,16 +83,20 @@
 
 <script>
     import QRCode from "vue-qrcode-component";
+    import axios from 'axios'
+
     export default {
         name: "ShareList",
         components: {QRCode},
-        props: ['isOpen', 'url'],
+        props: ['isOpen', 'url', 'favorites'],
 
         data() {
             return {
                 writeMail: false,
                 test: true,
                 userMail: '',
+                mailResponse: false,
+                isSending: false,
             }
         },
 
@@ -89,10 +116,27 @@
                 this.$parent.removeFavorite()
             },
 
-            sendMail(){
+            sendMail() {
                 this.$validator.validateAll().then((result) => {
-                    if(result) {
-                        alert('goed')
+                    if (result) {
+                        this.isSending = true
+                        axios
+                            .post('https://shaif.nl/lego-toyfinder/mail/index.php', {
+                                email: this.userMail,
+                                favorites: this.favorites,
+                                url: this.url
+                            })
+                            .then(response => {
+                                if (response) {
+                                    this.isSending = false,
+                                    this.userMail = ''
+                                    this.mailResponse = true
+                                }
+                            })
+                            .catch(error => {
+                                if (error) {
+                                }
+                            })
                     }
                     else {
                         alert('slecht')
@@ -156,10 +200,12 @@
 
     .move-close-button img {
         transition: 0.7s ease-in-out;
+        border: 2px solid red;
         margin-right: 1780px !important;
     }
 
     .sharelist-container__section-1 img {
+        border: 2px solid purple;
         cursor: pointer;
         margin-top: 10px;
         margin-right: 55px;
@@ -219,7 +265,7 @@
 
     .section-3-row__border-out {
         transition: 0.7s ease-in-out;
-        border:none;
+        border: none;
     }
 
     .border__text {
@@ -241,7 +287,7 @@
 
     .border__text-out {
         transition: 0.7s ease-in-out;
-        /*right: 10%;*/
+        opacity: 0;
     }
 
     .section-3-row__title {

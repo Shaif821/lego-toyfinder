@@ -16,6 +16,9 @@ export default new Router({
             name: 'screen-saver',
             component: SlideScreen
         },
+        {
+            path: '/lego-toyfinder/:id1-:id2-:id3-:id4'
+        }
     ]
 })
 

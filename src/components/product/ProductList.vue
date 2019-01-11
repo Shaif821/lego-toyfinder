@@ -176,7 +176,7 @@
                     </div>
                 </div>
             </div>
-            <ShareList v-if="shareListActive" :isOpen="shareListActive" :url="wishListUrl"></ShareList>
+            <ShareList v-if="shareListActive" :isOpen="shareListActive" :url="wishListUrl" :favorites="favoritesName"></ShareList>
         </div>
     </transition>
 </template>
@@ -211,6 +211,7 @@
                 loadOrder: true,
                 shareListActive: false,
                 wishListUrl: null,
+                favoritesName: [],
                 swipeOptionsProduct: {
                     preloadImages: true,
                     slidesPerView: '3.5',
@@ -346,9 +347,10 @@
 
                 for (let i = 0; i < this.favorites.length; i++) {
                     favoritesURL.push(this.favorites[i]['ProductNumber'])
+                    this.favoritesName.push(this.favorites[i]['ProductNameNL'])
                 }
 
-                this.wishListUrl = 'http://localhost:8080/' + favoritesURL.join('-')
+                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
             }
         }
     }
