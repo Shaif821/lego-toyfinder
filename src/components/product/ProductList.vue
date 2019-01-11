@@ -1,8 +1,7 @@
 <template>
     <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
-
-
-        <div>
+        <ScreenLoader v-if="loadOrder"></ScreenLoader>
+        <div v-else>
             <WishList :favorited="favorites"></WishList>
             <div class="product_list_container">
                 <div class="product_list_section-1">
@@ -11,37 +10,38 @@
                         <div>
                             <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
                             <button class="filter_buttons"><p>Beschikbaarheid</p></button>
-                            <button class="filter_buttons"><p>Prijs</p></button>
+                            <button @click="filterPrice()" class="filter_buttons"><p>Prijs</p></button>
                         </div>
                     </div>
-
                 </div>
+
                 <div class="filler_second"></div>
 
                 <div class="product_list_section-2">
-                    <swiper :options="swipeOptions" style="width: 1920px;">
-                        <swiper-slide class="product_wrapper" :class="{product_wrapper_details : selected === index}"
+                    <swiper :options="swipeOptionsProduct" style="width: 1920px;">
+                        <swiper-slide class="product_wrapper animated zoomIn"
+                                      :class="{product_wrapper_details : selected === index}"
                                       v-for="(i, index) in shortProducts" :key="index"
-                                      :style="{animationDelay: '0.' + i + 's'}">
-                            <div class="pre_product_details swiper-lazy">
+                                      :style="{animationDelay: '0.' + index + 's'}">
+                            <div v-if="testImage(i['ProductNumber']) !== false" class="pre_product_details swiper-lazy">
 
                                 <div :class="{product_all_image : selected === index}">
 
                                     <div class="product_image_normal"
                                          :class="[selected === index ? 'product_image_details' : 'product_image']">
 
-                                        <transition v-if="testImage(i['ProductNumber']) !== false" enter-active-class="animated zoomIn"
+                                        <transition enter-active-class="animated zoomIn"
                                                     leave-active-class="animated zoomOut" mode="out-in">
-                                            <img v-if="selectImage === i['ProductNumber']" :key="singleImage"
+                                            <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
                                                  :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
-                                            <img v-else :key="switchImage"
+                                            <img class="swiper-lazy" v-else :key="switchImage"
                                                  :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
                                         </transition>
                                     </div>
 
                                     <div v-if="selected !== index">
                                         <hr class="product_seperator">
-                                        <p class="product_name">{{ i['ProductNameNL']}}</p>
+                                        <p class="product_name">{{ i['ProductNameNL'] }}</p>
                                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                                         <div class="product_buttons">
@@ -59,7 +59,6 @@
                                                     <img key="2" v-else src="../../assets/images/layout/un)star.png">
                                                 </transition>
                                             </div>
-
                                         </div>
                                     </div>
 
@@ -85,53 +84,60 @@
                                 </div>
 
                                 <div v-if="selected === index" class="product_description">
-                                    <div class="remove_details" @click="selected = undefined">
+                                    <div class="remove_details" @click="selected = undefined, selectImage = undefined">
                                         <img src="../../assets/images/layout/path.png">
                                         <img src="../../assets/images/layout/rectangle.png">
                                     </div>
 
-                                    <div class="product_title">
-                                        <h1>{{ i['ProductNameNL']}}</h1>
-                                        <p>{{ i['Theme']}}</p>
-                                    </div>
-
-                                    <div class="product_toy_details">
-                                        <p>{{i['ProductDescriptionNL']}}</p>
-                                    </div>
-
-                                    <div class="product_rest_details">
-                                        <div class="details_wrapper">
-                                            <p>Leeftijd</p>
-                                            <p>{{i['AgeMark']}}</p>
+                                    <div class="product-details-title">
+                                        <div class="product_title">
+                                            <h1>{{ i['ProductNameNL']}}</h1>
+                                            <p>{{ i['Theme']}}</p>
                                         </div>
 
-                                        <div class="details_wrapper">
-                                            <p>Aantal stukjes</p>
-                                            <p>{{i['NumberOfPieces']}}</p>
-                                        </div>
-
-                                        <div class="details_wrapper">
-                                            <p>Interessegebied</p>
-                                            <p>{{i['Interesse']}}</p>
-                                        </div>
-                                        <div class="details_wrapper">
-                                            <p></p>
-                                            <p class="price_details">€ {{parseFloat(i['RRP'])}}</p>
+                                        <div class="product_toy_details">
+                                            <p>{{i['ProductDescriptionNL']}}</p>
                                         </div>
                                     </div>
 
-                                    <div @click="addToFavorite(i)" class="product_details_footer">
-                                        <p>Voeg toe aan verlanglijstje</p>
 
-                                        <div>
-                                            <div class="product_favorite">
-                                                <transition enter-active-class="animated bounceIn"
-                                                            leave-active-class="animated bounceOut"
-                                                            mode="out-in">
-                                                    <img :key="1" v-if="favorites.includes(i)" class="animated bounceIn"
-                                                         src="../../assets/images/layout/favorited_star.png">
-                                                    <img :key="2" v-else src="../../assets/images/layout/un)star.png">
-                                                </transition>
+                                    <div class="details-favorite">
+                                        <div class="product_rest_details">
+                                            <div class="details_wrapper">
+                                                <p>Leeftijd</p>
+                                                <p>{{i['AgeMark']}}</p>
+                                            </div>
+
+                                            <div class="details_wrapper">
+                                                <p>Aantal stukjes</p>
+                                                <p>{{i['NumberOfPieces']}}</p>
+                                            </div>
+
+                                            <div class="details_wrapper">
+                                                <p>Interessegebied</p>
+                                                <p>{{i['Interesse']}}</p>
+                                            </div>
+                                            <div class="details_wrapper">
+                                                <p></p>
+                                                <p class="price_details">€ {{parseFloat(i['RRP'])}}</p>
+                                            </div>
+                                        </div>
+
+                                        <div @click="addToFavorite(i)" class="product_details_footer">
+                                            <p>Voeg toe aan verlanglijstje</p>
+
+                                            <div>
+                                                <div class="product_favorite">
+                                                    <transition enter-active-class="animated bounceIn"
+                                                                leave-active-class="animated bounceOut"
+                                                                mode="out-in">
+                                                        <img :key="1" v-if="favorites.includes(i)"
+                                                             class="animated bounceIn"
+                                                             src="../../assets/images/layout/favorited_star.png">
+                                                        <img :key="2" v-else
+                                                             src="../../assets/images/layout/un)star.png">
+                                                    </transition>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -144,7 +150,7 @@
                 <div class="product_list_section-3_filler"></div>
 
                 <div class="product_list_section-4 animated slideInUp">
-                    <div @click="goToSurvey('Theme')" class="product_bottom_button">
+                    <div @click="goToSurvey('SurveyTheme')" class="product_bottom_button">
                         <span v-if="themeGroup">
                             {{getTheme(this.themeGroup) }}
                         </span>
@@ -154,8 +160,7 @@
                         </span>
                     </div>
 
-
-                    <div @click="goToSurvey('Age')" class="product_bottom_button">
+                    <div @click="goToSurvey('SurveyAge')" class="product_bottom_button">
                         <span v-if="ageGroup">
                             Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
                         </span>
@@ -163,7 +168,7 @@
                         <span v-else>Wat is je leeftijd?</span>
                     </div>
 
-                    <div @click="goToSurvey('Interest') " class="product_bottom_button">
+                    <div @click="goToSurvey('SurveyInterest') " class="product_bottom_button">
                         <span v-if="interestGroup"> Ik hou van
                             <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span>
                         </span>
@@ -171,26 +176,43 @@
                     </div>
                 </div>
             </div>
-
+            <ShareList v-if="shareListActive" :isOpen="shareListActive" :url="wishListUrl"></ShareList>
         </div>
     </transition>
 </template>
 
 <script>
     import WishList from './WishList'
-    import productsJSON from '../../assets/products/products'
-    import currentProductsJSON from '../../assets/products/current-products'
+    import ShareList from './ShareList'
+    import ScreenLoader from './../layout/ScreenLoader'
+    import productsJSON from '../../assets/products/januari-2019'
 
     export default {
         name: "ProductList",
-        components: {'WishList': WishList},
+        components: {
+            'WishList': WishList,
+            'ScreenLoader': ScreenLoader,
+            'ShareList': ShareList
+        },
 
         data() {
             return {
                 allProducts: productsJSON,
-                currentProducts: currentProductsJSON,
                 shortProducts: [],
-                swipeOptions: {
+                noProduct: [],
+                ageGroup: null,
+                interestGroup: null,
+                themeGroup: null,
+                favorites: [],
+                selected: undefined,
+                switchImage: undefined,
+                singleImage: '_box1_in',
+                selectImage: undefined,
+                loadOrder: true,
+                shareListActive: false,
+                wishListUrl: null,
+                swipeOptionsProduct: {
+                    preloadImages: true,
                     slidesPerView: '3.5',
                     lazy: true,
                     speed: 900, //De snelheid
@@ -201,15 +223,6 @@
                         this.test(swiper, event)
                     }
                 },
-                activateFreeMode: false,
-                ageGroup: null,
-                interestGroup: null,
-                themeGroup: null,
-                favorites: [],
-                selected: undefined,
-                switchImage: undefined,
-                singleImage: '_box1_in',
-                selectImage: undefined,
             }
         },
 
@@ -225,12 +238,10 @@
             },
 
             goToSurvey(survey) {
-                this.$store.state.isActiveLoader = false;
+                this.$store.state.loadState = false
                 this.$store.state.currentSurvey = survey
-                this.$store.state.currentState = 'State-4'
-                // this.$store.state.isActiveProducts = false
+                this.$store.state.slideState = true
             },
-
 
             addToFavorite(index) {
                 let pos = undefined;
@@ -245,9 +256,19 @@
                 }
             },
 
+            removeFavorite() {
+                this.favorites = []
+            },
+
             getProducts() {
-                for (let i = 0; i < 10; i++) {
-                    this.shortProducts.push(this.allProducts['products']['product'][i])
+                // for (let i = 0; i < this.allProducts['products']['product'].length; i++) {
+                for (let i = 0; i < this.allProducts.length; i++) {
+                    try {
+                        require('../../assets/images/products/' + this.allProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        this.shortProducts.push(this.allProducts[i])
+                    } catch (e) {
+                        this.noProduct.push(this.allProducts[i])
+                    }
                 }
             },
 
@@ -277,6 +298,14 @@
                 } catch (e) {
                     return false;
                 }
+            },
+
+            filterPrice() {
+
+            },
+
+            shareListState() {
+                this.shareListActive = !this.shareListActive;
             }
 
         },
@@ -292,6 +321,11 @@
                 this.themeGroup = this.$store.state.themeChoice
             }
 
+            let vm = this
+            setTimeout(function () {
+                vm.loadOrder = false
+            }, 2500)
+
             this.getProducts();
             this.changeImage();
         },
@@ -300,6 +334,22 @@
             swiper() {
                 return this.$refs.mySwiper.swiper //Hiermee wordt de instantie voor mySwiper gemaakt
             },
+
+            addToURL() {
+                return this.favorites
+            }
+        },
+
+        watch: {
+            addToURL() {
+                let favoritesURL = []
+
+                for (let i = 0; i < this.favorites.length; i++) {
+                    favoritesURL.push(this.favorites[i]['ProductNumber'])
+                }
+
+                this.wishListUrl = 'http://localhost:8080/' + favoritesURL.join('-')
+            }
         }
     }
 </script>
@@ -315,6 +365,7 @@
     }
 
     .product_list_container {
+        background: transparent;
         height: 1015px;
         font-family: Ubuntu, sans-serif;
     }
@@ -507,6 +558,8 @@
         position: relative;
         width: 650px;
         margin-left: 65px;
+        display: flex;
+        flex-direction: column;
     }
 
     .remove_details {
@@ -526,6 +579,13 @@
         margin-top: 30px;
         text-align: left;
         font-family: Ubuntu, 'sans-serif';
+    }
+
+    .product-details-title {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
 
     .product_title h1 {
@@ -549,9 +609,10 @@
     }
 
     .product_toy_details {
-        text-align: left;
         margin-top: 40px;
-        height: 348px;
+        text-align: left;
+        height: auto;
+        max-height: 310px;
         width: 545px;
         overflow: auto;
         font-family: Ubuntu, 'sans-serif';
@@ -567,6 +628,16 @@
     .product_rest_details {
         display: flex;
         flex-direction: row;
+        height: 106px;
+
+    }
+
+    .details-favorite {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 200px;
     }
 
     .details_wrapper {
@@ -600,7 +671,7 @@
     }
 
     .product_details_footer {
-        position: absolute;
+        /*position: absolute;*/
         bottom: 0;
         height: 94px;
         width: 100%;
@@ -636,6 +707,7 @@
     }
 
     .product_name {
+        height: 35px;
         font-size: 26px;
         text-align: left;
         width: 397px;
@@ -660,6 +732,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-top: -5px;
     }
 
     .product_details_button {

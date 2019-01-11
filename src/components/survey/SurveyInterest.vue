@@ -79,7 +79,7 @@
     }
 
     .survey_section-3 > * {
-        flex: 1 0 21%; /* explanation below */
+        flex: 1 0 20%; /* explanation below */
     }
 
     .filler_3 {

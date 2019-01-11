@@ -1,22 +1,17 @@
 <template>
     <!--De achtergrond kleur verandert als de isActiveLoader true is-->
-    <div id="app" :class="[{'products-background' : this.$store.state.currentState === 'State-3'}, {'rest-background' : this.$store.state.currentState !== 'State-3'}]">
+    <div id="app" :class="[this.$store.state.slideState ? 'rest-background' : 'products-background']">
         <transition-group enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
                     mode="out-in" enter>
-        <!--<slide-screen></slide-screen>-->
             <router-view :key="$route.fullPath"/>
         </transition-group>
     </div>
 </template>
 
 <script>
-    // import SlideScreenSurvey from './components/SlideScreenSurvey'
     export default {
         name: 'app',
-        // components: {
-        //     'slide-screen' : SlideScreenSurvey,
-        // }
     }
 </script>
 
@@ -34,7 +29,7 @@
     }
 
     #app {
-        height: 100%;
+        height: 1080px;
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -42,6 +37,7 @@
         color: #2c3e50;
         transition: 0.3s ease-in-out;
         z-index: 0;
+        background-color: transparent;
         overflow: hidden;
     }
 
@@ -50,18 +46,22 @@
     }
 
     .products-background {
-        animation-name: changeBackground;
-        animation-duration: 3s;
-        animation-fill-mode: forwards;
+        animation: changeBackground 2.5s ease-in-out;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
     }
 
     @keyframes changeBackground {
         0% {
-            background-color: transparent;
+            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
         }
         100% {
-            background-color: #edf5f7;
+            background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
         }
+    }
+
+    *{
+        outline: none;
     }
     /*::-webkit-scrollbar {*/
     /*width: 0px; !* remove scrollbar space *!*/

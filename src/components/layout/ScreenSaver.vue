@@ -36,12 +36,12 @@
             </div>
 
 
-            <div class="screensaver_section-4" @click="increment()">
+            <div class="screensaver_section-4" >
                 <div></div>
                 <div class="hand animated bounce infinite" style=" animation-duration: 3s;">
                     <img src="../../assets/images/layout/touch.png">
                 </div>
-                <div @click="toProducts" class="product_button_container">
+                <div @click="toThemes" class="product_button_container">
                     <div style="cursor: pointer" class="product_text_wrapper">
                         <p>Productoverzicht</p>
                         <div class="button_circle">
@@ -96,7 +96,7 @@
                     } else {
                         v.counter++
                     }
-                }, 4000)
+                }, 3000)
             },
 
             beforeEnter: function (el) {
@@ -112,9 +112,8 @@
                 test.setAttribute('style', 'animation-delay: -0.1s');
             },
 
-            toProducts() {
-                this.$store.state.isActiveLoader = true
-                this.$store.state.currentState = 'State-3'
+            toThemes() {
+                this.$store.state.isActiveTheme = true
             }
 
         },

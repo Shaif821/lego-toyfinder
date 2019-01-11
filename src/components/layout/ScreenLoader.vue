@@ -9,20 +9,19 @@
     export default {
         name: "ScreenLoader",
 
-        methods: {
-            toProducts(){
-                let vm = this
-                // this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
-                setTimeout(function (){
-                    // vm.$store.state.isActiveProducts = true
-                    vm.$store.state.currentState = 'State-3'
-                    // vm.$router.push({path:  vm.$store.state.productRoute})
-                }, 3000)
-            }
-        },
+        // methods: {
+        //     toProducts(){
+        //         let vm = this
+        //         // this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
+        //         setTimeout(function (){
+        //             // vm.$store.state.isActiveProducts = true
+        //             vm.$store.state.currentState = 'State-3'
+        //             // vm.$router.push({path:  vm.$store.state.productRoute})
+        //         }, 3000)
+        //     }
+        // },
 
         mounted() {
-            this.toProducts()
         }
     }
 </script>

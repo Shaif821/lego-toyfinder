@@ -10,13 +10,15 @@
             <div>
                 <!-- swiper -->
                 <swiper class="teste" :options="swiperOption">
-                    <swiper-slide style="cursor: pointer" class="theme_image_wrapper animated flipInY slower"
+                    <swiper-slide style="cursor: pointer;" class="theme_image_wrapper animated flipInY slower"
                                   v-for="(legoTheme, indexTheme) in this.$store.state.themes" :key="indexTheme + 'STH'">
+
                         <div @click="saveChoice(indexTheme)">
                             <img style="width: 288px; height: 376px; margin: 25px 24px 24px 22px; border: 5px solid black;"
                                  :src="legoTheme.url">
                             <img src="../../assets/images/layout/border.png">
                         </div>
+
                     </swiper-slide>
                 </swiper>
             </div>
@@ -48,7 +50,7 @@
             saveChoice(index) {
                 this.$parent.changeView(index)
             }
-        }
+        },
     }
 </script>
 

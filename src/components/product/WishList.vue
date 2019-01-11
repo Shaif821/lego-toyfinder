@@ -50,8 +50,12 @@
                 <img src="../../assets/images/layout/phone.png">
 
 
-                <div class="wishlist_share" :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
-                    <p>
+                <div class="wishlist_share" style="cursor: pointer;" :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
+                    <p @click="openShareList()" v-if="favorited.length > 0">
+                        Deel het verlanglijstje
+                    </p>
+
+                    <p v-else>
                         Deel het verlanglijstje
                     </p>
                 </div>
@@ -64,7 +68,7 @@
 <script>
     export default {
         name: "WishList",
-        props: ['favorited'],
+        props: ['favorited', 'isOpen'],
 
         data() {
             return {
@@ -75,6 +79,10 @@
         methods: {
             openWishList() {
                 this.isActiveWishList = !this.isActiveWishList
+            },
+
+            openShareList(){
+                this.$parent.shareListState()
             },
 
             removeFavorited(index) {
@@ -153,7 +161,7 @@
         width: 520px;
         position: relative;
         z-index: 2;
-        margin-top: -65px;
+        margin-top: -67px;
         right: 0;
         margin-left: 89px;
         background: white url('../../assets/images/layout/border-left.png') left no-repeat;
@@ -214,9 +222,13 @@
     }
 
     .wishlist_share p {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 120px;
+        width: 520px;
         text-align: center;
         font-weight: bold;
-        width: 100%;
         padding: 0;
         font-family: Ubuntu, 'sans-serif';
         font-size: 32px;

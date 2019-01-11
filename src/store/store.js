@@ -9,12 +9,10 @@ const store = new Vuex.Store({
         ageChoice: null,
         interestChoice: null,
         themeChoice: null,
+
         isActiveTheme: false,
-        isActiveLoader: false,
-        isActiveProducts: false,
-        loadIsActive: true,
-        currentState: 'State-1',
         currentSurvey: null,
+        slideState: true, //De state van de slide, true = legosurvey + cardboard + screensaver
 
 
         ages: [
@@ -95,6 +93,18 @@ const store = new Vuex.Store({
                 url: require('../assets/images/survey/group-44.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Vrijetijd',
+                pos: '49px 50px 53px 50px'
+            },
+            {
+                url: require('../assets/images/survey/group-44.png'),
+                speech: require('../assets/images/layout/bitmap-small.png'),
+                text: 'Bouwstenen',
+                pos: '49px 50px 53px 50px'
+            },
+            {
+                url: require('../assets/images/survey/group-34.png'),
+                speech: require('../assets/images/layout/bitmap-small.png'),
+                text: 'Ruimtevaart',
                 pos: '49px 50px 53px 50px'
             },
         ],

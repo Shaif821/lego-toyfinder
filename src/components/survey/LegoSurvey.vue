@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <!--<p>{{this.surveyOptions[0].age}} : {{this.surveyOptions[0].interest}} : {{this.surveyOptions[0].theme}}</p>-->
+    <div :style="[!this.$store.state.slideState ? {height: '60px;', transition: '0.5s ease-in-out;', overflow: 'hidden;'} : {}]" :class="[{'lego-survey_slide' : transitionSlide}]">
         <div class="survey_container">
             <div class="survey_section-1">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
@@ -38,7 +37,7 @@
             return {
                 index: true,
                 view: '',
-                test: 'test',
+                transitionSlide: false,
                 surveyOptions: [{
                     age: [],
                     interest: [],
@@ -48,64 +47,66 @@
         },
 
         methods: {
-            changeView(choice) {
-                if(this.$store.state.currentSurvey){
-                    this.addNewChoice(choice)
-                }
-                else {
-                    this.saveChoice(choice)
+            changeView(choice) { //Als de gebruiker vanuit het begin scherm een keuze maakt, of vanuit de producten slide
+                this.$store.state.currentSurvey ? this.addChoice(choice, true) : this.saveChoice(choice)
+            },
+
+            saveChoice(choice) {      //Sla de keuze op en ga door naar de volgende slide of view
+                this.addChoice(choice, false);
+
+                if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') {
+                    this.nextSlide()
+                } else {
+                    this.view = 'SurveyInterest'
                 }
             },
 
-            saveChoice(choice){
-                if(this.$store.state.isActiveTheme){
-                    this.$store.state.themeChoice = choice
-                    this.$store.state.isActiveLoader = true;
-                    this.$store.state.isActiveTheme = false;
-                }
-                else {
-                    if (this.view === 'SurveyAge') {
-                        this.$store.state.ageChoice = choice
-                        this.view = 'SurveyInterest'
-                    }
-                    else {
-                        this.$store.state.interestChoice = choice
-                        this.$store.state.isActiveLoader = true;
-                        this.$store.state.isActiveTheme = false
-                        this.$store.state.currentState = 'State-2'
-                    }
-                }
-            },
-
-            addNewChoice(choice){
-                switch(this.$store.state.currentSurvey) {
-                    case 'Age':
+            addChoice(choice, bool) {
+                switch (this.view) {
+                    case 'SurveyAge':
                         this.$store.state.ageChoice = choice
                         break;
-                    case 'Interest':
+                    case 'SurveyInterest':
                         this.$store.state.interestChoice = choice
                         break;
-                    case 'Theme':
+                    case 'SurveyTheme':
                         this.$store.state.themeChoice = choice
                         break;
                 }
-                this.$store.state.currentState = 'State-2'
-                this.$store.state.isActiveLoader = true;
+                if(bool){
+                    this.nextSlide()
+                }
             },
 
-            resetData(){
+            nextSlide() {
+                this.transitionSlide = true
+                this.$store.state.slideState = false           //De slideState wordt verandert naar de producten slide
+            },
+
+            resetData() {
                 this.view = 'SurveyAge'
                 this.$store.state.ageChoice = null
                 this.$store.state.interestChoice = null
                 this.$store.state.themeChoice = null
                 this.$store.state.isActiveTheme = false
-                if(this.$store.state.currentState !== 'State-1'){
-                    this.$parent.checkSlide(false);
-                }
-                this.$store.state.currentState = 'State-1'
+                this.$store.state.currentSurvey = null
+                this.$store.state.slideState = true
             },
+        },
 
-
+        mounted() {
+            if (this.$store.state.currentSurvey === 'SurveyAge') {
+                this.view = 'SurveyAge'
+            }
+            else if (this.$store.state.currentSurvey === 'SurveyInterest') {
+                this.view = 'SurveyInterest'
+            }
+            else if (this.$store.state.currentSurvey === 'SurveyTheme') {
+                this.view = 'SurveyTheme'
+            }
+            else {
+                this.view = 'SurveyAge'
+            }
         },
 
         computed: {
@@ -114,25 +115,13 @@
             }
         },
 
-        mounted() {
-          if(this.$store.state.currentSurvey === 'Age'){
-              this.view = 'SurveyAge'
-          }
-          else if (this.$store.state.currentSurvey === 'Interest') {
-              this.view = 'SurveyInterest'
-          }
-          else if (this.$store.state.currentSurvey === 'Theme') {
-              this.view = 'SurveyTheme'
-          }
-          else {
-              this.view = 'SurveyAge'
-          }
-        },
-
         watch: {
-            checkThemeChange(){
-                if(this.$store.state.isActiveTheme){
+            checkThemeChange() {
+                if (this.$store.state.isActiveTheme) {
                     this.view = 'SurveyTheme'
+                }
+                else {
+                    this.view = 'SurveyAge'
                 }
             }
         }
@@ -146,6 +135,27 @@
         padding: 0;
         margin: 0;
         height: 970px;
+    }
+
+    .lego-survey_slide {
+        overflow: hidden;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation: transition 0.5s forwards;
+    }
+
+    @keyframes transition {
+        0% {
+            opacity: 1;
+            height: 970px;
+        }
+        50% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 0;
+            height: 0;
+        }
     }
 
     .survey_section-1 img {
@@ -163,7 +173,7 @@
 
     .survey_section-1 img {
         margin-top: 10px;
-        margin-right: 55px;
+        margin-right: 60px;
     }
 
     .survey_section-2 p {

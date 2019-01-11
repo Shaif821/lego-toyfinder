@@ -1,9 +1,10 @@
 <template>
-    <div class="cardboard_container" :style="[this.$store.state.isActiveLoader ? {height: '66px'} : {height: '150px'}]">
+    <div class="cardboard_container" :style="[!this.$store.state.slideState ? {height: '66px'} : {height: '150px'}]">
         <img src="../../assets/images/layout/slider-border.png">
-        <transition leave-active-class="animated bounceOutRight" v-if="index === 0 && this.$store.state.isActiveLoader === false">
+        <transition leave-active-class="animated bounceOutRight" v-if="index === 0 && this.$store.state.slideState">
             <div class="skip animated bounceInLeft ">
-                <p @click="changeTheme" style="cursor: pointer;" class="skip_text">Overslaan</p>
+                <p v-if="this.$store.state.currentSurvey !== null" @click="goToProduct()" style="cursor: pointer;" class="skip_text">Terug</p>
+                <p v-else @click="goToProduct()" style="cursor: pointer;" class="skip_text">Overslaan</p>
             </div>
         </transition>
     </div>
@@ -15,8 +16,8 @@
         props: ['index'],
 
         methods: {
-            changeTheme(){
-                this.$store.state.isActiveTheme = true  //Hiermee wordt legoTheme weergegeven in de LegoSurvey component
+            goToProduct(){
+                this.$store.state.slideState = false
             }
         }
     }
@@ -29,27 +30,6 @@
         margin: 0;
         z-index: 1;
         transition: ease-in-out 0.3s;
-    }
-
-    .headerHeight {
-        height: 28px;
-    }
-
-    .header_position {
-        top: 0;
-    }
-
-    .footer_position {
-        bottom: 0;
-        animation-name: headerToFooter;
-        animation-duration: 2s;
-        -webkit-animation-fill-mode: both;
-        -moz-animation-fill-mode: both;
-        -o-animation-fill-mode: both;
-        animation-fill-mode: both;
-        animation-iteration-count: 1;
-        -webkit-animation-iteration-count: 1;
-        animation-timing-function: linear;
     }
 
     .skip {
