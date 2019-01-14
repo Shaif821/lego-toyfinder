@@ -1,5 +1,5 @@
 <template>
-    <div :style="[!this.$store.state.slideState ? {height: '60px;', transition: '0.5s ease-in-out;', overflow: 'hidden;'} : {}]" :class="[{'lego-survey_slide' : transitionSlide}]">
+    <div :class="[{'lego-survey_slide' : transitionSlide}]">
         <div class="survey_container">
             <div class="survey_section-1">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
@@ -31,7 +31,9 @@
             'SurveyTheme': SurveyTheme,
         },
 
-        props: ['indexAnimation'],
+        props: {
+            indexAnimation: Number
+        },
 
         data() {
             return {
@@ -173,7 +175,7 @@
 
     .survey_section-1 img {
         margin-top: 10px;
-        margin-right: 60px;
+        margin-right: 55px;
     }
 
     .survey_section-2 p {

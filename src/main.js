@@ -6,19 +6,24 @@ import VAnimateCss from 'v-animate-css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VueQRCode from 'vue-qrcode-component'
 import VeeValidate from 'vee-validate';
-import Slick from 'vue-slick'
+// import Slick from 'vue-slick'
+import VueLazyload from 'vue-lazyload'
 
 
 // require styles
 import 'swiper/dist/css/swiper.css'
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+// import 'slick-carousel/slick/slick.css';
+// import 'slick-carousel/slick/slick-theme.css';
 
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VueQRCode);
 Vue.use(VeeValidate);
-Vue.use(Slick);
+Vue.use(VueLazyload, {
+    preLoad: 1.3,
+    loading: require('./../src/assets/images/layout/loading.gif')
+})
+// Vue.use(Slick);
 
 Vue.config.productionTip = false
 

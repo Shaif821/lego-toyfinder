@@ -14,10 +14,12 @@
                                   v-for="(legoTheme, indexTheme) in this.$store.state.themes" :key="indexTheme + 'STH'">
 
                         <div @click="saveChoice(indexTheme)">
-                            <img style="width: 288px; height: 376px; margin: 25px 24px 24px 22px; border: 5px solid black;"
-                                 :src="legoTheme.url">
-                            <img src="../../assets/images/layout/border.png">
+                            <img class="swiper-lazy" style="width: 288px; height: 376px; margin: 25px 24px 24px 22px; border: 5px solid black;"
+                                 v-lazy="legoTheme.url">
+                            <img class="swiper-lazy" src="../../assets/images/layout/border.png">
                         </div>
+
+                        <p class="theme_text">{{legoTheme.brand}} {{legoTheme.theme}}</p>
 
                     </swiper-slide>
                 </swiper>
@@ -36,8 +38,9 @@
         data() {
             return {
                 swiperOption: {
-                    slidesPerView: 5,
-                    spaceBetween: 30,
+                    slidesPerView: 4.5,
+                    freeMode:true,
+                    centeredSlides: true,
                     pagination: {
                         el: '.swiper-pagination',
                         clickable: true
@@ -61,7 +64,6 @@
 
     .survey_section-3 {
         height: 495px;
-        overflow: hidden;
     }
 
     .survey_section-3 > *:first-child {
@@ -74,16 +76,20 @@
 
     .theme_image_wrapper:first-child {
         width: 100%;
-        margin-left: 120px;
-    }
-
-    .theme_image_wrapper {
-        padding: 0 20px;
+        margin-left: -700px;
     }
 
     .theme_image_wrapper img:first-child {
         position: absolute;
         z-index: 1;
+    }
+
+    .theme_text {
+        font-family: Ubuntu, 'sans-serif';
+        color:White;
+        font-size: 28px;
+        font-weight: 500;
+        line-height: 1.43;
     }
 
 </style>

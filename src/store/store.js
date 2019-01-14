@@ -5,7 +5,6 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        // filterOptions: [],
         ageChoice: null,
         interestChoice: null,
         themeChoice: null,
@@ -42,7 +41,6 @@ const store = new Vuex.Store({
                 pos: '76px 68px 88px 66px'
             },
         ],
-
 
         interests: [
             {
@@ -111,106 +109,143 @@ const store = new Vuex.Store({
 
         themes: [
             {
-                url: require('../assets/images/themes/architecture.jpeg'),
+                url: require('../assets/images/themes/architecture.jpg'),
+                brand: 'LEGO®',
                 theme: 'Architecture'
             },
             {
-                url: require('../assets/images/themes/batman_movie.jpeg'),
-                theme: 'THE LEGO® BATMAN MOVIE'
+                url: require('../assets/images/themes/batman.jpg'),
+                brand: 'LEGO®',
+                theme: 'Batman™'
             },
             {
-                url: require('../assets/images/themes/boost.jpeg'),
+                url: require('../assets/images/themes/batman_movie.jpg'),
+                brand: 'LEGO®',
+                theme: 'BATMAN™ MOVIE'
+            },
+            {
+                url: require('../assets/images/themes/boost.jpg'),
+                brand: 'LEGO®',
                 theme: 'BOOST'
             },
             {
-                url: require('../assets/images/themes/brickheadz_starwars.jpeg'),
+                url: require('../assets/images/themes/brickheadz.jpg'),
+                brand: 'LEGO®',
                 theme: 'BrickHeadz',
-                subTheme: 'Star wars'
             },
             {
-                url: require('../assets/images/themes/city_arctic.jpeg'),
+                url: require('../assets/images/themes/brickheadz_starwars.jpg'),
+                brand: 'LEGO®',
+                theme: 'BrickHeadz Star Wars',
+            },
+            {
+                url: require('../assets/images/themes/city_fire_police.jpg'),
+                brand: 'LEGO®',
                 theme: 'City',
-                subTheme: 'Arctic'
             },
             {
-                url: require('../assets/images/themes/classic.jpeg'),
+                url: require('../assets/images/themes/classic.jpg'),
+                brand: 'LEGO®',
                 theme: 'Classic'
             },
             {
-                url: require('../assets/images/themes/creator_3in1.jpeg'),
-                theme: 'Creator3In1'
+                url: require('../assets/images/themes/creator_3in1.jpg'),
+                brand: 'LEGO®',
+                theme: 'Creator 3In1'
             },
             {
-                url: require('../assets/images/themes/creator_expert.jpeg'),
-                theme: 'Creator'
+                url: require('../assets/images/themes/creator_expert.jpg'),
+                brand: 'LEGO®',
+                theme: 'Creator Expert'
             },
             {
-                url: require('../assets/images/themes/disney_tangled.jpeg'),
-                theme: 'Disney'
+                url: require('../assets/images/themes/disney.jpg'),
+                brand: 'LEGO®',
+                theme: 'Disney™'
             },
             {
-                url: require('../assets/images/themes/duplo.jpeg'),
+                url: require('../assets/images/themes/duplo.jpg'),
+                brand: 'LEGO®',
                 theme: 'DUPLO®'
             },
             {
-                url: require('../assets/images/themes/elves.jpeg'),
+                url: require('../assets/images/themes/elves.jpg'),
+                brand: 'LEGO®',
                 theme: 'Elves'
             },
             {
-                url: require('../assets/images/themes/friends_bigraceday_.jpeg'),
+                url: require('../assets/images/themes/friends.jpg'),
+                brand: 'LEGO®',
                 theme: 'Friends'
             },
             {
-                url: require('../assets/images/themes/hp.jpeg'),
-                theme: 'Harry Potter'
+                url: require('../assets/images/themes/hp.jpg'),
+                brand: 'LEGO®',
+                theme: 'Harry Potter™'
             },
             {
-                url: require('../assets/images/themes/juniors_jurassic-world.jpeg'),
-                theme: 'Juniors',
-                subTheme: 'Jurassic World'
+                url: require('../assets/images/themes/juniors_jurassic-world.jpg'),
+                brand: 'LEGO®',
+                theme: 'Jurassic World™ Juniors',
             },
             {
-                url: require('../assets/images/themes/jurrasic_world.jpeg'),
-                theme: 'Jurassic World'
+                url: require('../assets/images/themes/jurrasic_world.jpg'),
+                brand: 'LEGO®',
+                theme: 'Jurassic World™'
             },
             {
-                url: require('../assets/images/themes/lego_pirates_caribbean.jpg'),
-                theme: 'Pirates of the Caribbean'
+                url: require('../assets/images/themes/lego_movie.jpg'),
+                brand: 'LEGO®',
+                theme: 'The Lego Movied™'
             },
             {
-                url: require('../assets/images/themes/mindstorms.jpeg'),
-                theme: 'MINDSTORMS'
+                url: require('../assets/images/themes/minecraft.jpg'),
+                brand: 'LEGO®',
+                theme: 'Minecraft™'
             },
             {
-                url: require('../assets/images/themes/ninjago.jpeg'),
-                theme: 'NINJAGO'
+                url: require('../assets/images/themes/minifigures.jpg'),
+                brand: 'LEGO®',
+                theme: 'Minifigures'
             },
             {
-                url: require('../assets/images/themes/nocorners_ideas.jpeg'),
-                theme: 'Ideas'
+                url: require('../assets/images/themes/ninjago.jpg'),
+                brand: 'LEGO®',
+                theme: 'NINJAGO®'
             },
             {
-                url: require('../assets/images/themes/speed_champions.jpeg'),
+                url: require('../assets/images/themes/speed_champions.jpg'),
+                brand: 'LEGO®',
                 theme: 'Speed Champions'
             },
             {
-                url: require('../assets/images/themes/starwars.jpeg'),
-                theme: 'Star Wars'
+                url: require('../assets/images/themes/spiderman.jpg'),
+                brand: 'LEGO®',
+                theme: 'Spiderman'
             },
             {
-                url: require('../assets/images/themes/superheroes_dc.jpeg'),
+                url: require('../assets/images/themes/starwars.jpg'),
+                brand: 'LEGO®',
+                theme: 'Star Wars™'
+            },
+            {
+                url: require('../assets/images/themes/superheroes_dc.jpg'),
+                brand: 'LEGO®',
                 theme: 'DC Comics Super Heroes'
             },
             {
-                url: require('../assets/images/themes/superheroes_marvel-bp.jpeg'),
+                url: require('../assets/images/themes/superheroes_marvel-bp.jpg'),
+                brand: 'LEGO®',
                 theme: 'Marvel Super Heroes'
             },
             {
-                url: require('../assets/images/themes/technic.jpeg'),
+                url: require('../assets/images/themes/technic.jpg'),
+                brand: 'LEGO®',
                 theme: 'Technic'
             },
         ],
     },
+
 
     getters: {
         getLegoTheme(state) {

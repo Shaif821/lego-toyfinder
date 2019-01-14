@@ -15,7 +15,7 @@
             </swiper-slide>
 
             <swiper-slide>
-                <ScreenSaver class="swiper-no-swiping" v-if="this.$store.state.slideState" @click.native="toSurvey()" ></ScreenSaver>
+                <ScreenSaver v-if="this.$store.state.slideState" class="swiper-no-swiping" @click.native="toSurvey()" ></ScreenSaver>
                 <ProductList v-else></ProductList>
             </swiper-slide>
 
@@ -83,7 +83,6 @@
                     this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
                 })                                                 //een slide verandert. De index is nodig voor de Cardboard component
             },
-
         },
 
         mounted() {
@@ -121,7 +120,5 @@
 </script>
 
 <style scoped>
-    .swiper__swiper-slide {
-        /*border: 10px solid red;*/
-    }
+
 </style>

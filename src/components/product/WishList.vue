@@ -68,7 +68,10 @@
 <script>
     export default {
         name: "WishList",
-        props: ['favorited', 'isOpen'],
+        props: {
+            favorited : Array,
+            isOpen : Boolean
+        },
 
         data() {
             return {

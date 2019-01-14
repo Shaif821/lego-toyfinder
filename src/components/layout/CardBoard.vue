@@ -13,7 +13,9 @@
 <script>
     export default {
         name: "CardBoard",
-        props: ['index'],
+        props: {
+            index: Number
+        },
 
         methods: {
             goToProduct(){

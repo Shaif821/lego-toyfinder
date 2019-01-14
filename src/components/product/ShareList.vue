@@ -88,7 +88,11 @@
     export default {
         name: "ShareList",
         components: {QRCode},
-        props: ['isOpen', 'url', 'favorites'],
+        props: {
+            isOpen: Boolean,
+            url: String,
+            favorites: Array
+        },
 
         data() {
             return {
@@ -200,12 +204,10 @@
 
     .move-close-button img {
         transition: 0.7s ease-in-out;
-        border: 2px solid red;
         margin-right: 1780px !important;
     }
 
     .sharelist-container__section-1 img {
-        border: 2px solid purple;
         cursor: pointer;
         margin-top: 10px;
         margin-right: 55px;

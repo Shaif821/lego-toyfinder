@@ -18,7 +18,7 @@
                 <div class="filler_second"></div>
 
                 <div class="product_list_section-2">
-                    <swiper :options="swipeOptionsProduct" style="width: 1920px;">
+                    <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
                         <swiper-slide class="product_wrapper animated zoomIn"
                                       :class="{product_wrapper_details : selected === index}"
                                       v-for="(i, index) in shortProducts" :key="index"
@@ -33,9 +33,9 @@
                                         <transition enter-active-class="animated zoomIn"
                                                     leave-active-class="animated zoomOut" mode="out-in">
                                             <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
+                                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
                                             <img class="swiper-lazy" v-else :key="switchImage"
-                                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
+                                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
                                         </transition>
                                     </div>
 
@@ -52,9 +52,8 @@
 
                                             <div class="product_favorite" @click="addToFavorite(i)">
                                                 <transition enter-active-class="animated bounceIn"
-                                                            leave-active-class="animated bounceOut"
                                                             mode="out-in">
-                                                    <img key="1" v-if="favorites.includes(i)" class="animated bounceIn"
+                                                    <img key="1" v-if="favorites.includes(i)"
                                                          src="../../assets/images/layout/favorited_star.png">
                                                     <img key="2" v-else src="../../assets/images/layout/un)star.png">
                                                 </transition>
@@ -212,12 +211,14 @@
                 shareListActive: false,
                 wishListUrl: null,
                 favoritesName: [],
+                currentSlide: null,
+                addSlides: null,
                 swipeOptionsProduct: {
                     preloadImages: true,
                     slidesPerView: '3.5',
                     lazy: true,
                     speed: 900, //De snelheid
-                    // loop: true,
+                    freeMode: true,
                     preventClicks: true,
                     preventClicksPropagation: false,
                     onClick: (swiper, event) => {
@@ -262,11 +263,20 @@
             },
 
             getProducts() {
+                let counter = 0;
+                if(this.currentSlide === null) {
+                    counter = 15
+                } else {
+                    counter = this.addSlides
+                }
+
                 // for (let i = 0; i < this.allProducts['products']['product'].length; i++) {
                 for (let i = 0; i < this.allProducts.length; i++) {
                     try {
                         require('../../assets/images/products/' + this.allProducts[i]['ProductNumber'] + this.singleImage + '.png')
-                        this.shortProducts.push(this.allProducts[i])
+                        if(this.shortProducts.length < counter){
+                            this.shortProducts.push(this.allProducts[i])
+                        }
                     } catch (e) {
                         this.noProduct.push(this.allProducts[i])
                     }
@@ -302,13 +312,17 @@
             },
 
             filterPrice() {
-
             },
 
             shareListState() {
                 this.shareListActive = !this.shareListActive;
-            }
+            },
 
+            changeSwiperIndex() {
+                this.$nextTick(() => {                             //Wanneer een swipe plaatst vindt,  wordt deze functie uitgevoerd
+                    this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
+                })                                                 //een slide verandert. De index is nodig voor de Cardboard component
+            },
         },
 
         mounted() {
@@ -327,6 +341,7 @@
                 vm.loadOrder = false
             }, 2500)
 
+            this.changeSwiperIndex();
             this.getProducts();
             this.changeImage();
         },
@@ -338,6 +353,10 @@
 
             addToURL() {
                 return this.favorites
+            },
+
+            addToSlide() {
+                return this.currentSlide
             }
         },
 
@@ -351,6 +370,13 @@
                 }
 
                 this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
+            },
+
+            addToSlide(){
+                if((this.currentSlide+5) > this.addSlides) {
+                    this.addSlides = this.currentSlide + 10
+                    this.getProducts()
+                }
             }
         }
     }

@@ -10,7 +10,7 @@
             <div @click="saveChoice(indexInterest)" class="survey_wrapper" style="cursor: pointer;" v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
                 <div  class="bitmap-small">
-                    <img class="animated flipInY" style="animation-delay: 0.4s" :src="legoInterest.url"
+                    <img class="animated flipInY" style="animation-delay: 0.4s" src="#"
                          :style="{margin: legoInterest.pos}">
                     <img class="animated flipInY" style="animation-delay: 0.4s" src="../../assets/images/layout/bitmap-small.png">
                 </div>
