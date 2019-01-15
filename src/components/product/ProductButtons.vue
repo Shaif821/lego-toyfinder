@@ -1,20 +1,20 @@
 <template>
     <div >
         <div @click="goToSurvey('SurveyTheme')" class="product_bottom_button">
-            <span v-if="themeGroup">{{getTheme(this.themeGroup) }}</span>
+            <span v-if="themeGroup !== null">{{ themeGroup }}</span>
             <span v-else>Kies een thema</span>
         </div>
 
         <div @click="goToSurvey('SurveyAge')" class="product_bottom_button">
-            <span v-if="ageGroup">
-                Ik ben <span class="product_survey_choice">{{ getAge(this.ageGroup) }}</span>
+            <span v-if="ageGroup !== null">
+                Ik ben <span class="product_survey_choice">{{ ageGroup  }}</span>
             </span>
             <span v-else>Wat is je leeftijd?</span>
         </div>
 
         <div @click="goToSurvey('SurveyInterest') " class="product_bottom_button">
-            <span v-if="interestGroup"> Ik hou van
-                <span class="product_survey_choice">{{ getInterest(this.interestGroup) }}</span>
+            <span v-if="interestGroup !== null"> Ik hou van
+                <span class="product_survey_choice">{{ interestGroup }}</span>
             </span>
             <span v-else>Wat vind je leuk?</span>
         </div>
@@ -34,16 +34,6 @@
         },
 
         methods: {
-            getTheme(id) {
-                return this.$store.state.themes[id].theme
-            },
-            getAge(id) {
-                return this.$store.state.ages[id].text
-            },
-            getInterest(id) {
-                return this.$store.state.interests[id].text
-            },
-
             goToSurvey(survey) {
                 this.$store.state.loadState = false
                 this.$store.state.currentSurvey = survey
@@ -53,13 +43,13 @@
 
         mounted() {
             if (this.$store.state.ageChoice !== null) {
-                this.ageGroup = this.$store.state.ageChoice
+                this.ageGroup = this.$store.state.ages[this.$store.state.ageChoice].text
             }
             if (this.$store.state.interestChoice !== null) {
-                this.interestGroup = this.$store.state.interestChoice
+                this.interestGroup = this.$store.state.interests[this.$store.state.interestChoice].text
             }
             if (this.$store.state.themeChoice !== null) {
-                this.themeGroup = this.$store.state.themeChoice
+                this.themeGroup = this.$store.state.themes[this.$store.state.themeChoice].theme
             }
         }
     }

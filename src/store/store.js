@@ -19,6 +19,8 @@ const store = new Vuex.Store({
                 url: require('../assets/images/survey/group-107.png'),
                 speech: require('../assets/images/layout/bitmap.png'),
                 text: '1 - 2 jaar',
+                ageMin: 1,
+                ageMax: 2,
                 pos: '82px 103px 100px 94px'
             },
             {
@@ -26,18 +28,24 @@ const store = new Vuex.Store({
                 url: require('../assets/images/survey/group-43.png'),
                 speech: require('../assets/images/layout/bitmap.png'),
                 text: '2 - 6 jaar',
+                ageMin: 2,
+                ageMax: 6,
                 pos: '70px 80px 92px 77px'
             },
             {
                 url: require('../assets/images/survey/group-34.png'),
                 speech: require('../assets/images/layout/bitmap.png'),
                 text: '6 - 12 jaar',
+                ageMin: 6,
+                ageMax: 12,
                 pos: '78px 90px 87px 88px'
             },
             {
                 url: require('../assets/images/survey/group-44.png'),
                 speech: require('../assets/images/layout/bitmap.png'),
                 text: '12+',
+                ageMin: 12,
+                ageMax: 99,
                 pos: '76px 68px 88px 66px'
             },
         ],
@@ -65,13 +73,13 @@ const store = new Vuex.Store({
             {
                 url: require('../assets/images/survey/group-44.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
-                text: 'Roboto',
+                text: 'Robot',
                 pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/group-107.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
-                text: 'Stad & gebouw',
+                text: 'Stad & Gebouwen',
                 pos: '49px 50px 53px 50px'
             },
             {
@@ -90,7 +98,7 @@ const store = new Vuex.Store({
             {
                 url: require('../assets/images/survey/group-44.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
-                text: 'Vrijetijd',
+                text: 'Vrije tijd',
                 pos: '49px 50px 53px 50px'
             },
             {

@@ -165,6 +165,7 @@
             getProducts() {
                 let counter = 0;
                 counter = this.currentSlide === null ? 15 : this.addSlides
+                this.shortProducts = []
 
                 for (let i = 0; i < this.allProducts.length; i++) {
                     try {
@@ -238,8 +239,8 @@
 
         watch: {
             addToSlide(){
-                if((this.currentSlide+5) > this.addSlides) {
-                    this.addSlides = this.currentSlide + 10
+                if((this.currentSlide+5) > this.addSlides && this.currentSlide < this.allProducts.length) {
+                    this.addSlides = this.currentSlide + 10 > this.allProducts.length ? this.allProducts.length : this.currentSlide + 10
                     this.getProducts()
                 }
             }
