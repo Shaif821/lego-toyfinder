@@ -8,16 +8,15 @@
                     <div class="animated slideInDown">
                         <p>{{productCount}} resultaten</p>
                         <div>
-                            <button class="filter_buttons filter_buttons_active"><p>Alfabetisch</p></button>
-                            <button class="filter_buttons"><p>Beschikbaarheid</p></button>
-                            <button class="filter_buttons"><p>Prijs</p></button>
+                            <button @click="changFilter('Alpha')" class="filter_buttons" :class="{filter_buttons_active : productType === 'Alpha'}"><p>Alfabetisch</p></button>
+                            <button @click="changFilter('Price')" class="filter_buttons" :class="{filter_buttons_active : productType === 'Price'}"><p>Prijs</p></button>
                         </div>
                     </div>
                 </div>
 
                 <div class="filler_second"></div>
 
-                <ProductItem :favorite="favorites" class="product_list_section-2"></ProductItem>
+                <ProductItem :productSort="productType" :favorite="favorites" class="product_list_section-2"></ProductItem>
 
                 <div class="product_list_section-3_filler"></div>
 
@@ -53,6 +52,7 @@
                 wishListUrl: null,
                 favoritesName: [],
                 productCount: null,
+                productType: 'Alpha'
             }
         },
 
@@ -81,6 +81,10 @@
             shareListState() {
                 this.shareListActive = !this.shareListActive;
             },
+
+            changFilter(type) {
+                this.productType = type
+            }
         },
 
         mounted() {
@@ -144,7 +148,6 @@
         margin: 0 auto 0 60px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
         justify-items: flex-start;
         align-items: center;
         min-width: 947px;
@@ -157,14 +160,10 @@
         font-size: 48px;
     }
 
-    .product_list_section-1 > *:first-child > *:first-child {
-        text-align: left;
-    }
-
     .product_list_section-1 > *:first-child > *:nth-child(2) {
+        margin-left: 80px;
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
         align-items: center;
         height: 100%;
     }
@@ -194,6 +193,11 @@
         border: 2px solid #2f3f50;
         color: white;
         background: #496078;
+    }
+
+    .product_list_section-2 {
+        height: 678px;
+        width: 100%;
     }
 
     .product_list_section-3_filler {

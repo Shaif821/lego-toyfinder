@@ -2,7 +2,7 @@
     <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
         <swiper-slide class="product_wrapper animated zoomIn"
                       :class="{product_wrapper_details : selected === index}"
-                      v-for="(i, index) in shortProducts" :key="index"
+                      v-for="(i, index) in shortProducts" :key="i['ProductNumber']"
                       :style="{animationDelay: '0.' + index + 's'}">
             <div v-if="testImage(i['ProductNumber']) !== false" class="pre_product_details swiper-lazy">
 
@@ -10,8 +10,8 @@
 
                     <div class="product_image_normal"
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
-                        <transition enter-active-class="animated zoomIn"
-                                    leave-active-class="animated zoomOut" mode="out-in">
+                        <transition enter-active-class="animated zoomIn faster"
+                                    leave-active-class="animated zoomOut faster" mode="out-in">
                             <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
                                  v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
                             <img class="swiper-lazy" v-else :key="switchImage"
@@ -21,7 +21,7 @@
 
                     <div v-if="selected !== index">
                         <hr class="product_seperator">
-                        <p class="product_name">{{ i['ProductNameNL'] }}</p>
+                        <p class="product_name">{{ i['ProductNameNL'] }} {{productSort}}</p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
@@ -128,18 +128,27 @@
 
 <script>
     import productsJSON from '../../assets/products/januari-2019'
+    import priceProducts from '../../assets/products/price'
+    import alphaProducts from '../../assets/products/alpha'
 
     export default {
         name: "ProductItem",
         props: {
-            favorite: Array
+            favorite: Array,
+            productSort: String,
         },
 
         data() {
             return {
                 allProducts: productsJSON,
+                priceProducts: priceProducts,
+                alphaProducts: alphaProducts,
+                currentProducts: null,
+
+                startProduts: null,
                 shortProducts: [],
                 noProduct: [],
+
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -166,19 +175,35 @@
                 let counter = 0;
                 counter = this.currentSlide === null ? 15 : this.addSlides
                 this.shortProducts = []
+                this.checkProductFilter()
 
                 for (let i = 0; i < this.allProducts.length; i++) {
                     try {
-                        require('../../assets/images/products/' + this.allProducts[i]['ProductNumber'] + this.singleImage + '.png')
-                        if(this.shortProducts.length < counter){
-                            this.shortProducts.push(this.allProducts[i])
+                        require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        if (this.shortProducts.length < counter) {
+                            this.shortProducts.push(this.currentProducts[i])
                         }
                     } catch (e) {
-                        this.noProduct.push(this.allProducts[i])
+                        this.noProduct.push(this.currentProducts[i])
                     }
                 }
 
-                this.$parent.productLength(this.shortProducts.length)
+                this.$parent.productLength(this.currentProducts.length)
+            },
+
+            checkProductFilter() {
+                if (this.productSort === 'All') {
+                    this.currentProducts = this.allProducts
+                }
+                else if(this.productSort === 'Alpha') {
+                    this.currentProducts = this.alphaProducts
+                }
+                else if(this.productSort === 'Price'){
+                    this.currentProducts = this.priceProducts
+                }
+                else {
+                    this.currentProducts = this.alphaProducts
+                }
             },
 
             changeImage(type, id) {
@@ -203,7 +228,6 @@
                 try {
                     require('../../assets/images/products/' + product + this.singleImage + '.png')
                     return product
-                    // return require('../statics/icons/svg/' + this.coinData.symbol + '.svg')
                 } catch (e) {
                     return false;
                 }
@@ -234,25 +258,30 @@
 
             addToSlide() {
                 return this.currentSlide
-            }
+            },
         },
 
         watch: {
-            addToSlide(){
-                if((this.currentSlide+5) > this.addSlides && this.currentSlide < this.allProducts.length) {
-                    this.addSlides = this.currentSlide + 10 > this.allProducts.length ? this.allProducts.length : this.currentSlide + 10
-                    this.getProducts()
+            addToSlide() {
+                if ((this.currentSlide + 5) > this.addSlides) {
+                    this.checkProductFilter()
+                    if (this.currentSlide < this.currentProducts.length) {
+                        this.addSlides = this.currentSlide + 10 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 10
+                        this.getProducts()
+                    }
                 }
+            },
+
+            productSort: function (newVal, oldVal){
+                this.checkProductFilter()
+                this.getProducts()
             }
         }
     }
 </script>
 
 <style scoped>
-    .product_list_section-2 {
-        height: 678px;
-        width: 100%;
-    }
+
 
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
