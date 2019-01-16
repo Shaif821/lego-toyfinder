@@ -1,7 +1,7 @@
 <template>
-    <div class="cardboard_container" :style="[!this.$store.state.slideState ? {height: '66px'} : {height: '150px'}]">
+    <div class="cardboard_container" :style="[this.$store.state.transitionSlide ? {height: '66px'} : {height: '150px'}]">
         <img src="../../assets/images/layout/slider-border.png">
-        <transition leave-active-class="animated bounceOutRight" v-if="index === 0 && this.$store.state.slideState">
+        <transition leave-active-class="animated bounceOutRight" v-if="index === 0 && this.$store.state.legoSurveyStatus">
             <div class="skip animated bounceInLeft ">
                 <p v-if="this.$store.state.currentSurvey !== null" @click="goToProduct()" style="cursor: pointer;" class="skip_text">Terug</p>
                 <p v-else @click="goToProduct()" style="cursor: pointer;" class="skip_text">Overslaan</p>

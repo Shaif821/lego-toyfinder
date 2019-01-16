@@ -1,13 +1,12 @@
 <template>
-    <div style="padding: 0; margin: 0;">
+    <div class="slidescreen__container" :class="[this.$store.state.legoSurveyStatus ? 'rest-background' : 'products-background']" style="padding: 0; margin: 0;">
         <div v-if="fixSlideOrder === 0">{{moveSlide()}}</div>
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
                 style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
-
             <swiper-slide>
-                <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey v-if="this.$store.state.slideState" :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide">
@@ -18,7 +17,6 @@
                 <ScreenSaver v-if="this.$store.state.slideState" class="swiper-no-swiping" @click.native="toSurvey()" ></ScreenSaver>
                 <ProductList v-else></ProductList>
             </swiper-slide>
-
         </swiper>
     </div>
 </template>
@@ -120,5 +118,27 @@
 </script>
 
 <style scoped>
+    .slidescreen__container {
+        height: 1080px;
+        width: 1920px;
+    }
 
+    .rest-background {
+        background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+    }
+
+    .products-background {
+        animation: changeBackground 2.5s ease-in-out;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+    }
+
+    @keyframes changeBackground {
+        0% {
+            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+        }
+        100% {
+            background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
+        }
+    }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <!--De achtergrond kleur verandert als de isActiveLoader true is-->
-    <div id="app" :class="[this.$store.state.slideState ? 'rest-background' : 'products-background']">
+    <div id="app" >
         <transition-group enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"
                     mode="out-in" enter>
@@ -24,12 +24,11 @@
     body {
         padding: 0;
         margin: 0;
-        height: 1080px;
-        width: 1920px;
+
     }
 
     #app {
-        height: 1080px;
+        /*height: 1080px;*/
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -37,28 +36,11 @@
         color: #2c3e50;
         transition: 0.3s ease-in-out;
         z-index: 0;
-        background-color: transparent;
+        background-image: radial-gradient(0% 0%, #098ddb, #1062a2);
         overflow: hidden;
     }
 
-    .rest-background {
-        background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-    }
 
-    .products-background {
-        animation: changeBackground 2.5s ease-in-out;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-    }
-
-    @keyframes changeBackground {
-        0% {
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-        }
-        100% {
-            background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
-        }
-    }
 
     *{
         outline: none;

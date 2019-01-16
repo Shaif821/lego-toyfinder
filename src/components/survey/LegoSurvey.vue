@@ -1,5 +1,5 @@
 <template>
-    <div :class="[{'lego-survey_slide' : transitionSlide}]">
+    <div :class="[{'lego-survey_slide' : this.$store.state.transitionSlide}]">
         <div class="survey_container">
             <div class="survey_section-1">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
@@ -39,7 +39,6 @@
             return {
                 index: true,
                 view: '',
-                transitionSlide: false,
                 surveyOptions: [{
                     age: [],
                     interest: [],
@@ -81,8 +80,9 @@
             },
 
             nextSlide() {
-                this.transitionSlide = true
-                this.$store.state.slideState = false           //De slideState wordt verandert naar de producten slide
+                this.$store.state.transitionSlide = true
+                this.$store.state.slideState = false
+                this.$store.state.legoSurveyStatus = false
             },
 
             resetData() {

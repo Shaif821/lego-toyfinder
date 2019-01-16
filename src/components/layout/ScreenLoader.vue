@@ -1,6 +1,6 @@
 <template>
     <div class="screen-loader_container">
-        <i class="fas fa-spinner animated rotateIn infinite" style="color: white"></i>
+        <img src="../../assets/images/layout/loader.png" class="animated rotateIn infinite">
         <p>Jouw toekomstige cadeautjes worden geladen</p>
     </div>
 </template>
