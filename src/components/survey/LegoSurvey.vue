@@ -79,8 +79,8 @@
 
             nextSlide() {
                 this.$store.state.transitionSlide = true
-                // this.$store.state.slideState = false
                 this.$store.state.legoSurveyStatus = false
+                this.$store.state.switchState = false
             },
 
             resetData() {

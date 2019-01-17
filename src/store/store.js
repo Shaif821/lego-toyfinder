@@ -17,6 +17,7 @@ const store = new Vuex.Store({
         transitionSlide: false,
 
         toProduct: false,
+        switchState: true,
 
 
         ages: [

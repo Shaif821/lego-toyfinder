@@ -6,24 +6,27 @@
 
         <div class="survey__filler"></div>
 
-        <swiper :options="swiperOption">
-            <swiper-slide class="survey__theme__slider animated zoomIn"
-                          :style="{animationDelay: '0.' + indexTheme + 'STH'}"
-                          style="animation-duration: 1.5s;"
-                          v-for="(legoTheme, indexTheme) in this.$store.state.themes"
-                          :key="indexTheme + 'STH'">
+        <div class="survey__theme__wrapper">
+            <swiper :options="swiperOption">
+                <swiper-slide class="survey__theme__slider animated flipInY"
+                              :style="{animationDelay: '0.' + indexTheme + 'STH'}"
+                              style="animation-duration: 1.5s;"
+                              v-for="(legoTheme, indexTheme) in this.$store.state.themes"
+                              :key="indexTheme + 'STH'">
 
-                <div class="survey__theme__images" @click="$parent.changeView(index)">
-                    <img class="survey__theme__lego__img  swiper-lazy" v-lazy="legoTheme.url">
-                    <img class="swiper-lazy" src="../../assets/images/layout/border.png">
-                </div>
+                    <div class="survey__theme__images" @click="$parent.changeView(indexTheme)">
+                        <img class="survey__theme__lego__img  swiper-lazy" v-lazy="legoTheme.url">
+                        <img class="swiper-lazy" src="../../assets/images/layout/border.png">
+                    </div>
 
-                <p class="survey__theme__text animated flipInX"
-                   style="animation-delay: 1s; animation-duration: 1s;">
-                    {{legoTheme.brand}} {{legoTheme.theme}}
-                </p>
-            </swiper-slide>
-        </swiper>
+                    <p class="survey__theme__text animated flipInX"
+                       style="animation-delay: 1s; animation-duration: 1s;">
+                        {{legoTheme.brand}} {{legoTheme.theme}}
+                    </p>
+                </swiper-slide>
+            </swiper>
+        </div>
+
     </div>
 </template>
 
@@ -50,7 +53,13 @@
 
 <style scoped>
     .survey__filler {
-        height: 100px;
+        height: 65px;
+    }
+
+    .survey__theme__wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .survey__theme__slider {
@@ -59,6 +68,7 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        margin-top: 35px;
     }
 
     .survey__theme__slider:first-child {

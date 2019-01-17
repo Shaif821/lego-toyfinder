@@ -37,13 +37,9 @@
             goToSurvey(survey) {
                 this.$store.state.currentSurvey = survey
                 this.$store.state.legoSurveyStatus = true
-
-                let v = this
-                setTimeout(function () {
-                    v.$store.state.slideState = true
-                }, 1000)
+                this.$store.state.slideState = true
                 this.$store.state.transitionSlide = false
-
+                this.$store.state.toProduct = true
             },
         },
 
@@ -62,8 +58,6 @@
 </script>
 
 <style scoped>
-
-
     .product-bottom__button {
         height: 100%;
         flex: 1;
