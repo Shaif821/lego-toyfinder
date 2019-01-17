@@ -1,6 +1,7 @@
 <template>
-    <div class="slidescreen__container" :class="[this.$store.state.legoSurveyStatus ? 'rest-background' : 'products-background']" style="padding: 0; margin: 0;">
+    <div class="slidescreen__container" :class="[!this.$store.state.toProduct ? 'slidescreen__container--normal' : 'slidescreen__container--products']" style="padding: 0; margin: 0;">
         <div v-if="fixSlideOrder === 0">{{moveSlide()}}</div>
+
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
@@ -10,12 +11,14 @@
             </swiper-slide>
 
             <swiper-slide class="swiper__slide">
-                <CardBoard @click.native="toSurvey()" class="swiper-no-swiping" :index="currentSlide"></CardBoard>
+                <CardBoard @click.native="toSurvey()" class="swiper__slide--no-swiping" :index="currentSlide"></CardBoard>
             </swiper-slide>
 
             <swiper-slide>
-                <ScreenSaver v-if="this.$store.state.slideState" class="swiper-no-swiping" @click.native="toSurvey()" ></ScreenSaver>
-                <ProductList v-else></ProductList>
+                <transition leave-active-class="animated fadeOut" mode="out-in">
+                    <ScreenSaver v-if="this.$store.state.slideState" class="swiper__slide--no-swiping" @click.native="toSurvey()" ></ScreenSaver>
+                    <ProductList v-else></ProductList>
+                </transition>
             </swiper-slide>
         </swiper>
     </div>
@@ -45,7 +48,7 @@
                     resistanceRatio: 0.15,
                     preventClicks: true,
                     preventClicksPropagation: false,
-                    noSwipingClass: 'swiper-no-swiping',
+                    noSwipingClass: 'swiper__slide--no-swiping',
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     },
@@ -72,7 +75,13 @@
 
             toSurvey() {
                 this.$nextTick(() => {
-                    this.swiper.slideTo(0, 900, false);
+
+                    let v = this
+                    setTimeout(function () {
+                        v.$store.state.loadSurvey = true
+                    }, 100)
+                    this.swiper.slideTo(0, 1000, false);
+
                 })
             },
 
@@ -104,7 +113,11 @@
         watch: {
             checkTheme() {
                 if (this.$store.state.isActiveTheme) {
-                    this.moveSlide(900);
+                    let v = this
+                    setTimeout(function () {
+                        v.$store.state.loadSurvey = true
+                    }, 100)
+                    this.moveSlide(1000);
                 }
             },
 
@@ -118,16 +131,11 @@
 </script>
 
 <style scoped>
-    .slidescreen__container {
-        height: 1080px;
-        width: 1920px;
-    }
-
-    .rest-background {
+    .slidescreen__container--normal{
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }
 
-    .products-background {
+    .slidescreen__container--products {
         animation: changeBackground 2.5s ease-in-out;
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;

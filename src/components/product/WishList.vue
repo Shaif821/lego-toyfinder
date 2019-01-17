@@ -1,29 +1,27 @@
 <template>
-    <div :class="[isActiveWishList ? 'openWishList' : 'closeWishList']" class="wish_list_container">
-        <div @click="openWishList()" style="cursor: pointer;" class="wish_list_button">
-            <div class="clipBoard">
+    <div :class="[isActiveWishList ? 'wishlist__container--open' : 'wishlist__container--close']"
+         class="wishlist__container">
+        <div @click="openWishList()" style="cursor: pointer;" class="wishlist__clipboard__container">
+            <div class="wishlist__clipboard">
                 <transition enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut"
                             mode="out-in">
-                    <img :key="1" v-if="favorited.length > 0" src="../../assets/images/layout/star-icon-mini.png">
-                    <img :key="2" v-else style="width: 28px; height: 29px;"
-                         src="../../assets/images/layout/un)star.png">
+                    <img class="wishlist__star" :key="1" v-if="favorited.length > 0" src="../../assets/images/layout/star-icon-mini.png">
+                    <img class="wishlist__star wishlist__star--un" :key="2" v-else src="../../assets/images/layout/un)star.png">
                 </transition>
                 <img src="../../assets/images/layout/list-icon.png">
             </div>
             <img src="../../assets/images/layout/wishlist.png">
         </div>
 
-        <div class="wishlist_phone_container" :class="{add_shadow: isActiveWishList}">
-            <div class="wishlist_title">
-                <img src="../../assets/images/layout/star.png">
-                <p>
-                    Maak ook een verlanglijstje
-                </p>
+        <div class="wishlist__phone__container" :class="{add__shadow: isActiveWishList}">
+            <div class="wishlist__phone__header">
+                <img class="wishlist__phone__title__img" src="../../assets/images/layout/star.png">
+                <p class="wishlist__phone__text">Maak ook een verlanglijstje</p>
             </div>
 
-            <div class="wishlist_phone">
-                <img src="../../assets/images/layout/lego-head.png">
+            <div class="wishlist__phone">
+                <img class="wishlist__phone__legohead" src="../../assets/images/layout/lego-head.png">
                 <div class="phone_contents">
                     <div v-for="(i, index) in 5" :key="index">
                         <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX"
@@ -96,7 +94,7 @@
 </script>
 
 <style scoped>
-    .wish_list_container {
+    .wishlist__container {
         position: absolute;
         top: 0;
         width: 609px;
@@ -104,7 +102,7 @@
         right: -26.85%;
     }
 
-    .closeWishList {
+    .wishlist__container--close {
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
         right: -26.85%;
@@ -120,7 +118,7 @@
         }
     }
 
-    .openWishList {
+    .wishlist__container--open {
         animation: wishlist 0.4s forwards;
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both
@@ -135,31 +133,33 @@
         }
     }
 
-    .wish_list_button {
+    .wishlist__clipboard__container {
         position: absolute;
         z-index: 5;
         left: 0;
     }
 
-    .wish_list_button div {
+    .wishlist__clipboard {
         margin-left: 3px;
         margin-top: 20px;
-    }
-
-    .clipBoard {
         z-index: 6;
         position: absolute;
         width: 100%;
     }
 
-    .clipBoard img:first-child {
+    .wishlist__star {
         z-index: 7;
         position: absolute;
         margin-top: -3px;
         margin-left: -15px;
     }
 
-    .wishlist_phone_container {
+    .wishlist__star--un {
+        width: 28px;
+        height: 29px;
+    }
+
+    .wishlist__phone__container {
         height: 1080px;
         width: 520px;
         position: relative;
@@ -174,24 +174,24 @@
         transition: 0.3s ease-in-out;
     }
 
-    .add_shadow {
+    .add__shadow {
         transition: 0.3s ease-in-out;
         box-shadow: 0 0 96px 0 rgba(0, 0, 0, 0.8);
     }
 
-    .wishlist_title {
+    .wishlist__phone__header {
         margin-top: 49px;
         color: #020202;
     }
 
-    .wishlist_title img {
+    .wishlist__phone__title__img {
         position: absolute;
         left: 0;
         margin-left: 63px;
         margin-top: 37px;
     }
 
-    .wishlist_title p {
+    .wishlist__phone__text {
         padding: 0;
         margin: 0;
         font-family: BlueSheepLego, 'sans-serif';
@@ -199,15 +199,53 @@
         width: 321px;
     }
 
-    .wishlist_phone {
+    .wishlist__phone {
         margin-top: 55px;
     }
 
-    .wishlist_phone img:first-child {
+    .wishlist__phone__legohead {
         position: absolute;
         right: 0;
         margin-right: 51.3px;
         margin-top: -35px;
+    }
+
+    .phone_contents {
+        height: 606px;
+        width: 329px;
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        right: 50%;
+        bottom: -17%;
+        transform: translate(-50%, -50%);
+    }
+
+    .phone_contents div {
+        border-bottom: 1px dotted #979797;
+    }
+
+    .phone_contents div, .phone_contents div p {
+        height: 114px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .phone_contents div:first-child {
+        background: none;
+        font-size: 30px;
+    }
+
+    .phone_contents div:last-child {
+        border-bottom: none;
+    }
+
+    .phone_contents div p {
+        padding: 0;
+        font-family: BlueSheepLego, 'sans-serif';
+        line-height: 1.17;
+        width: 329px;
     }
 
     .wishlist_share {
@@ -259,43 +297,7 @@
         color: black;
     }
 
-    .phone_contents {
-        height: 606px;
-        width: 329px;
-        position: absolute;
-        z-index: 1;
-        left: 50%;
-        right: 50%;
-        bottom: -17%;
-        transform: translate(-50%, -50%);
-    }
 
-    .phone_contents div {
-        border-bottom: 1px dotted #979797;
-    }
-
-    .phone_contents div, .phone_contents div p {
-        height: 114px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .phone_contents div:first-child {
-        background: none;
-        font-size: 30px;
-    }
-
-    .phone_contents div:last-child {
-        border-bottom: none;
-    }
-
-    .phone_contents div p {
-        padding: 0;
-        font-family: BlueSheepLego, 'sans-serif';
-        line-height: 1.17;
-        width: 329px;
-    }
 
     .is_favorited {
         display: flex;

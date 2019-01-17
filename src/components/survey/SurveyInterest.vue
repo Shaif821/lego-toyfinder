@@ -1,24 +1,32 @@
 <template>
     <div>
-        <div class="survey_section-2">
-            <p>Wat vind je leuk?</p>
+        <div class="survey__subject">
+            <p class="survey__subject__text">Wat vind je leuk?</p>
         </div>
 
-        <div class="filler_2"></div>
+        <div class="survey__filler"></div>
 
-        <div class="survey_section-3">
-            <div @click="saveChoice(indexInterest)" class="survey_wrapper" style="cursor: pointer;" v-for="(legoInterest, indexInterest) in this.$store.state.interests"
+        <div class="survey__interest__container">
+            <div @click="saveChoice(indexInterest)" class="survey__interest__wrapper"
+                 v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
-                <div  class="bitmap-small">
-                    <img class="animated flipInY" style="animation-delay: 0.4s" src="#"
-                         :style="{margin: legoInterest.pos}">
-                    <img class="animated flipInY" style="animation-delay: 0.4s" src="../../assets/images/layout/bitmap-small.png">
+
+                <div  class="survey__interest__images">
+                    <img class="survey__interest__lego__img animated flipInY"
+                         style="animation-delay: 0.4s; animation-duration: 1.5s"
+                         src="../../assets/images/layout/lego-head.png" :style="{margin: legoInterest.pos}">
+                    <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
+                         src="../../assets/images/layout/bitmap-small.png">
                 </div>
-                <p>{{legoInterest.text}}</p>
+
+                <p class="survey__theme__text animated flipInX"
+                   style="animation-delay: 1s; animation-duration: 2s;">
+                    {{legoInterest.text}}
+                </p>
             </div>
         </div>
 
-        <div class="filler_3"></div>
+        <div class="survey__filler-2"></div>
     </div>
 </template>
 
@@ -35,24 +43,15 @@
 </script>
 
 <style scoped>
-    .survey_section-2 p {
-        font-size: 72px;
-        color: white;
-        padding: 0;
-        margin: 0;
-    }
+    .survey__filler {height: 62px;}
 
-    .filler_2 {
-        height: 62px;
-    }
-
-    .survey_section-3 {
+    .survey__interest__container {
         color: white;
         font-family: Ubuntu, sans-serif;
         font-size: 28px;
         font-weight: 500;
         height: 585px;
-        width: 1320px;
+        width: 1380px;
         margin: 0 auto;
         display: flex;
         flex-direction: row;
@@ -60,29 +59,26 @@
         align-items: center;
         flex-wrap: wrap;
     }
-
-    .survey_wrapper {
+    .survey__interest__wrapper {
+        flex: 1 0 20%;
         display: flex;
         flex-flow: column;
         justify-content: center;
         align-items: center;
+        cursor: pointer;
     }
 
-    .survey_wrapper > * {
+    .survey__interest__images {
         margin: 0;
         padding: 0;
     }
 
-    .bitmap-small img:first-child {
+    .survey__interest__lego__img {
         position: absolute;
         z-index: 1;
     }
 
-    .survey_section-3 > * {
-        flex: 1 0 20%; /* explanation below */
-    }
-
-    .filler_3 {
+    .survey__filler-2 {
         height: 100px;
     }
 </style>

@@ -1,19 +1,17 @@
 <template>
-    <div :class="[{'lego-survey_slide' : this.$store.state.transitionSlide}]">
-        <div class="survey_container">
-            <div class="survey_section-1">
+    <div :class="[{'survey__hide' : this.$store.state.transitionSlide}]">
+        <div class="survey__container">
+            <div class="survey__header">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
-                    <img class="animated pulse infinite" src="../../assets/images/layout/close.png">
+                    <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
                 </div>
             </div>
 
-            <transition enter-active-class="animated slideInRight faster"
-                        leave-active-class="animated slideOutLeft faster"
+            <transition enter-active-class="animated slideInRight"
+                        leave-active-class="animated slideOutLeft"
                         enter mode="out-in">
-                <component v-if="indexAnimation === 0" :is="view"></component>
+                <component v-if="indexAnimation === 0 && this.$store.state.loadSurvey" :is="view"></component>
             </transition>
-
-            <div class="filler_3"></div>
         </div>
     </div>
 </template>
@@ -52,7 +50,7 @@
                 this.$store.state.currentSurvey ? this.addChoice(choice, true) : this.saveChoice(choice)
             },
 
-            saveChoice(choice) {      //Sla de keuze op en ga door naar de volgende slide of view
+            saveChoice(choice) {  //Sla de keuze op en ga door naar de volgende slide of view
                 this.addChoice(choice, false);
 
                 if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') {
@@ -81,7 +79,7 @@
 
             nextSlide() {
                 this.$store.state.transitionSlide = true
-                this.$store.state.slideState = false
+                // this.$store.state.slideState = false
                 this.$store.state.legoSurveyStatus = false
             },
 
@@ -93,6 +91,7 @@
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
                 this.$store.state.slideState = true
+                this.$store.state.loadSurvey = false
             },
         },
 
@@ -131,7 +130,7 @@
 </script>
 
 <style>
-    .survey_container {
+    .survey__container {
         font-family: BlueSheepLego, 'sans-serif';
         background-color: rgba(0, 0, 0, 0.7);
         padding: 0;
@@ -139,7 +138,28 @@
         height: 970px;
     }
 
-    .lego-survey_slide {
+    .survey__header{
+        height: 150px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .survey__header--img {
+        cursor: pointer;
+        margin-top: 10px;
+        margin-right: 55px;
+    }
+
+    .survey__subject__text {
+        font-size: 72px;
+        color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    /*Animations*/
+    .survey__hide{
         overflow: hidden;
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
@@ -158,30 +178,5 @@
             opacity: 0;
             height: 0;
         }
-    }
-
-    .survey_section-1 img {
-        cursor: pointer;
-        margin-top: 10px;
-        margin-right: 55px;
-    }
-
-    .survey_section-1 {
-        height: 150px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-end;
-    }
-
-    .survey_section-1 img {
-        margin-top: 10px;
-        margin-right: 55px;
-    }
-
-    .survey_section-2 p {
-        font-size: 72px;
-        color: white;
-        padding: 0;
-        margin: 0;
     }
 </style>

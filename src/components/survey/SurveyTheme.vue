@@ -1,32 +1,29 @@
 <template>
     <div>
-        <div class="survey_section-2">
-            <p>Welk thema past bij jou?</p>
+        <div class="survey__subject">
+            <p class="survey__subject__text">Welk thema past bij jou?</p>
         </div>
 
-        <div class="filler_2"></div>
+        <div class="survey__filler"></div>
 
-        <div class="survey_section-3">
-            <div>
-                <!-- swiper -->
-                <swiper class="teste" :options="swiperOption">
-                    <swiper-slide style="cursor: pointer;" class="theme_image_wrapper animated flipInY slower"
-                                  v-for="(legoTheme, indexTheme) in this.$store.state.themes" :key="indexTheme + 'STH'">
+        <swiper :options="swiperOption">
+            <swiper-slide class="survey__theme__slider animated zoomIn"
+                          :style="{animationDelay: '0.' + indexTheme + 'STH'}"
+                          style="animation-duration: 1.5s;"
+                          v-for="(legoTheme, indexTheme) in this.$store.state.themes"
+                          :key="indexTheme + 'STH'">
 
-                        <div @click="saveChoice(indexTheme)">
-                            <img class="swiper-lazy" style="width: 288px; height: 376px; margin: 25px 24px 24px 22px; border: 5px solid black;"
-                                 v-lazy="legoTheme.url">
-                            <img class="swiper-lazy" src="../../assets/images/layout/border.png">
-                        </div>
+                <div class="survey__theme__images" @click="$parent.changeView(index)">
+                    <img class="survey__theme__lego__img  swiper-lazy" v-lazy="legoTheme.url">
+                    <img class="swiper-lazy" src="../../assets/images/layout/border.png">
+                </div>
 
-                        <p class="theme_text">{{legoTheme.brand}} {{legoTheme.theme}}</p>
-
-                    </swiper-slide>
-                </swiper>
-            </div>
-        </div>
-
-        <div class="filler_3"></div>
+                <p class="survey__theme__text animated flipInX"
+                   style="animation-delay: 1s; animation-duration: 1s;">
+                    {{legoTheme.brand}} {{legoTheme.theme}}
+                </p>
+            </swiper-slide>
+        </swiper>
     </div>
 </template>
 
@@ -39,7 +36,7 @@
             return {
                 swiperOption: {
                     slidesPerView: 4.5,
-                    freeMode:true,
+                    freeMode: true,
                     centeredSlides: true,
                     pagination: {
                         el: '.swiper-pagination',
@@ -48,48 +45,45 @@
                 },
             }
         },
-
-        methods: {
-            saveChoice(index) {
-                this.$parent.changeView(index)
-            }
-        },
     }
 </script>
 
 <style scoped>
-    .filler_2 {
+    .survey__filler {
         height: 100px;
     }
 
-    .survey_section-3 {
-        height: 495px;
+    .survey__theme__slider {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 
-    .survey_section-3 > *:first-child {
-        overflow: auto;
-    }
-
-    .teste {
-        height: 100%;
-    }
-
-    .theme_image_wrapper:first-child {
+    .survey__theme__slider:first-child {
         width: 100%;
         margin-left: -700px;
     }
 
-    .theme_image_wrapper img:first-child {
+    .survey__theme__lego__img {
         position: absolute;
         z-index: 1;
+        width: 288px;
+        height: 376px;
+        margin: 25px 24px 24px 22px;
+        border: 5px solid black;
     }
 
-    .theme_text {
+    .survey__theme__text {
         font-family: Ubuntu, 'sans-serif';
-        color:White;
+        color: White;
         font-size: 28px;
         font-weight: 500;
         line-height: 1.43;
+        width: 355px;
+        margin-left: 0;
+        margin-right: 0;
     }
 
 </style>

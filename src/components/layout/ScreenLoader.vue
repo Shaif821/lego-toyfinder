@@ -1,6 +1,6 @@
 <template>
-    <div class="screen-loader_container">
-        <img src="../../assets/images/layout/loader.png" class="animated rotateIn infinite">
+    <div class="screen__loader__container">
+        <img src="../../assets/images/layout/loader.png" class="rotating">
         <p>Jouw toekomstige cadeautjes worden geladen</p>
     </div>
 </template>
@@ -9,19 +9,15 @@
     export default {
         name: "ScreenLoader",
 
-        // methods: {
-        //     toProducts(){
-        //         let vm = this
-        //         // this.$router.push('/products/age/' + this.surveyOptions[0].age + '/interest/' + this.surveyOptions[0].interest);
-        //         setTimeout(function (){
-        //             // vm.$store.state.isActiveProducts = true
-        //             vm.$store.state.currentState = 'State-3'
-        //             // vm.$router.push({path:  vm.$store.state.productRoute})
-        //         }, 3000)
-        //     }
-        // },
+        methods: {
+        },
 
         mounted() {
+            let vm = this
+            setTimeout(function () {
+                vm.$store.state.slideState = false
+                vm.$store.state.toProduct = true
+            }, 3000)
         }
     }
 </script>
@@ -29,7 +25,7 @@
 <style scoped>
     @import "https://use.fontawesome.com/releases/v5.3.1/css/all.css";
 
-    .screen-loader_container {
+    .screen__loader__container {
         transition: ease-in-out 0.3s;
         overflow: hidden;
         height: 1015px;

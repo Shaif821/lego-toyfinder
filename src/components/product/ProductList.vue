@@ -1,30 +1,36 @@
 <template>
-    <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" mode="out-in">
-        <ScreenLoader v-if="loadOrder"></ScreenLoader>
-        <div v-else>
-            <WishList :favorited="favorites"></WishList>
-            <div class="product_list_container">
-                <div class="product_list_section-1">
-                    <div class="animated slideInDown">
-                        <p>{{productCount}} resultaten</p>
-                        <div>
-                            <button @click="changFilter('Alpha')" class="filter_buttons" :class="{filter_buttons_active : productType === 'Alpha'}"><p>Alfabetisch</p></button>
-                            <button @click="changFilter('Price')" class="filter_buttons" :class="{filter_buttons_active : productType === 'Price'}"><p>Prijs</p></button>
-                        </div>
+    <div>
+        <WishList :favorited="favorites"></WishList>
+        <div class="product__list__container">
+
+            <div class="product__list__header">
+                <div class="product__list__header__wrapper animated slideInDown">
+                    <p class="product__list__header__count">{{productCount}} resultaten</p>
+                    <div class="header__filter__container">
+                        <button @click="changFilter('Alpha')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'Alpha'}">
+                            <p class="header__filter__button--text">Alfabetisch</p>
+                        </button>
+                        <button @click="changFilter('Price')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'Price'}">
+                            <p class="header__filter__button--text">Prijs</p>
+                        </button>
                     </div>
                 </div>
-
-                <div class="filler_second"></div>
-
-                <ProductItem :productSort="productType" :favorite="favorites" class="product_list_section-2"></ProductItem>
-
-                <div class="product_list_section-3_filler"></div>
-
-                <ProductButtons class="product_list_section-4 animated slideInUp"></ProductButtons>
             </div>
-            <ShareList v-if="shareListActive" :isOpen="shareListActive" :url="wishListUrl" :favorites="favoritesName"></ShareList>
+
+            <div class="filler_second"></div>
+
+            <ProductItem :productSort="productType" :favorite="favorites" class="product__list__item"></ProductItem>
+
+            <div class="product__list__filler"></div>
+
+            <ProductButtons class="product__list__buttons animated slideInUp"></ProductButtons>
         </div>
-    </transition>
+        <ShareList v-if="shareListActive" :isOpen="shareListActive"
+                   :url="wishListUrl" :favorites="favoritesName">
+        </ShareList>
+    </div>
 </template>
 
 <script>
@@ -32,16 +38,14 @@
     import ShareList from './ShareList'
     import ProductItem from './ProductItem'
     import ProductButtons from './ProductButtons'
-    import ScreenLoader from './../layout/ScreenLoader'
 
     export default {
         name: "ProductList",
         components: {
             'WishList': WishList,
-            'ScreenLoader': ScreenLoader,
             'ShareList': ShareList,
-            'ProductItem' : ProductItem,
-            'ProductButtons' : ProductButtons
+            'ProductItem': ProductItem,
+            'ProductButtons': ProductButtons
         },
 
         data() {
@@ -52,7 +56,7 @@
                 wishListUrl: null,
                 favoritesName: [],
                 productCount: null,
-                productType: 'Alpha'
+                productType: 'Alpha',
             }
         },
 
@@ -74,7 +78,7 @@
                 this.favorites = []
             },
 
-            productLength(length){
+            productLength(length) {
                 this.productCount = length
             },
 
@@ -87,13 +91,6 @@
             }
         },
 
-        mounted() {
-            let vm = this
-            setTimeout(function () {
-                vm.loadOrder = false
-            }, 2500)
-        },
-
         computed: {
             addToURL() {
                 return this.favorites
@@ -103,12 +100,10 @@
         watch: {
             addToURL() {
                 let favoritesURL = []
-
                 for (let i = 0; i < this.favorites.length; i++) {
                     favoritesURL.push(this.favorites[i]['ProductNumber'])
                     this.favoritesName.push(this.favorites[i]['ProductNameNL'])
                 }
-
                 this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
             },
         }
@@ -125,7 +120,7 @@
         animation-fill-mode: both;
     }
 
-    .product_list_container {
+    .product__list__container {
         background: transparent;
         height: 1015px;
         font-family: Ubuntu, sans-serif;
@@ -139,11 +134,11 @@
         height: 76px;
     }
 
-    .product_list_section-1 {
+    .product__list__header {
         height: 48px;
     }
 
-    .product_list_section-1 > * {
+    .product__list__header__wrapper {
         height: 100%;
         margin: 0 auto 0 60px;
         display: flex;
@@ -154,13 +149,13 @@
         width: 1000px;
     }
 
-    .product_list_section-1 > *:first-child {
+    .product__list__header__count {
         color: black;
         font-weight: bold;
         font-size: 48px;
     }
 
-    .product_list_section-1 > *:first-child > *:nth-child(2) {
+    .header__filter__container {
         margin-left: 80px;
         display: flex;
         flex-direction: row;
@@ -168,7 +163,7 @@
         height: 100%;
     }
 
-    .filter_buttons {
+    .header__filter__button {
         cursor: pointer;
         border-radius: 24px;
         font-size: 25px;
@@ -183,11 +178,11 @@
         transition: 0.3s ease-in-out;
     }
 
-    .filter_buttons p {
+    .header__filter__button--text {
         margin: 10px;
     }
 
-    .filter_buttons_active {
+    .header__filter__button__active {
         transition: 0.3s ease-in-out;
         box-shadow: 0 3px 0 0 rgba(47, 63, 80, 0.5);
         border: 2px solid #2f3f50;
@@ -195,12 +190,21 @@
         background: #496078;
     }
 
-    .product_list_section-2 {
+    .product__list__item {
         height: 678px;
         width: 100%;
     }
 
-    .product_list_section-3_filler {
+    .product__list__buttons {
+        width: 100%;
+        height: 120px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .product__list__filler {
         height: 92px;
     }
 

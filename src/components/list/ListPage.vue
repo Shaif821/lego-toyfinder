@@ -58,10 +58,13 @@
 </template>
 
 <script>
-    import 'buefy/dist/buefy.css'
+    // import 'buefy/dist/buefy.css'
+    import Buefy from 'buefy'
+
 
     export default {
         name: "ListPage",
+        components: Buefy,
 
         data() {
             return {
@@ -69,6 +72,7 @@
                     target: 'list__confetti',
                     max: 20,
                     size: 3,
+                    rotate: true,
                     props: [
                         {
                             type: "png",
@@ -76,8 +80,7 @@
                         },
                         {
                             type: "png",
-                            weight: 0.7,
-                            src: "/lego-toyfinder/img/list-block.798c64a5.png"
+                            src: "data:image/png;base64,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"
                         }
                     ]
                 }
@@ -86,7 +89,7 @@
 
         mounted() {
             let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            confetti.render()
         }
     }
 </script>
@@ -242,9 +245,8 @@
     }
 
     /*Media Queries*/
-    @media screen and (max-width: 1016px) {
+    @media screen and (max-width: 1216px) {
         .text__container {
-            transition: 0.3s ease-in-out;
             display: none;
         }
     }

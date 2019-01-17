@@ -8,12 +8,15 @@ const store = new Vuex.Store({
         ageChoice: null,
         interestChoice: null,
         themeChoice: null,
+        loadSurvey: false,
 
         isActiveTheme: false,
         currentSurvey: null,
         slideState: true, //De state van de slide, true = legosurvey + cardboard + screensaver
         legoSurveyStatus: true,
         transitionSlide: false,
+
+        toProduct: false,
 
 
         ages: [

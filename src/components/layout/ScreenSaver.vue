@@ -1,64 +1,71 @@
 <template>
     <div>
-        <div class="screensaver_container">
+        <div v-if="this.$store.state.legoSurveyStatus" class="screensaver__container">
 
-            <div class="screensaver_section-1">
-                <p>Ik wil dit jaar een...</p>
+            <div class="screensaver__header">
+                <p class="screensaver__header__text">Ik wil dit jaar een...</p>
             </div>
 
 
             <transition
                     leave-active-class="animated bounceOutRight"
                     enter-active-class="animated bounceInLeft"
-                    @before-enter="beforeEnter"
                     @before-leave="beforeLeave"
                     style="animation-delay: 0.3s"
                     mode="out-in">
 
-                <div class="screensaver_section-2" :key="counter">
-                    <div class="speech_bubble_container">
-                        <img class="testen animated rubberBandItem" style="animation-delay: 0.9s"
+                <div class="screensaver__main" :key="counter">
+
+                    <div class="bubble__container">
+                        <img class="bubble__container--speech animated rubberBandItem" style="animation-delay: 0.9s"
                              :style="{margin: legoImages[counter].speechPos}"
                              :src="legoImages[counter].speech">
-                        <img src="../../assets/images/screensaver/speech-bubble.png">
+                        <img class="bubble__container--bubble " src="../../assets/images/screensaver/speech-bubble.png">
                     </div>
 
-                    <img class="screensaver_lego animated bounceInLeft"
+                    <img class="screensaver__lego animated bounceInLeft"
                          :style="{marginBottom: legoImages[counter].margin}"
                          :src="legoImages[counter].url">
                 </div>
-
             </transition>
 
 
-            <div class="screensaver_section-3">
-                <p>Wat wil jij van Lego? Maak snel jouw verlanglijstje </p>
+            <div class="screensaver__tagline">
+                <p class="screensaver__tagline--text">
+                    Wat wil jij van Lego? Maak snel jouw verlanglijstje
+                </p>
             </div>
 
 
-            <div class="screensaver_section-4" >
-                <div></div>
-                <div class="hand animated bounce infinite" style=" animation-duration: 3s;">
+            <div class="screensaver__footer">
+                <div class="screensaver__footer--filler"></div>
+                <div class="screensaver__footer--hand animated bounce infinite" style=" animation-duration: 3s;">
                     <img src="../../assets/images/layout/touch.png">
                 </div>
-                <div @click="toThemes" class="product_button_container">
-                    <div style="cursor: pointer" class="product_text_wrapper">
-                        <p>Productoverzicht</p>
-                        <div class="button_circle">
+                <div @click="toThemes" class="screensaver__footer--text">
+                    <div style="cursor: pointer" class="screensaver__footer--text-wrapper">
+                        <p class="screensaver__footer--title">Productoverzicht</p>
+                        <div class="screensaver__footer--button">
                             <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div v-else>
+            <ScreenLoader></ScreenLoader>
+        </div>
     </div>
 
 </template>
 
 <script>
+    import ScreenLoader from '../layout/ScreenLoader'
 
     export default {
         name: "ScreenSaver",
+        components: {'ScreenLoader' : ScreenLoader},
+
 
         data() {
             return {
@@ -89,36 +96,28 @@
 
         methods: {
             increment() {
+                //Elke 3 seconden verandert de Lego afbleeding
                 let v = this;
                 setInterval(function () {
-                    if (v.counter === 2) {
-                        v.counter = 0;
-                    } else {
-                        v.counter++
-                    }
+                    v.counter === 2 ? v.counter = 0 : v.counter++
                 }, 3000)
             },
 
-            beforeEnter: function (el) {
-                if(el){
-                    this.transition = true;
-                }
-            },
-
             beforeLeave: function (el) {
-                let test = el.querySelector('.screensaver_lego');
+                //Dit zorgt ervoor dat de speechbuble iets later uit het scherm verdwijnt
+                let test = el.querySelector('.screensaver__lego');
                 test.classList.remove('animated', 'bounceInLeft');
                 test.classList.add('animated', 'bounceOutRight');
                 test.setAttribute('style', 'animation-delay: -0.1s');
             },
 
             toThemes() {
+                //Laadt de SurveyTheme component inplaatst van de SurveyAge component
                 this.$store.state.isActiveTheme = true
             }
-
         },
 
-        mounted: function () {
+        mounted () {
             this.increment();
         }
     }
@@ -127,9 +126,141 @@
 <style scoped>
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
-    .faster {
-        animation-delay: 0.3s;
+    .screensaver__container {
+        overflow: hidden;
+        height: 930px;
+        font-family: BlueSheepLego, 'sans-serif';
     }
+
+    .screensaver__header {
+        height: 72px;
+    }
+
+    .screensaver__header__text {
+        font-size: 72px;
+        color: white;
+        padding: 0;
+        margin: 0;
+    }
+
+    .screensaver__main {
+        height: 638px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .screensaver__lego {
+        margin-top: 128px;
+    }
+
+    .bubble__container {
+        position: absolute;
+        width: 100%;
+    }
+
+    .bubble__container--bubble {
+        animation: speech 0.5s ease-in-out;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation-delay: 0.4s;
+        transform: translate(+25%, +25%) scale(0);
+    }
+
+    .rubberBandItem {
+        -webkit-animation-name: rubberBandItem;
+        animation-name: rubberBandItem;
+    }
+
+    .bubble__container--speech {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .bubble__container--bubble {
+        margin-top: 30px;
+        margin-right: 750px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .screensaver__tagline {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        font-family: 'Ubuntu', 'sans-serif';
+        background: url('../../assets/images/layout/separator.png') no-repeat 100% center;
+        background-size: contain;
+        width: 1587px;
+    }
+
+    .screensaver__tagline--text {
+        font-size: 28px;
+        font-weight: 500;
+        padding: 0;
+        margin: 0;
+        color: white;
+        width: 100%;
+    }
+
+    .screensaver__footer {
+        width: 1587px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .screensaver__footer--filler, .screensaver__footer--hand, .screensaver__footer--text {
+        flex: 1;
+    }
+
+    .screensaver__footer--hand {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .screensaver__footer--text {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        height: 197px;
+        margin: 0 auto;
+    }
+
+    .screensaver__footer--text-wrapper {
+        font-family: 'Ubuntu', 'sans-serif';
+        font-size: 25px;
+        color: #ffc600;
+        text-decoration: none;
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        margin-right: -100px;
+    }
+
+    .screensaver__footer--title {
+        margin-right: 23px;
+    }
+
+    .screensaver__footer--button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        width: 72px;
+        height: 72px;
+        background: #ffc600;
+    }
+
+    /*Animations:*/
+    .bounce {
+        animation-name: bounce;
+        transform-origin: center bottom;
+    }
+
 
     @keyframes bounce {
         from,
@@ -148,60 +279,7 @@
         }
     }
 
-    .bounce {
-        animation-name: bounce;
-        transform-origin: center bottom;
-    }
-
-    .screensaver_container {
-        overflow: hidden;
-        height: 930px;
-        font-family: BlueSheepLego, 'sans-serif';
-    }
-
-    .screensaver_section-1 {
-        height: 72px;
-    }
-
-    .screensaver_section-1 p {
-        font-size: 72px;
-        color: white;
-        padding: 0;
-        margin: 0;
-    }
-
-    .screensaver_section-2 {
-        height: 638px;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .screensaver_lego {
-        margin-top: 128px;
-    }
-
-    .speech_bubble_container {
-        position: absolute;
-        width: 100%;
-    }
-
-    .speech_bubble_container img:nth-child(2) {
-        animation: testAnimation 0.5s ease-in-out;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
-        animation-delay: 0.4s;
-        transform: translate(+25%, +25%) scale(0);
-
-        /*transform: translate(+5%, +5%) scale(0);*/
-    }
-
-    @keyframes testAnimation {
-        /*from{*/
-        /*transform: translate(+55%, +55%) scale(0);*/
-        /*}*/
-        /*to {*/
-        /*transform: translate(0%, 0%) scale(1);*/
-        /*}*/
+    @keyframes speech {
         0% {
             transform: translate(+55%, +55%) scale(0);
         }
@@ -247,94 +325,5 @@
             -webkit-transform: scale3d(1, 1, 1);
             transform: scale3d(1, 1, 1);
         }
-    }
-
-    .rubberBandItem {
-        -webkit-animation-name: rubberBandItem;
-        animation-name: rubberBandItem;
-    }
-
-    .speech_bubble_container img:first-child {
-        position: absolute;
-        z-index: 1;
-    }
-
-    .speech_bubble_container img:nth-child(2) {
-        margin-top: 30px;
-        margin-right: 750px;
-        width: 250px;
-        height: 250px;
-    }
-
-    .screensaver_section-3 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-        font-family: 'Ubuntu', 'sans-serif';
-        background: url('../../assets/images/layout/separator.png') no-repeat 100% center;
-        background-size: contain;
-        width: 1587px;
-    }
-
-    .screensaver_section-3 p {
-        font-size: 28px;
-        font-weight: 500;
-        padding: 0;
-        margin: 0;
-        color: white;
-        width: 100%;
-    }
-
-    .screensaver_section-4 {
-        width: 1587px;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-
-    .screensaver_section-4 > * {
-        flex: 1;
-    }
-
-    .hand {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .product_button_container {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-        height: 197px;
-        margin: 0 auto;
-    }
-
-    .product_text_wrapper {
-        font-family: 'Ubuntu', 'sans-serif';
-        font-size: 25px;
-        color: #ffc600;
-        text-decoration: none;
-        justify-content: space-between;
-        display: flex;
-        flex-direction: row;
-        margin-right: -100px;
-    }
-
-    .product_text_wrapper > *:first-child {
-        margin-right: 23px;
-    }
-
-    .button_circle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        width: 72px;
-        height: 72px;
-        background: #ffc600;
     }
 </style>
