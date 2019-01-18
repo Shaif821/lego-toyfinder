@@ -21,11 +21,16 @@
 
             <div class="filler_second"></div>
 
-            <ProductItem :productSort="productType" :favorite="favorites" class="product__list__item"></ProductItem>
+            <ProductItem :productSort="productType" :favorite="favorites"
+                         :age="ageGroup" :interest="interestGroup" :theme="themeGroup"
+                         :subjects="subjects"
+                         class="product__list__item"></ProductItem>
 
             <div class="product__list__filler"></div>
 
-            <ProductButtons class="product__list__buttons animated slideInUp"></ProductButtons>
+            <ProductButtons :age="ageGroup" :interest="interestGroup" :theme="themeGroup"
+                            class="product__list__buttons animated slideInUp">
+            </ProductButtons>
         </div>
         <ShareList v-if="shareListActive" :isOpen="shareListActive"
                    :url="wishListUrl" :favorites="favoritesName">
@@ -57,6 +62,10 @@
                 favoritesName: [],
                 productCount: null,
                 productType: 'Alpha',
+                ageGroup: null,
+                interestGroup: null,
+                themeGroup: null,
+                subjects: [],
             }
         },
 
@@ -91,6 +100,21 @@
             }
         },
 
+        mounted(){
+            if (this.$store.state.ageChoice !== null) {
+                this.ageGroup = this.$store.state.ages[this.$store.state.ageChoice].text
+                this.subjects.push('age')
+            }
+            if (this.$store.state.interestChoice !== null) {
+                this.interestGroup = this.$store.state.interests[this.$store.state.interestChoice].text
+                this.subjects.push('interest')
+            }
+            if (this.$store.state.themeChoice !== null) {
+                this.subjects.push('theme')
+                this.themeGroup = this.$store.state.themes[this.$store.state.themeChoice].theme
+            }
+        },
+
         computed: {
             addToURL() {
                 return this.favorites
@@ -104,15 +128,13 @@
                     favoritesURL.push(this.favorites[i]['ProductNumber'])
                     this.favoritesName.push(this.favorites[i]['ProductNameNL'])
                 }
-                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
+                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/list/' + favoritesURL.join('-')
             },
         }
     }
 </script>
 
 <style scoped>
-    @import '../../../node_modules/slick-carousel/slick/slick.css';
-
     .zoomOut, .zoomIn {
         -webkit-animation-duration: 0.4s;
         animation-duration: 0.4s;

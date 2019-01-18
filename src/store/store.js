@@ -8,16 +8,17 @@ const store = new Vuex.Store({
         ageChoice: null,
         interestChoice: null,
         themeChoice: null,
-        loadSurvey: false,
 
-        isActiveTheme: false,
-        currentSurvey: null,
-        slideState: true, //De state van de slide, true = legosurvey + cardboard + screensaver
-        legoSurveyStatus: true,
-        transitionSlide: false,
+        loadSurvey: false,      //Of de survey geladen moet worden of niet       =====> Screensaver & product pagina                       : ScreenSaver & Product
+        isActiveTheme: false,  //Checkt of het thema gedeelte actief is          =====> Wanneer de survey pagina wordt weergegeven         : ScreenSaver & Product
 
-        toProduct: false,
-        switchState: true,
+        slideState: 1,           //De state van de slide                         =====> welke state                                        : ELK
+
+
+        currentSurvey: null,   //De huidige survey                               =====> De huidige survey die geladen moet worden          : Product
+        legoSurveyStatus: true,  //Overslaan tekst bij de carboard component     =====> Wanneer de survey pagina weergegeven wordt         : Survey
+        transitionSlide: false,  //De transitie van de survey slide              =====> Wanneer de producten pagina geladen wordt = true   : Survey
+
 
 
         ages: [

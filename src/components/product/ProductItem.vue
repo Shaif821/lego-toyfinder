@@ -21,7 +21,7 @@
 
                     <div v-if="selected !== index">
                         <hr class="product_seperator">
-                        <p class="product_name">{{ i['ProductNameNL'] }} {{productSort}}</p>
+                        <p class="product_name">{{ i['ProductNameNL'] }} </p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
@@ -30,7 +30,7 @@
                                 Bekijk dit product
                             </div>
 
-                            <div class="product_favorite" @click="toFavorite(i)">
+                            <div class="product_favorite" @click="$parent.addToFavorite(i)">
                                 <transition enter-active-class="animated bounceIn"
                                             mode="out-in">
                                     <img key="1" v-if="favorite.includes(i)"
@@ -102,7 +102,7 @@
                             </div>
                         </div>
 
-                        <div @click="toFavorite(i)" class="product_details_footer">
+                        <div @click="$parent.addToFavorite(i)" class="product_details_footer">
                             <p>Voeg toe aan verlanglijstje</p>
 
                             <div>
@@ -127,28 +127,27 @@
 </template>
 
 <script>
-    import productsJSON from '../../assets/products/januari-2019'
-    import priceProducts from '../../assets/products/price'
-    import alphaProducts from '../../assets/products/alpha'
+    import priceProducts from '../../assets/products/products-all-links-price'
+    import alphaProducts from '../../assets/products/products-all-links-alpha'
 
     export default {
         name: "ProductItem",
         props: {
             favorite: Array,
             productSort: String,
+            age: String,
+            interest: String,
+            theme: String,
+            subjects: Array,
         },
 
         data() {
             return {
-                allProducts: productsJSON,
                 priceProducts: priceProducts,
                 alphaProducts: alphaProducts,
                 currentProducts: null,
-
-                startProduts: null,
                 shortProducts: [],
                 noProduct: [],
-
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -176,8 +175,7 @@
                 counter = this.currentSlide === null ? 15 : this.addSlides
                 this.shortProducts = []
                 this.checkProductFilter()
-
-                for (let i = 0; i < this.allProducts.length; i++) {
+                for (let i = 0; i < this.currentProducts.length; i++) {
                     try {
                         require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
                         if (this.shortProducts.length < counter) {
@@ -187,18 +185,14 @@
                         this.noProduct.push(this.currentProducts[i])
                     }
                 }
-
                 this.$parent.productLength(this.currentProducts.length)
             },
 
             checkProductFilter() {
-                if (this.productSort === 'All') {
-                    this.currentProducts = this.allProducts
-                }
-                else if(this.productSort === 'Alpha') {
+                if (this.productSort === 'Alpha') {
                     this.currentProducts = this.alphaProducts
                 }
-                else if(this.productSort === 'Price'){
+                else if (this.productSort === 'Price') {
                     this.currentProducts = this.priceProducts
                 }
                 else {
@@ -239,9 +233,9 @@
                 })                                                 //een slide verandert. De index is nodig voor de Cardboard component
             },
 
-            toFavorite(i) {
-                this.$parent.addToFavorite(i)
-            }
+            // toFavorite(i) {
+            //     this.$parent.addToFavorite(i)
+            // }
 
         },
 
@@ -272,7 +266,7 @@
                 }
             },
 
-            productSort: function (newVal, oldVal){
+            productSort: function (newVal, oldVal) {
                 this.checkProductFilter()
                 this.getProducts()
             }
@@ -286,7 +280,7 @@
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         width: 457px !important;
-        height: 678px !important;
+        height: 676px !important;
         display: flex;
         flex-direction: column;
         background: #ffffff;
@@ -319,6 +313,7 @@
     }
 
     .product_all_image {
+
         margin-left: 20px;
         width: 500px;
         height: 676px;

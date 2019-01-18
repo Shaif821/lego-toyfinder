@@ -44,7 +44,7 @@
                                class="section-3-row__middle section-3-row__input" placeholder="Mijn emailadres">
                         <div :key="2" v-else>
                             <br>
-                            <i class="fas fa-spinner animated rotateIn infinite" style="color: white; font-size: 50px;"></i>
+                            <img src="../../assets/images/layout/loader.png" class="rotating">
                         </div>
                     </transition>
 

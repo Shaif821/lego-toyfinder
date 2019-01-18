@@ -9,15 +9,15 @@
     export default {
         name: "ScreenLoader",
 
-        methods: {
-        },
+        methods: {},
 
         mounted() {
+            this.$store.state.legoSurveyStatus = true
             let vm = this
             setTimeout(function () {
-                vm.$store.state.slideState = false
-                vm.$store.state.toProduct = true
+                vm.$store.state.slideState = 3
             }, 3000)
+
         }
     }
 </script>
@@ -37,6 +37,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        z-index: 100;
     }
 
 

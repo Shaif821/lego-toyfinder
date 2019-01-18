@@ -10,7 +10,6 @@ import VueLazyload from 'vue-lazyload'
 
 // require styles
 import 'swiper/dist/css/swiper.css'
-require('confetti-js')
 
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);

@@ -6,16 +6,19 @@
             <!-- Hero head: will stick at the top -->
             <div class="hero-head">
                 <!--<nav class="navbar">-->
-                    <img class="navbar__logo" src="../../assets/images/layout/logo.png" alt="Logo">
+                <img class="navbar__logo" src="../../assets/images/layout/logo.png" alt="Logo">
                 <!--</nav>-->
             </div>
 
             <!-- Hero content: will be in the middle -->
-            <div class="phone__container" >
+            <div class="phone__container">
                 <div class="phone__container__text columns is-gapless is-desktop">
                     <div class="column phone__container__column product__container">
                         <div class="phone__container__products">
-                            <p>test</p>
+                            <p  @mouseover="showImage(product['ProductNumber'], product['Link'])" v-for="(product, index) in products" :key="index"
+                               class="products__text">
+                                {{product['ProductNameNL']}}
+                            </p>
                         </div>
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
@@ -28,6 +31,14 @@
                         </p>
 
                         <div class="text__image__container">
+                            <a :href="url" target="_blank" class="image__wrapper">
+                                <transition enter-active-class="animated bounceInLeft"
+                                            leave-active-class="animated bounceOutRight"
+                                            mode="out-in">
+                                    <img v-if="!noImage" class="image__product"
+                                         :key="image" :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                                </transition>
+                            </a>
                         </div>
 
                         <p class="text__share">Deel jouw lijstje</p>
@@ -58,9 +69,10 @@
 </template>
 
 <script>
-    // import 'buefy/dist/buefy.css'
-    import Buefy from 'buefy'
 
+
+    import productsJSON from '../../assets/products/products-all-links-alpha'
+    import Buefy from 'buefy'
 
     export default {
         name: "ListPage",
@@ -68,6 +80,12 @@
 
         data() {
             return {
+                allProducts: productsJSON,
+                products: [],
+                noProducts: [],
+                image: null,
+                noImage: true,
+                url: null,
                 confettiSettings: {
                     target: 'list__confetti',
                     max: 20,
@@ -87,9 +105,47 @@
             }
         },
 
+        methods: {
+            getProducts() {
+                let id = this.$parent.$router.currentRoute.params.id.split("-").join(" ")
+                id = id.split(" ")
+
+                for (let i = 0; i < id.length; i++) {
+                    for(let j = 0; j < this.allProducts.length; j++){
+                        if(id[i] === this.allProducts[j]['ProductNumber']){
+                            try {
+                                require('../../assets/images/products/' + this.allProducts[j]['ProductNumber'] + '_box1_in.png')
+                                this.products.push(this.allProducts[j])
+                            } catch (e) {
+                                this.noProducts.push(1)
+                            }
+                        }
+                    }
+                }
+            },
+
+            showImage(id, link){
+                if(this.noImage && this.products.length > 0) {
+                    this.image = this.products[0]['ProductNumber']
+                    this.url = this.products[0]['Link']
+                }
+                else {
+                    this.image = id
+                    this.url = link
+                }
+                this.noImage = false
+            }
+        },
+
         mounted() {
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            if(this.$parent.$router.currentRoute.name === 'list-page'){
+                require('confetti-js')
+                require('buefy/dist/buefy.min.css')
+                this.getProducts()
+                this.showImage()
+                let confetti = new ConfettiGenerator(this.confettiSettings)
+                confetti.render()
+            }
         }
     }
 </script>
@@ -132,7 +188,7 @@
     }
 
     .phone__container {
-        margin-top: -45px;
+        margin-top: -30px;
         max-width: 1130px;
         width: 100%;
         max-height: 860px;
@@ -149,7 +205,8 @@
         justify-content: space-around;
         flex-wrap: wrap;
     }
-    .phone__container__column{
+
+    .phone__container__column {
         max-width: 500px;
         min-width: 300px;
         max-height: 860px;
@@ -169,7 +226,30 @@
         left: 18%;
         max-height: 860px;
         height: 860px;
-        margin-bottom:-197%;
+        margin-bottom: -197%;
+    }
+
+    .products__text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: BlueSheepLego, 'sans-serif';
+        line-height: 1.17;
+        color: black;
+        font-size: 30px;
+        height: 12%;
+        background-image: linear-gradient(to right, black 33%, rgba(155,155,155,0) 0%);
+        background-position: bottom;
+        background-size: 20px 1px;
+        background-repeat: repeat-x;
+        transition: 0.5s ease-in-out;
+        opacity: 1;
+
+    }
+
+    .products__text:hover {
+        transition: 0.5s ease-in-out;
+        background-color: #e0e6ed;
     }
 
     .phone__container__column {
@@ -207,11 +287,27 @@
     }
 
     .text__image__container {
+        overflow:hidden;
         margin-top: 20px;
         background: white;
         border-radius: 10px;
         width: 350px;
         height: 276px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image__wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .image__product {
+        max-height: 75%;
+        max-width: 75%;
     }
 
     .text__share {

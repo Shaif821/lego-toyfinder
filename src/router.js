@@ -18,8 +18,13 @@ export default new Router({
             component: SlideScreen
         },
         {
-            path: '/lego-toyfinder/list/',
+            path: '/lego-toyfinder/list/:id',
             name: 'list-page',
+            component: ListPage
+        },
+        {
+            path: '/lego-toyfinder/list/',
+            name: 'list-page-no',
             component: ListPage
         }
     ]

@@ -1,11 +1,10 @@
 <template>
-    <div>
-        <div v-if="this.$store.state.legoSurveyStatus" class="screensaver__container">
+    <div v-if="this.$store.state.slideState === 1">
+        <div class="screensaver__container">
 
             <div class="screensaver__header">
                 <p class="screensaver__header__text">Ik wil dit jaar een...</p>
             </div>
-
 
             <transition
                     leave-active-class="animated bounceOutRight"
@@ -36,7 +35,6 @@
                 </p>
             </div>
 
-
             <div class="screensaver__footer">
                 <div class="screensaver__footer--filler"></div>
                 <div class="screensaver__footer--hand animated bounce infinite" style=" animation-duration: 3s;">
@@ -52,20 +50,13 @@
                 </div>
             </div>
         </div>
-        <div v-else>
-            <ScreenLoader></ScreenLoader>
-        </div>
     </div>
 
 </template>
 
 <script>
-    import ScreenLoader from '../layout/ScreenLoader'
-
     export default {
         name: "ScreenSaver",
-        components: {'ScreenLoader' : ScreenLoader},
-
 
         data() {
             return {

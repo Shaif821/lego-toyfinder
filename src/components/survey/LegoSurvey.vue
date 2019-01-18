@@ -1,7 +1,7 @@
 <template>
     <div :class="[{'survey__hide' : this.$store.state.transitionSlide}]">
         <div class="survey__container">
-            <div class="survey__header">
+            <div :class="[{'hide__interest' : $store.state.transitionSlide}]" class="survey__header">
                 <div style="cursor: pointer;" @click="resetData()" class="first-slide">
                     <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
                 </div>
@@ -10,7 +10,8 @@
             <transition enter-active-class="animated slideInRight"
                         leave-active-class="animated slideOutLeft"
                         enter mode="out-in">
-                <component v-if="indexAnimation === 0 && this.$store.state.loadSurvey" :is="view"></component>
+                <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
+                           v-if="indexAnimation === 0 && this.$store.state.loadSurvey" :is="view"></component>
             </transition>
         </div>
     </div>
@@ -72,7 +73,7 @@
                         this.$store.state.themeChoice = choice
                         break;
                 }
-                if(bool){
+                if (bool) {
                     this.nextSlide()
                 }
             },
@@ -80,39 +81,49 @@
             nextSlide() {
                 this.$store.state.transitionSlide = true
                 this.$store.state.legoSurveyStatus = false
-                this.$store.state.switchState = false
+                this.$store.state.slideState = 2
             },
 
             resetData() {
+                if(this.$store.state.slideState !== 1) {
+                    this.$store.state.slideState = 1
+                }
+                this.$store.state.slideState = true
+                this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
                 this.$store.state.ageChoice = null
                 this.$store.state.interestChoice = null
                 this.$store.state.themeChoice = null
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
-                this.$store.state.slideState = true
-                this.$store.state.loadSurvey = false
             },
+
+            watchView(){
+                if (this.$store.state.currentSurvey === 'SurveyAge') {
+                    this.view = 'SurveyAge'
+                }
+                else if (this.$store.state.currentSurvey === 'SurveyInterest') {
+                    this.view = 'SurveyInterest'
+                }
+                else if (this.$store.state.currentSurvey === 'SurveyTheme') {
+                    this.view = 'SurveyTheme'
+                }
+                else {
+                    this.view = 'SurveyAge'
+                }
+            }
         },
 
         mounted() {
-            if (this.$store.state.currentSurvey === 'SurveyAge') {
-                this.view = 'SurveyAge'
-            }
-            else if (this.$store.state.currentSurvey === 'SurveyInterest') {
-                this.view = 'SurveyInterest'
-            }
-            else if (this.$store.state.currentSurvey === 'SurveyTheme') {
-                this.view = 'SurveyTheme'
-            }
-            else {
-                this.view = 'SurveyAge'
-            }
+            this.watchView()
         },
 
         computed: {
             checkThemeChange() {
                 return this.$store.state.isActiveTheme
+            },
+            checkView(){
+                return this.$store.state.currentSurvey
             }
         },
 
@@ -123,6 +134,12 @@
                 }
                 else {
                     this.view = 'SurveyAge'
+                }
+            },
+
+            checkView(){
+                if(this.$store.state.currentSurvey !== null) {
+                    this.watchView()
                 }
             }
         }
@@ -138,7 +155,7 @@
         height: 970px;
     }
 
-    .survey__header{
+    .survey__header {
         height: 150px;
         display: flex;
         justify-content: flex-end;
@@ -159,23 +176,23 @@
     }
 
     /*Animations*/
-    .survey__hide{
+    .survey__hide {
         overflow: hidden;
         -webkit-animation-fill-mode: both;
         animation-fill-mode: both;
-        animation: transition 0.5s forwards;
+        animation: transition 2s forwards;
+    }
+
+    .hide__interest {
+        transition: 0.5s ease-in-out;
+        opacity: 0;
     }
 
     @keyframes transition {
         0% {
-            opacity: 1;
             height: 970px;
         }
-        50% {
-            opacity: 0;
-        }
         100% {
-            opacity: 0;
             height: 0;
         }
     }

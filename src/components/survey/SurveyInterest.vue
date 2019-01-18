@@ -11,7 +11,7 @@
                  v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
 
-                <div  class="survey__interest__images">
+                <div  class="survey__interest__images" >
                     <img class="survey__interest__lego__img animated flipInY"
                          style="animation-delay: 0.4s; animation-duration: 1.5s"
                          src="../../assets/images/layout/lego-head.png" :style="{margin: legoInterest.pos}">
@@ -71,7 +71,9 @@
     .survey__interest__images {
         margin: 0;
         padding: 0;
+        transition: 0.5s ease-in-out;
     }
+
 
     .survey__interest__lego__img {
         position: absolute;

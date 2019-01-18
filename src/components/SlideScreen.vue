@@ -1,5 +1,7 @@
 <template>
-    <div class="slidescreen__container" :class="[!this.$store.state.toProduct ? 'slidescreen__container--normal' : 'slidescreen__container--products']" style="padding: 0; margin: 0;">
+    <div class="slidescreen__container"
+         :class="[this.$store.state.slideState  === 3 ? 'slidescreen__container--products' : 'slidescreen__container--normal']"
+         style="padding: 0; margin: 0;">
         <div v-if="fixSlideOrder === 0">{{moveSlide()}}</div>
 
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
@@ -7,17 +9,20 @@
         <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
                 style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
             <swiper-slide>
-                <LegoSurvey v-if="this.$store.state.slideState" :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide">
-                <CardBoard @click.native="toSurvey()" class="swiper__slide--no-swiping" :index="currentSlide"></CardBoard>
+                <CardBoard @click.native="toSurvey()" class="swiper__slide--no-swiping"
+                           :index="currentSlide"></CardBoard>
             </swiper-slide>
 
-            <swiper-slide>
-                <transition leave-active-class="animated fadeOut" mode="out-in">
-                    <ScreenSaver v-if="this.$store.state.slideState" class="swiper__slide--no-swiping" @click.native="toSurvey()" ></ScreenSaver>
-                    <ProductList v-else></ProductList>
+            <swiper-slide class="swiper__slide">
+                <transition leave-active-class="animated fadeOut" enter-active-class="animated fadeIn" mode="out-in">
+                    <ScreenSaver :key="1" v-if="this.$store.state.slideState === 1" class="swiper__slide--no-swiping"
+                                 @click.native="toSurvey()"></ScreenSaver>
+                    <ScreenLoader :key="2" v-else-if="this.$store.state.slideState === 2"></ScreenLoader>
+                    <ProductList :key="3" v-else></ProductList>
                 </transition>
             </swiper-slide>
         </swiper>
@@ -25,6 +30,7 @@
 </template>
 
 <script>
+    import ScreenLoader from './layout/ScreenLoader'
     import ProductList from './product/ProductList'
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
@@ -34,7 +40,8 @@
         name: "SlideScreen",
         components: {
             ScreenSaver, LegoSurvey,
-            CardBoard, ProductList
+            CardBoard, ProductList,
+            ScreenLoader
         },
 
         data() {
@@ -75,13 +82,11 @@
 
             toSurvey() {
                 this.$nextTick(() => {
-
                     let v = this
                     setTimeout(function () {
                         v.$store.state.loadSurvey = true
                     }, 100)
-                    this.swiper.slideTo(0, 1000, false);
-
+                    this.swiper.slideTo(0, 1500, false);
                 })
             },
 
@@ -100,13 +105,14 @@
             swiper() {
                 return this.$refs.mySwiper.swiper //Hiermee wordt de instantie voor mySwiper gemaakt
             },
-
             checkTheme() {
                 return this.$store.state.isActiveTheme
             },
-
             checkCurSlide() {
                 return this.currentSlide
+            },
+            checkLoadState() {
+                return this.$store.state.transitionSlide
             }
         },
 
@@ -116,8 +122,17 @@
                     let v = this
                     setTimeout(function () {
                         v.$store.state.loadSurvey = true
-                    }, 100)
-                    this.moveSlide(1000);
+                    }, 100);
+                    this.moveSlide(1500);
+                }
+            },
+
+            checkLoadState() {
+                if(!this.$store.state.transitionSlide) {
+                    this.$nextTick(() => {
+                        this.swiper.slideTo(0, 1500, false);
+
+                    })
                 }
             },
 
@@ -131,14 +146,20 @@
 </script>
 
 <style scoped>
-    .slidescreen__container--normal{
+    .slidescreen__container--normal {
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }
 
     .slidescreen__container--products {
-        animation: changeBackground 2.5s ease-in-out;
-        -webkit-animation-fill-mode: both;
-        animation-fill-mode: both;
+        background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
+
+        /*animation: changeBackground 2.5s ease-in-out;*/
+        /*-webkit-animation-fill-mode: both;*/
+        /*animation-fill-mode: both;*/
+    }
+
+    .swiper__slide {
+        z-index: 5;
     }
 
     @keyframes changeBackground {
