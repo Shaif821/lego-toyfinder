@@ -37,7 +37,7 @@
                                   <p class="not_favorited">Je lijstje is nog leeg</p>
                             </span>
 
-                            <span :key="i + '-has_star'" v-else>
+                            <span :key="favorited[i - 1]" v-else>
                                 <p class="has_star">{{i}}</p>
                             </span>
 

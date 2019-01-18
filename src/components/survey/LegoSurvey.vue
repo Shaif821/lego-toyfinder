@@ -11,7 +11,9 @@
                         leave-active-class="animated slideOutLeft"
                         enter mode="out-in">
                 <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
-                           v-if="indexAnimation === 0 && this.$store.state.loadSurvey" :is="view"></component>
+                           v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
+                           :is="view">
+                </component>
             </transition>
         </div>
     </div>

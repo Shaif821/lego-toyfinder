@@ -16,10 +16,10 @@ $favorites = $data['favorites'];
 $url = $data['url'];
 
 $emailContent = "
-<h1>Wenslijtjes</h1>
-<p>Bedankt voor het aanmaken van jouw wenslijtje.</p>
+<h1>Wenslijstjes</h1>
+<p>Bedankt voor het aanmaken van jouw wenslijstje.</p>
 <p><b>Mijn lijstje:</b></p>
-<ul><li>". implode('</li><li>', $favorites) ."</li></ul>
+<ul><li>".  $favorites[0] ."</li></ul>
 <br><br>
 <p>Je kunt jouw lijstje ook online bekijken via deze unieke link:<br>
 ". $url ."</p>";

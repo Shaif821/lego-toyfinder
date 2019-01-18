@@ -7,7 +7,7 @@
         <div class="survey__filler"></div>
 
         <div class="survey__interest__container">
-            <div @click="saveChoice(indexInterest)" class="survey__interest__wrapper"
+            <div @click="$parent.changeView(indexInterest);" class="survey__interest__wrapper"
                  v-for="(legoInterest, indexInterest) in this.$store.state.interests"
                  :key="indexInterest + 'ST'">
 
@@ -33,12 +33,6 @@
 <script>
     export default {
         name: "SurveyInterest",
-
-        methods: {
-            saveChoice(index) {
-                this.$parent.changeView(index);   //De route wordt verandert naar de producten pagina
-            },                                    //en de index van het gekozen interesse wordt meegegven
-        }
     }
 </script>
 
