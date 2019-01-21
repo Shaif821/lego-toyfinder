@@ -9,7 +9,7 @@
         <div class="survey__age__container">
             <div class="survey__age__wrapper" v-for="(legoAge, indexAge) in this.$store.state.ages" :key="indexAge + 'SA'">
                 <div class="survey__age__images">
-                    <div @click="$parent.changeView(indexAge)">
+                    <div @click="$parent.changeView(legoAge)">
 
                         <img class="survey__age__lego__img animated flipInY slower"
                              style="animation-duration: 1.7s;"

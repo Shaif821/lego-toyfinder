@@ -1,20 +1,20 @@
 <template>
     <div >
         <div @click="goToSurvey('SurveyTheme')" class="product-bottom__button">
-            <span class="product-buttons__text" v-if="theme !== null">{{ theme }}</span>
+            <span class="product-buttons__text" v-if="this.$store.state.themeChoice !== null">{{ this.$store.state.themeChoice.theme }}</span>
             <span class="product-buttons__text" v-else>Kies een thema</span>
         </div>
 
         <div @click="goToSurvey('SurveyAge')" class="product-bottom__button">
-            <span class="product-buttons__text" v-if="age !== null">
-                Ik ben <span class="product_survey_choice">{{ age  }}</span>
+            <span class="product-buttons__text" v-if="this.$store.state.ageChoice !== null">
+                Ik ben <span class="product_survey_choice">{{ this.$store.state.ageChoice.text  }}</span>
             </span>
             <span class="product-buttons__text" v-else>Wat is je leeftijd?</span>
         </div>
 
         <div @click="goToSurvey('SurveyInterest') " class="product-bottom__button product-bottom__button--last">
-            <span class="product-buttons__text" v-if="interest !== null">
-                Ik hou van <span class="product_survey_choice">{{ interest }}</span>
+            <span class="product-buttons__text" v-if="this.$store.state.interestChoice !== null">
+                Ik hou van <span class="product_survey_choice">{{ this.$store.state.interestChoice.text }}</span>
             </span>
             <span class="product-buttons__text" v-else>Wat vind je leuk?</span>
         </div>
@@ -24,24 +24,14 @@
 <script>
     export default {
         name: "ProductButtons",
-        props: {
-            age: String,
-            interest: String,
-            theme: String
-        },
 
         methods: {
             goToSurvey(survey) {
-                this.$store.state.currentSurvey = survey
-                this.$store.state.legoSurveyStatus = true
+                this.$store.state.surveyStream = false
                 this.$store.state.slideState = 2
-                this.$store.state.transitionSlide = false
+                this.$store.state.currentSurvey = survey
             },
         },
-
-        mounted() {
-
-        }
     }
 </script>
 

@@ -1,19 +1,27 @@
 <template>
     <div>
-        <WishList :favorited="favorites"></WishList>
+        <WishList  :favorited="favorites"></WishList>
         <div class="product__list__container">
 
             <div class="product__list__header">
-                <div class="product__list__header__wrapper animated slideInDown">
+                <div class="product__list__header__wrapper">
                     <p class="product__list__header__count">{{productCount}} resultaten</p>
                     <div class="header__filter__container">
-                        <button @click="changFilter('Alpha')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'Alpha'}">
-                            <p class="header__filter__button--text">Alfabetisch</p>
+                        <button @click="changFilter('AlphaA')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'AlphaA'}">
+                            <p class="header__filter__button--text">Alfabetisch A-Z</p>
                         </button>
-                        <button @click="changFilter('Price')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'Price'}">
-                            <p class="header__filter__button--text">Prijs</p>
+                        <button @click="changFilter('AlphaZ')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'AlphaZ'}">
+                            <p class="header__filter__button--text">Alfabetisch Z-A</p>
+                        </button>
+                        <button @click="changFilter('PriceL')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'PriceL'}">
+                            <p class="header__filter__button--text">Prijs oplopend</p>
+                        </button>
+                        <button @click="changFilter('PriceH')" class="header__filter__button"
+                                :class="{header__filter__button__active : productType === 'PriceH'}">
+                            <p class="header__filter__button--text">Prijs aflopend</p>
                         </button>
                     </div>
                 </div>
@@ -21,16 +29,11 @@
 
             <div class="filler_second"></div>
 
-            <ProductItem :productSort="productType" :favorite="favorites"
-                         :age="ageGroup" :interest="interestGroup" :theme="themeGroup"
-                         :subjects="subjects"
-                         class="product__list__item"></ProductItem>
+            <ProductItem :productSort="productType" :favorite="favorites" class="product__list__item"></ProductItem>
 
             <div class="product__list__filler"></div>
 
-            <ProductButtons :age="ageGroup" :interest="interestGroup" :theme="themeGroup"
-                            class="product__list__buttons animated slideInUp">
-            </ProductButtons>
+            <ProductButtons class="product__list__buttons"></ProductButtons>
         </div>
         <ShareList v-if="shareListActive" :isOpen="shareListActive"
                    :url="wishListUrl" :favorites="favoritesName">
@@ -56,16 +59,11 @@
         data() {
             return {
                 favorites: [],
-                loadOrder: true,
                 shareListActive: false,
                 wishListUrl: null,
                 favoritesName: [],
                 productCount: null,
-                productType: 'Alpha',
-                ageGroup: null,
-                interestGroup: null,
-                themeGroup: null,
-                subjects: [],
+                productType: 'AlphaA',
             }
         },
 
@@ -101,18 +99,7 @@
         },
 
         mounted(){
-            if (this.$store.state.ageChoice !== null) {
-                this.ageGroup = this.$store.state.ages[this.$store.state.ageChoice].text
-                this.subjects.push('age')
-            }
-            if (this.$store.state.interestChoice !== null) {
-                this.interestGroup = this.$store.state.interests[this.$store.state.interestChoice].text
-                this.subjects.push('interest')
-            }
-            if (this.$store.state.themeChoice !== null) {
-                this.subjects.push('theme')
-                this.themeGroup = this.$store.state.themes[this.$store.state.themeChoice].theme
-            }
+
         },
 
         computed: {
@@ -167,8 +154,6 @@
         flex-direction: row;
         justify-items: flex-start;
         align-items: center;
-        min-width: 947px;
-        width: 1000px;
     }
 
     .product__list__header__count {

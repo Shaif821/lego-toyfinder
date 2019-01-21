@@ -9,15 +9,23 @@
     export default {
         name: "ScreenLoader",
 
-        methods: {},
-
         mounted() {
-            this.$store.state.legoSurveyStatus = true
             let vm = this
-            setTimeout(function () {
-                vm.$store.state.slideState = 3
-            }, 3000)
+            if(this.$store.state.surveyStream){
+                this.$store.state.legoSurveyStatus = true
+                this.$store.state.loadSurvey = false
+                setTimeout(function () {
+                    vm.$store.state.slideState = 3
+                }, 3000)
+            } else {
+                this.$store.state.transitionSlide = false
+                this.$store.state.legoSurveyStatus = true
+                this.$store.state.surveyStream = false
+                setTimeout(function () {
+                    vm.$store.state.slideState = 2
+                }, 3000)
 
+            }
         }
     }
 </script>

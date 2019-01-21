@@ -71,7 +71,7 @@
 <script>
 
 
-    import productsJSON from '../../assets/products/products-all-links-alpha'
+    import productsJSON from '../../assets/products/alpha-a'
     import Buefy from 'buefy'
 
     export default {

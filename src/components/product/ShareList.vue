@@ -62,7 +62,8 @@
                 </form>
 
                 <div :key="2" v-else class="section-3-row" :class="{'section-3-row__center' : writeMail}">
-                    <p class="section-3-row__title">Het is gelukt!</p>
+                    <p v-if="!writeMail" class="section-3-row__title">Het is gelukt!</p>
+                    <p v-else class="section-3-row__title">Er is iets misgegaan. Probeer het later opnieuw.</p>
                     <p class="section-3-row__bottom-title">
                         Er is een mailtje verstuurt naar jouw emailadres.
                     </p>
@@ -101,6 +102,7 @@
                 userMail: '',
                 mailResponse: false,
                 isSending: false,
+                mailFailed: false,
             }
         },
 
@@ -139,6 +141,7 @@
                             })
                             .catch(error => {
                                 if (error) {
+                                    this.mailFailed = true
                                 }
                             })
                     }

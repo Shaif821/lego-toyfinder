@@ -1,5 +1,4 @@
 <template>
-    <!--De achtergrond kleur verandert als de isActiveLoader true is-->
     <div id="app" >
         <transition-group enter-active-class="animated fadeIn"
                     leave-active-class="animated fadeOut"

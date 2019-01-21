@@ -1,5 +1,5 @@
 <template>
-    <div :class="[isActiveWishList ? 'wishlist__container--open' : 'wishlist__container--close']"
+    <div :class="[{'wishlist__container--open' : isActiveWishList}, {'wishlist__container--close' : notActiveWishList}]"
          class="wishlist__container">
         <div @click="openWishList()" style="cursor: pointer;" class="wishlist__clipboard__container">
             <div class="wishlist__clipboard">
@@ -73,13 +73,20 @@
 
         data() {
             return {
-                isActiveWishList: false
+                isActiveWishList: false,
+                notActiveWishList: false,
             }
         },
 
         methods: {
             openWishList() {
-                this.isActiveWishList = !this.isActiveWishList
+                if(this.isActiveWishList) {
+                    this.isActiveWishList = false
+                    this.notActiveWishList = true
+                } else {
+                    this.notActiveWishList = true
+                    this.isActiveWishList = true
+                }
             },
 
             openShareList(){

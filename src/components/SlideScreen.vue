@@ -13,16 +13,22 @@
             </swiper-slide>
 
             <swiper-slide class="swiper__slide">
-                <CardBoard @click.native="toSurvey()" class="swiper__slide--no-swiping"
+                <CardBoard class="swiper__slide--no-swiping"
                            :index="currentSlide"></CardBoard>
             </swiper-slide>
 
-            <swiper-slide class="swiper__slide">
-                <transition leave-active-class="animated fadeOut" enter-active-class="animated fadeIn" mode="out-in">
-                    <ScreenSaver :key="1" v-if="this.$store.state.slideState === 1" class="swiper__slide--no-swiping"
-                                 @click.native="toSurvey()"></ScreenSaver>
-                    <ScreenLoader :key="2" v-else-if="this.$store.state.slideState === 2"></ScreenLoader>
-                    <ProductList :key="3" v-else></ProductList>
+            <swiper-slide v-if="this.$store.state.slideState !== 4" class="swiper__slide">
+                <transition v-if="this.$store.state.slideState === 1" leave-active-class="animated fadeOut"
+                            enter-active-class="animated fadeIn" mode="out-in">
+                    <ScreenSaver class="swiper__slide--no-swiping" @click.native="toSurvey()"></ScreenSaver>
+                </transition>
+                <transition v-else-if="this.$store.state.slideState === 2" leave-active-class="animated fadeOut"
+                            enter-active-class="animated fadeIn" mode="out-in">
+                    <ScreenLoader class="swiper__slide--no-swiping"></ScreenLoader>
+                </transition>
+                <transition v-else leave-active-class="animated fadeOut" enter-active-class="animated fadeIn"
+                            mode="out-in">
+                    <ProductList></ProductList>
                 </transition>
             </swiper-slide>
         </swiper>
@@ -53,8 +59,9 @@
                     mousewheel: true,              //-zichtbaar zijn, dus zoveel mogelijk slides die er in passen qua hoogte
                     autoHeight: true,              //De height staat niet vast
                     resistanceRatio: 0.15,
-                    preventClicks: true,
-                    preventClicksPropagation: false,
+                    // preventClicks: true,
+                    // preventClicksPropagation: true,
+                    preloadImages: true,
                     noSwipingClass: 'swiper__slide--no-swiping',
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
@@ -82,11 +89,12 @@
 
             toSurvey() {
                 this.$nextTick(() => {
+                    this.$store.state.loadSurvey = true
+                    this.swiper.slideTo(0, 1500, false);
                     let v = this
                     setTimeout(function () {
-                        v.$store.state.loadSurvey = true
-                    }, 100)
-                    this.swiper.slideTo(0, 1500, false);
+                        v.$store.state.slideState = 4
+                    }, 1550)
                 })
             },
 
@@ -112,7 +120,11 @@
                 return this.currentSlide
             },
             checkLoadState() {
-                return this.$store.state.transitionSlide
+                return this.$store.state.slideState
+            },
+
+            checkStream() {
+                return this.$store.state.surveyStream
             }
         },
 
@@ -127,11 +139,18 @@
                 }
             },
 
-            checkLoadState() {
-                if(!this.$store.state.transitionSlide) {
+            checkStream() {
+                if (!this.$store.state.surveyStream) {
                     this.$nextTick(() => {
                         this.swiper.slideTo(0, 1500, false);
+                    })
+                }
+            },
 
+            checkLoadState() {
+                if (this.$store.state.slideState === 1) {
+                    this.$nextTick(() => {
+                        this.swiper.slideTo(1, 1500, false);
                     })
                 }
             },

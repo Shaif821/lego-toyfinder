@@ -42,7 +42,7 @@
                     </div>
 
                     <div v-else class="product_more_images">
-                        <div class="mini_images">
+                        <div class="mini_images" v-if="getMini(i['ProductNumber'])">
                             <div @click="changeImage('box', selectImage = i['ProductNumber'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : '' ]">
@@ -127,27 +127,28 @@
 </template>
 
 <script>
-    import priceProducts from '../../assets/products/products-all-links-price'
-    import alphaProducts from '../../assets/products/products-all-links-alpha'
+    import price_L from '../../assets/products/price-l'
+    import price_H from '../../assets/products/price-h'
+    import alpha_A from '../../assets/products/alpha-a'
+    import alpha_Z from '../../assets/products/alpha-z'
+
 
     export default {
         name: "ProductItem",
         props: {
             favorite: Array,
             productSort: String,
-            age: String,
-            interest: String,
-            theme: String,
-            subjects: Array,
         },
 
         data() {
             return {
-                priceProducts: priceProducts,
-                alphaProducts: alphaProducts,
+                priceProductsLow: price_L,
+                priceProductsHigh: price_H,
+                alphaProductsA: alpha_A,
+                alphaProductsZ: alpha_Z,
                 currentProducts: null,
                 shortProducts: [],
-                noProduct: [],
+                // noProduct: [],
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -160,6 +161,7 @@
                     lazy: true,
                     speed: 900, //De snelheid
                     freeMode: true,
+                    freeModeMomentum: true,
                     preventClicks: true,
                     preventClicksPropagation: false,
                     onClick: (swiper, event) => {
@@ -172,31 +174,56 @@
         methods: {
             getProducts() {
                 let counter = 0;
+                let length = 0;
                 counter = this.currentSlide === null ? 15 : this.addSlides
                 this.shortProducts = []
                 this.checkProductFilter()
                 for (let i = 0; i < this.currentProducts.length; i++) {
                     try {
                         require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        length++
                         if (this.shortProducts.length < counter) {
-                            this.shortProducts.push(this.currentProducts[i])
+                            // if (this.checkSurvey(this.currentProducts[i])) {
+                                this.shortProducts.push(this.currentProducts[i])
+                            // }
                         }
                     } catch (e) {
-                        this.noProduct.push(this.currentProducts[i])
                     }
                 }
-                this.$parent.productLength(this.currentProducts.length)
+                if(this.shortProducts.length > 0) {
+                    this.$parent.productLength(length)
+                }
+
             },
 
+            // checkSurvey(product) {
+            //
+            // },
+
             checkProductFilter() {
-                if (this.productSort === 'Alpha') {
-                    this.currentProducts = this.alphaProducts
+                if (this.productSort === 'AlphaA') {
+                    this.currentProducts = this.alphaProductsA
                 }
-                else if (this.productSort === 'Price') {
-                    this.currentProducts = this.priceProducts
+                else if (this.productSort === 'AlphaZ') {
+                    this.currentProducts = this.alphaProductsZ
+                }
+                else if (this.productSort === 'PriceL') {
+                    this.currentProducts = this.priceProductsLow
+                }
+                else if (this.productSort === 'PriceH') {
+                    this.currentProducts = this.priceProductsHigh
                 }
                 else {
-                    this.currentProducts = this.alphaProducts
+                    this.currentProducts = this.alphaProductsA
+                }
+            },
+
+            getMini(id) {
+                try {
+                    require('../../assets/images/products/' + id + '_prod.png')
+                    return true
+                } catch (e) {
+                    return false
                 }
             },
 
@@ -232,11 +259,6 @@
                     this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
                 })                                                 //een slide verandert. De index is nodig voor de Cardboard component
             },
-
-            // toFavorite(i) {
-            //     this.$parent.addToFavorite(i)
-            // }
-
         },
 
         mounted() {

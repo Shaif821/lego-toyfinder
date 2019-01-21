@@ -2,7 +2,7 @@
     <div class="cardboard__container" :style="[this.$store.state.transitionSlide ? {height: '66px'} : {height: '150px'}]">
         <img class="cardboard__container__img" src="../../assets/images/layout/slider-border.png">
         <transition leave-active-class="animated bounceOutRight">
-            <div v-if="index === 0 && this.$store.state.legoSurveyStatus" class="cardboard__container__text-holder animated bounceInRight ">
+            <div v-if="index === 0 && this.$store.state.loadSurvey" class="cardboard__container__text-holder animated bounceInRight ">
                 <p class="cardboard__container__text" v-if="this.$store.state.currentSurvey !== null" @click="goToProduct()">Terug</p>
                 <p class="cardboard__container__text" v-else @click="goToProduct()">Overslaan</p>
             </div>
@@ -21,7 +21,8 @@
             goToProduct(){
                 this.$store.state.transitionSlide = true
                 this.$store.state.legoSurveyStatus = false
-                this.$store.state.slideState = 3
+                this.$store.state.surveyStream = true
+                this.$store.state.slideState = 2
             }
         }
     }

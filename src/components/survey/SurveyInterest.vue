@@ -7,22 +7,30 @@
         <div class="survey__filler"></div>
 
         <div class="survey__interest__container">
-            <div @click="$parent.changeView(indexInterest);" class="survey__interest__wrapper"
-                 v-for="(legoInterest, indexInterest) in this.$store.state.interests"
-                 :key="indexInterest + 'ST'">
+            <div class="survey__interest__wrapper"
+                 v-for="(ageInterest, indexInterest) in $store.state.ageChoice.interest"
+                 :key="indexInterest + 'ST'"
+                 :style="
+                 [$store.state.ageChoice.interest.length === 4 ? {flex: '0 1 calc(25% - 8px)'} :
+                 ($store.state.ageChoice.interest.length === 7 ? {flex: '0 1 calc(25% - 8px)'} :
+                 ($store.state.ageChoice.interest.length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
+                 {flex: '0 1 calc(20% - 8px)'}))]"
+            >
+                <div v-for="interest in $store.state.interests" :key="interest"  @click="$parent.changeView(interest)" >
+                    <div class="survey__interest__images" v-if="interest.text === ageInterest">
+                        <img class="survey__interest__lego__img animated flipInY"
+                             style="animation-delay: 0.4s; animation-duration: 1.5s"
+                             src="../../assets/images/layout/lego-head.png" :style="{margin: interest.pos}">
+                        <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
+                             src="../../assets/images/layout/bitmap-small.png">
+                    </div>
 
-                <div  class="survey__interest__images" >
-                    <img class="survey__interest__lego__img animated flipInY"
-                         style="animation-delay: 0.4s; animation-duration: 1.5s"
-                         src="../../assets/images/layout/lego-head.png" :style="{margin: legoInterest.pos}">
-                    <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
-                         src="../../assets/images/layout/bitmap-small.png">
+                    <p v-if="interest.text === ageInterest" class="survey__theme__text animated flipInX"
+                       style="animation-delay: 1s; animation-duration: 2s;">
+                        {{interest.text}}
+                    </p>
                 </div>
 
-                <p class="survey__theme__text animated flipInX"
-                   style="animation-delay: 1s; animation-duration: 2s;">
-                    {{legoInterest.text}}
-                </p>
             </div>
         </div>
 
@@ -37,7 +45,9 @@
 </script>
 
 <style scoped>
-    .survey__filler {height: 62px;}
+    .survey__filler {
+        height: 62px;
+    }
 
     .survey__interest__container {
         color: white;
@@ -53,8 +63,8 @@
         align-items: center;
         flex-wrap: wrap;
     }
+
     .survey__interest__wrapper {
-        flex: 1 0 20%;
         display: flex;
         flex-flow: column;
         justify-content: center;
@@ -67,7 +77,6 @@
         padding: 0;
         transition: 0.5s ease-in-out;
     }
-
 
     .survey__interest__lego__img {
         position: absolute;

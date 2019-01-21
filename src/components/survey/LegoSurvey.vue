@@ -55,7 +55,6 @@
 
             saveChoice(choice) {  //Sla de keuze op en ga door naar de volgende slide of view
                 this.addChoice(choice, false);
-
                 if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') {
                     this.nextSlide()
                 } else {
@@ -64,6 +63,7 @@
             },
 
             addChoice(choice, bool) {
+                // alert('test ' + choice)
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
@@ -83,14 +83,11 @@
             nextSlide() {
                 this.$store.state.transitionSlide = true
                 this.$store.state.legoSurveyStatus = false
+                this.$store.state.surveyStream = true
                 this.$store.state.slideState = 2
             },
 
             resetData() {
-                if(this.$store.state.slideState !== 1) {
-                    this.$store.state.slideState = 1
-                }
-                this.$store.state.slideState = true
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
                 this.$store.state.ageChoice = null
@@ -98,9 +95,10 @@
                 this.$store.state.themeChoice = null
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
+                this.$store.state.slideState = 1
             },
 
-            watchView(){
+            watchView() {
                 if (this.$store.state.currentSurvey === 'SurveyAge') {
                     this.view = 'SurveyAge'
                 }
@@ -110,9 +108,7 @@
                 else if (this.$store.state.currentSurvey === 'SurveyTheme') {
                     this.view = 'SurveyTheme'
                 }
-                else {
-                    this.view = 'SurveyAge'
-                }
+                else { this.view = 'SurveyAge' }
             }
         },
 
@@ -124,7 +120,7 @@
             checkThemeChange() {
                 return this.$store.state.isActiveTheme
             },
-            checkView(){
+            checkView() {
                 return this.$store.state.currentSurvey
             }
         },
@@ -139,8 +135,8 @@
                 }
             },
 
-            checkView(){
-                if(this.$store.state.currentSurvey !== null) {
+            checkView() {
+                if (this.$store.state.currentSurvey !== null) {
                     this.watchView()
                 }
             }

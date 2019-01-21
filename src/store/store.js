@@ -19,7 +19,7 @@ const store = new Vuex.Store({
         legoSurveyStatus: true,  //Overslaan tekst bij de carboard component     =====> Wanneer de survey pagina weergegeven wordt         : Survey
         transitionSlide: false,  //De transitie van de survey slide              =====> Wanneer de producten pagina geladen wordt = true   : Survey
 
-
+        surveyStream: null,
 
         ages: [
             {
@@ -28,6 +28,10 @@ const store = new Vuex.Store({
                 text: '1 - 2 jaar',
                 ageMin: 1,
                 ageMax: 2,
+                interest: [
+                    'Bouwstenen', 'Dieren', 'Fantasie', 'Stad & Gebouwen',
+                    'Superhelden', 'Voertuigen', 'Vrije tijd'
+                ],
                 pos: '82px 103px 100px 94px'
             },
             {
@@ -37,6 +41,10 @@ const store = new Vuex.Store({
                 text: '2 - 6 jaar',
                 ageMin: 2,
                 ageMax: 6,
+                interest: [
+                    'Avontuur', 'Bouwstenen', 'Dieren', 'Fantasie', 'Ruimtevaart',
+                    'Stad & Gebouwen', 'Superhelden', 'Vrije tijd', 'Voertuigen'
+                ],
                 pos: '70px 80px 92px 77px'
             },
             {
@@ -45,6 +53,10 @@ const store = new Vuex.Store({
                 text: '6 - 12 jaar',
                 ageMin: 6,
                 ageMax: 12,
+                interest: [
+                    'Avontuur', 'Dieren', 'Fantasie', 'Robot', 'Ruimtevaart',
+                    'Stad & Gebouwen', 'Superhelden', 'Vrije tijd', 'Voertuigen'
+                ],
                 pos: '78px 90px 87px 88px'
             },
             {
@@ -53,6 +65,10 @@ const store = new Vuex.Store({
                 text: '12+',
                 ageMin: 12,
                 ageMax: 99,
+                interest:[
+                    'Avontuur', 'Bouwstenen', 'Dieren', 'Fantasie', 'Voertuigen',
+                    'Ruimtevaart', 'Stad & Gebouwen', 'Superhelden'
+                ],
                 pos: '76px 68px 88px 66px'
             },
         ],
