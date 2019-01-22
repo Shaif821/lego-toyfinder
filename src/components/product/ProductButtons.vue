@@ -1,7 +1,10 @@
 <template>
     <div >
         <div @click="goToSurvey('SurveyTheme')" class="product-bottom__button">
-            <span class="product-buttons__text" v-if="this.$store.state.themeChoice !== null">{{ this.$store.state.themeChoice.theme }}</span>
+            <span class="product-buttons__text" v-if="this.$store.state.themeChoice !== null">
+                {{ this.$store.state.themeChoice.brand }}
+                {{ this.$store.state.themeChoice.theme }}
+            </span>
             <span class="product-buttons__text" v-else>Kies een thema</span>
         </div>
 
@@ -27,8 +30,11 @@
 
         methods: {
             goToSurvey(survey) {
+                this.$store.state.legoSurveyStatus = true
                 this.$store.state.surveyStream = false
-                this.$store.state.slideState = 2
+                this.$store.state.transitionSlide = false
+                this.$store.state.slideState = 4
+                this.$store.state.loadSurvey = true
                 this.$store.state.currentSurvey = survey
             },
         },

@@ -6,15 +6,14 @@
 
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
-        <swiper ref="mySwiper" :options="swiperOption" @slideChange="changeSwiperIndex"
+        <swiper ref="mySwiper" :options="swiperOption"
                 style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
             <swiper-slide>
                 <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide">
-                <CardBoard class="swiper__slide--no-swiping"
-                           :index="currentSlide"></CardBoard>
+                <CardBoard class="swiper__slide--no-swiping" :index="currentSlide"></CardBoard>
             </swiper-slide>
 
             <swiper-slide v-if="this.$store.state.slideState !== 4" class="swiper__slide">
@@ -78,6 +77,8 @@
         methods: {
             moveSlide(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
+                    this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
+
                     if (!this.$store.state.isActiveTheme) {
                         this.swiper.slideTo(2, time, false);
                     } else {
@@ -89,6 +90,7 @@
 
             toSurvey() {
                 this.$nextTick(() => {
+
                     this.$store.state.loadSurvey = true
                     this.swiper.slideTo(0, 1500, false);
                     let v = this
@@ -97,16 +99,6 @@
                     }, 1550)
                 })
             },
-
-            changeSwiperIndex() {
-                this.$nextTick(() => {                             //Wanneer een swipe plaatst vindt,  wordt deze functie uitgevoerd
-                    this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
-                })                                                 //een slide verandert. De index is nodig voor de Cardboard component
-            },
-        },
-
-        mounted() {
-            this.changeSwiperIndex();  //Tijdens het opstarten wordt gekeken welke index het huidige is
         },
 
         computed: {
@@ -116,19 +108,33 @@
             checkTheme() {
                 return this.$store.state.isActiveTheme
             },
-            checkCurSlide() {
-                return this.currentSlide
-            },
+
             checkLoadState() {
                 return this.$store.state.slideState
             },
 
+            checkSurvey() {
+                return this.$store.state.currentSurvey
+            },
+
             checkStream() {
                 return this.$store.state.surveyStream
+            },
+
+            checkTransition(){
+                return this.$store.state.transitionSlide
             }
         },
 
         watch: {
+            checkTransition(){
+                if (!this.$store.state.transitionSlide) {
+                    this.$nextTick(() => {
+                        this.swiper.slideTo(0, 2000, false);
+                    })
+                }
+            },
+
             checkTheme() {
                 if (this.$store.state.isActiveTheme) {
                     let v = this
@@ -142,7 +148,7 @@
             checkStream() {
                 if (!this.$store.state.surveyStream) {
                     this.$nextTick(() => {
-                        this.swiper.slideTo(0, 1500, false);
+                        this.swiper.slideTo(0, 2000, false);
                     })
                 }
             },
@@ -155,11 +161,13 @@
                 }
             },
 
-            checkCurSlide() {
-                if (this.currentSlide === 1) {
-                    this.$store.state.isActiveTheme = false;
+            checkSurvey(){
+                if(this.$store.state.currentSurvey === null) {
+                    this.$nextTick(() => {
+                        this.swiper.slideTo(1, 1500, false);
+                    })
                 }
-            }
+            },
         }
     }
 </script>

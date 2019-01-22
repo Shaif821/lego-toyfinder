@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+
         ageChoice: null,
         interestChoice: null,
         themeChoice: null,
@@ -13,7 +14,6 @@ const store = new Vuex.Store({
         isActiveTheme: false,  //Checkt of het thema gedeelte actief is          =====> Wanneer de survey pagina wordt weergegeven         : ScreenSaver & Product
 
         slideState: 1,           //De state van de slide                         =====> welke state                                        : ELK
-
 
         currentSurvey: null,   //De huidige survey                               =====> De huidige survey die geladen moet worden          : Product
         legoSurveyStatus: true,  //Overslaan tekst bij de carboard component     =====> Wanneer de survey pagina weergegeven wordt         : Survey

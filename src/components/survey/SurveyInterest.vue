@@ -16,7 +16,7 @@
                  ($store.state.ageChoice.interest.length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
                  {flex: '0 1 calc(20% - 8px)'}))]"
             >
-                <div v-for="interest in $store.state.interests" :key="interest"  @click="$parent.changeView(interest)" >
+                <div v-for="interest in $store.state.interests" @click="$parent.changeView(interest)" >
                     <div class="survey__interest__images" v-if="interest.text === ageInterest">
                         <img class="survey__interest__lego__img animated flipInY"
                              style="animation-delay: 0.4s; animation-duration: 1.5s"

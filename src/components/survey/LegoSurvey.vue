@@ -1,8 +1,8 @@
 <template>
-    <div :class="[{'survey__hide' : this.$store.state.transitionSlide}]">
+    <div :class="[this.$store.state.transitionSlide ? 'survey__hide' : 'survey__show']">
         <div class="survey__container">
             <div :class="[{'hide__interest' : $store.state.transitionSlide}]" class="survey__header">
-                <div style="cursor: pointer;" @click="resetData()" class="first-slide">
+                <div style="cursor: pointer;" @click="resetData(true)" class="first-slide">
                     <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
                 </div>
             </div>
@@ -85,17 +85,22 @@
                 this.$store.state.legoSurveyStatus = false
                 this.$store.state.surveyStream = true
                 this.$store.state.slideState = 2
+                this.resetData(false)
             },
 
-            resetData() {
+            resetData(bool) {
+                if(bool) {
+                    this.$store.state.ageChoice = null
+                    this.$store.state.interestChoice = null
+                    this.$store.state.themeChoice = null
+                }
+
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
-                this.$store.state.ageChoice = null
-                this.$store.state.interestChoice = null
-                this.$store.state.themeChoice = null
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
-                this.$store.state.slideState = 1
+
+
             },
 
             watchView() {
@@ -137,7 +142,16 @@
 
             checkView() {
                 if (this.$store.state.currentSurvey !== null) {
-                    this.watchView()
+                    if (this.$store.state.currentSurvey === 'SurveyAge') {
+                        this.view = 'SurveyAge'
+                    }
+                    else if (this.$store.state.currentSurvey === 'SurveyInterest') {
+                        this.view = 'SurveyInterest'
+                    }
+                    else if (this.$store.state.currentSurvey === 'SurveyTheme') {
+                        this.view = 'SurveyTheme'
+                    }
+                    else { this.view = 'SurveyAge' }
                 }
             }
         }
@@ -181,6 +195,13 @@
         animation: transition 2s forwards;
     }
 
+    .survey_show {
+        overflow: hidden;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        animation: transitionShow 2s forwards;
+    }
+
     .hide__interest {
         transition: 0.5s ease-in-out;
         opacity: 0;
@@ -192,6 +213,15 @@
         }
         100% {
             height: 0;
+        }
+    }
+
+    @keyframes transitionShow {
+        0% {
+            height: 0;
+        }
+        100% {
+            height: 970px;
         }
     }
 </style>
