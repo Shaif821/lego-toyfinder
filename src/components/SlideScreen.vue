@@ -1,22 +1,22 @@
 <template>
-    <div class="slidescreen__container"
+    <div @click="fullScreen()" id="SlideScreen" class="slidescreen__container"
          :class="[this.$store.state.slideState  === 3 ? 'slidescreen__container--products' : 'slidescreen__container--normal']"
          style="padding: 0; margin: 0;">
         <div v-if="fixSlideOrder === 0">{{moveSlide()}}</div>
 
         <!--De ref zorgt ervoor dat mySwiper een instantie wordt, waarmee je allerlei methodes kan gebruiken-->
         <!--changeSwiperIndex zorgt ervoor dat elke keer dat er een swipe plaatst vindt, de functie wordt uitgevoerd-->
-        <swiper ref="mySwiper" :options="swiperOption"
-                style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
-            <swiper-slide>
+        <swiper ref="mySwiper" :options="swiperOption" style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
+
+            <swiper-slide class="swiper__slide--no-swiping">
                 <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
-            <swiper-slide class="swiper__slide">
-                <CardBoard class="swiper__slide--no-swiping" :index="currentSlide"></CardBoard>
+            <swiper-slide class="swiper__slide--no-swiping">
+                <CardBoard :index="currentSlide"></CardBoard>
             </swiper-slide>
 
-            <swiper-slide v-if="this.$store.state.slideState !== 4" class="swiper__slide">
+            <swiper-slide v-if="this.$store.state.slideState !== 4" class="swiper__slide--no-swiping">
                 <transition v-if="this.$store.state.slideState === 1" leave-active-class="animated fadeOut"
                             enter-active-class="animated fadeIn" mode="out-in">
                     <ScreenSaver class="swiper__slide--no-swiping" @click.native="toSurvey()"></ScreenSaver>
@@ -30,6 +30,7 @@
                     <ProductList></ProductList>
                 </transition>
             </swiper-slide>
+
         </swiper>
     </div>
 </template>
@@ -58,9 +59,10 @@
                     mousewheel: true,              //-zichtbaar zijn, dus zoveel mogelijk slides die er in passen qua hoogte
                     autoHeight: true,              //De height staat niet vast
                     resistanceRatio: 0.15,
-                    // preventClicks: true,
-                    // preventClicksPropagation: true,
+                    preventClicks: true,
+                    preventClicksPropagation: true,
                     preloadImages: true,
+                    isFullScreen: false,
                     noSwipingClass: 'swiper__slide--no-swiping',
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
@@ -78,7 +80,6 @@
             moveSlide(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
                     this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
-
                     if (!this.$store.state.isActiveTheme) {
                         this.swiper.slideTo(2, time, false);
                     } else {
@@ -89,80 +90,48 @@
             },
 
             toSurvey() {
-                this.$nextTick(() => {
-
-                    this.$store.state.loadSurvey = true
-                    this.swiper.slideTo(0, 1500, false);
-                    let v = this
-                    setTimeout(function () {
-                        v.$store.state.slideState = 4
-                    }, 1550)
-                })
+                if(this.isFullScreen){
+                    this.$nextTick(() => {
+                        this.$store.state.loadSurvey = true
+                        this.swiper.slideTo(0, 1500, false);
+                        let v = this
+                        setTimeout(function () {
+                            v.$store.state.slideState = 4
+                        }, 1550)
+                    })
+                }
             },
+
+            fullScreen(){
+                let element = document.getElementById("SlideScreen")
+                if(element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if(element.mozRequestFullScreen) {
+                    element.mozRequestFullScreen();
+                } else if(element.webkitRequestFullscreen) {
+                    element.webkitRequestFullscreen();
+                } else if(element.msRequestFullscreen) {
+                    element.msRequestFullscreen();
+                }
+
+                this.isFullScreen = true
+            }
         },
+
 
         computed: {
             swiper() {
                 return this.$refs.mySwiper.swiper //Hiermee wordt de instantie voor mySwiper gemaakt
             },
-            checkTheme() {
-                return this.$store.state.isActiveTheme
-            },
 
             checkLoadState() {
                 return this.$store.state.slideState
             },
-
-            checkSurvey() {
-                return this.$store.state.currentSurvey
-            },
-
-            checkStream() {
-                return this.$store.state.surveyStream
-            },
-
-            checkTransition(){
-                return this.$store.state.transitionSlide
-            }
         },
 
         watch: {
-            checkTransition(){
-                if (!this.$store.state.transitionSlide) {
-                    this.$nextTick(() => {
-                        this.swiper.slideTo(0, 2000, false);
-                    })
-                }
-            },
-
-            checkTheme() {
-                if (this.$store.state.isActiveTheme) {
-                    let v = this
-                    setTimeout(function () {
-                        v.$store.state.loadSurvey = true
-                    }, 100);
-                    this.moveSlide(1500);
-                }
-            },
-
-            checkStream() {
-                if (!this.$store.state.surveyStream) {
-                    this.$nextTick(() => {
-                        this.swiper.slideTo(0, 2000, false);
-                    })
-                }
-            },
-
             checkLoadState() {
                 if (this.$store.state.slideState === 1) {
-                    this.$nextTick(() => {
-                        this.swiper.slideTo(1, 1500, false);
-                    })
-                }
-            },
-
-            checkSurvey(){
-                if(this.$store.state.currentSurvey === null) {
                     this.$nextTick(() => {
                         this.swiper.slideTo(1, 1500, false);
                     })
@@ -180,21 +149,10 @@
     .slidescreen__container--products {
         background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
 
-        /*animation: changeBackground 2.5s ease-in-out;*/
-        /*-webkit-animation-fill-mode: both;*/
-        /*animation-fill-mode: both;*/
     }
 
     .swiper__slide {
         z-index: 5;
     }
 
-    @keyframes changeBackground {
-        0% {
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-        }
-        100% {
-            background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
-        }
-    }
 </style>

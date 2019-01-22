@@ -8,12 +8,12 @@
 
         <div class="survey__interest__container">
             <div class="survey__interest__wrapper"
-                 v-for="(ageInterest, indexInterest) in $store.state.ageChoice.interest"
+                 v-for="(ageInterest, indexInterest) in ageChoice['interest']"
                  :key="indexInterest + 'ST'"
                  :style="
-                 [$store.state.ageChoice.interest.length === 4 ? {flex: '0 1 calc(25% - 8px)'} :
-                 ($store.state.ageChoice.interest.length === 7 ? {flex: '0 1 calc(25% - 8px)'} :
-                 ($store.state.ageChoice.interest.length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
+                 [ageChoice['interest'].length === 4 ? {flex: '0 1 calc(25% - 8px)'} :
+                 (ageChoice['interest'].length === 7 ? {flex: '0 1 calc(25% - 8px)'} :
+                 (ageChoice['interest'].length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
                  {flex: '0 1 calc(20% - 8px)'}))]"
             >
                 <div v-for="interest in $store.state.interests" @click="$parent.changeView(interest)" >
@@ -41,6 +41,9 @@
 <script>
     export default {
         name: "SurveyInterest",
+        props: {
+            ageChoice : Object
+        }
     }
 </script>
 
@@ -65,10 +68,8 @@
     }
 
     .survey__interest__wrapper {
-        display: flex;
-        flex-flow: column;
-        justify-content: center;
-        align-items: center;
+        display: grid;
+        /*grid-template-columns: repeat(5, 1fr);*/
         cursor: pointer;
     }
 

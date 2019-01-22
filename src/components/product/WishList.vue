@@ -27,7 +27,7 @@
                         <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX"
                                     class="contain_favorite_text" mode="out-in">
 
-                            <span class="is_favorited" :key="favorited[i - 1]" v-if="favorited[i - 1]">
+                            <span class="is_favorited" :key="favorited[i - 1]['ProductNameNL']" v-if="favorited[i - 1]">
                                     <p>{{favorited[i - 1]['ProductNameNL']}}</p>
                                     <img style="cursor: pointer" @click="removeFavorited(favorited[i - 1])"
                                          src="../../assets/images/layout/close-yellow.png">

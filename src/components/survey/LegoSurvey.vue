@@ -2,7 +2,7 @@
     <div :class="[this.$store.state.transitionSlide ? 'survey__hide' : 'survey__show']">
         <div class="survey__container">
             <div :class="[{'hide__interest' : $store.state.transitionSlide}]" class="survey__header">
-                <div style="cursor: pointer;" @click="resetData(true)" class="first-slide">
+                <div style="cursor: pointer;" @click="resetData()" class="first-slide">
                     <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
                 </div>
             </div>
@@ -12,7 +12,7 @@
                         enter mode="out-in">
                 <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
                            v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
-                           :is="view">
+                           :is="view" :ageChoice="age">
                 </component>
             </transition>
         </div>
@@ -40,11 +40,9 @@
             return {
                 index: true,
                 view: '',
-                surveyOptions: [{
-                    age: [],
-                    interest: [],
-                    theme: []
-                }]
+                age: null,
+                interest: null,
+                theme: null
             }
         },
 
@@ -63,16 +61,15 @@
             },
 
             addChoice(choice, bool) {
-                // alert('test ' + choice)
                 switch (this.view) {
                     case 'SurveyAge':
-                        this.$store.state.ageChoice = choice
+                        this.age = choice
                         break;
                     case 'SurveyInterest':
-                        this.$store.state.interestChoice = choice
+                        this.interest = choice
                         break;
                     case 'SurveyTheme':
-                        this.$store.state.themeChoice = choice
+                        this.theme = choice
                         break;
                 }
                 if (bool) {
@@ -81,26 +78,23 @@
             },
 
             nextSlide() {
+                this.$store.state.ageChoice = this.age
+                this.$store.state.interestChoice = this.interest
+                this.$store.state.themeChoice = this.theme
                 this.$store.state.transitionSlide = true
-                this.$store.state.legoSurveyStatus = false
                 this.$store.state.surveyStream = true
                 this.$store.state.slideState = 2
-                this.resetData(false)
             },
 
-            resetData(bool) {
-                if(bool) {
-                    this.$store.state.ageChoice = null
-                    this.$store.state.interestChoice = null
-                    this.$store.state.themeChoice = null
-                }
-
+            resetData() {
+                this.age = null
+                this.interest = null
+                this.theme = null
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
-
-
+                this.$store.state.slideState = 1
             },
 
             watchView() {
@@ -113,7 +107,9 @@
                 else if (this.$store.state.currentSurvey === 'SurveyTheme') {
                     this.view = 'SurveyTheme'
                 }
-                else { this.view = 'SurveyAge' }
+                else {
+                    this.view = 'SurveyAge'
+                }
             }
         },
 
@@ -151,7 +147,9 @@
                     else if (this.$store.state.currentSurvey === 'SurveyTheme') {
                         this.view = 'SurveyTheme'
                     }
-                    else { this.view = 'SurveyAge' }
+                    else {
+                        this.view = 'SurveyAge'
+                    }
                 }
             }
         }

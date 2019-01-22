@@ -31,7 +31,7 @@
         methods: {
             goToSurvey(survey) {
                 this.$store.state.legoSurveyStatus = true
-                this.$store.state.surveyStream = false
+                this.$store.state.surveyStream = null
                 this.$store.state.transitionSlide = false
                 this.$store.state.slideState = 4
                 this.$store.state.loadSurvey = true

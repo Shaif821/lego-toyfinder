@@ -21,7 +21,8 @@
 
                     <div v-if="selected !== index">
                         <hr class="product_seperator">
-                        <p class="product_name">{{ i['ProductNameNL'] }} </p>
+                        <!--<p class="product_name">{{ 'Min: ' + i['AgeMin'] + ' &#45;&#45;  Max: ' + i['AgeMax'] + '-&#45;&#45; Interesse: ' + i['Interesse'] + '-&#45;&#45;Thema: ' + i['Theme']}} </p>-->
+                        <p class="product_name">{{ i['ProductNameNL']}} </p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
@@ -155,6 +156,7 @@
                 selected: undefined,
                 currentSlide: null,
                 addSlides: null,
+                filterLength: 0,
                 swipeOptionsProduct: {
                     preloadImages: true,
                     slidesPerView: '3.5',
@@ -175,6 +177,7 @@
             getProducts() {
                 let counter = 0;
                 let length = 0;
+                this.filterLength = 0
                 counter = this.currentSlide === null ? 15 : this.addSlides
                 this.shortProducts = []
                 this.checkProductFilter()
@@ -183,39 +186,99 @@
                         require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
                         length++
                         if (this.shortProducts.length < counter) {
-                            // if (this.checkSurvey(this.currentProducts[i])) {
-                                this.shortProducts.push(this.currentProducts[i])
-                            // }
+                            this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
+                            this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
                         }
                     } catch (e) {
                     }
                 }
-                if(this.shortProducts.length > 0) {
+                if (this.shortProducts.length > 0) {
+                    console.log(this.filterLength)
+                    this.$parent.productLength(this.filterLength)
+                }
+
+                if(this.shortProducts.length <= 0) {
+                    this.getAllProducts()
                     this.$parent.productLength(length)
                 }
-
             },
 
-            // checkSurvey(product) {
-            //
-            // },
+            checkFilters(currentProduct, theme, age, interest, bool) {
+                if (interest !== null && age !== null && theme !== null) {                  //Wanneer alle filters zijn gevuld
+                    if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']
+                        && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                    }
+                }
+                else if (interest !== null && age !== null && theme === null) {
+                    if (interest.text === currentProduct['Interesse']                       //gevuld: interest & age
+                        && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+                else if (interest !== null && age === null && theme !== null) {             //gevuld: interest & theme
+                    if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']) {
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+                else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
+                    if (theme.theme === currentProduct['Theme'] && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+                else if (interest == null && age !== null && theme == null) {             //Wanneer allen age gevuld is
+                    if ( age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+                else if (interest !== null && age === null && theme === null) {
+                    if (interest.text === currentProduct['Interesse']) {                 //Wanneer alleen interest gevuld is
+
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+                else if (interest === null && age === null && theme !== null) {          //Wanneer alleen thema gevuld is
+                    if (theme.theme === currentProduct['Theme']) {
+                        console.log('test12')
+                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+
+                    }
+                }
+            },
+
+            getAllProducts(){
+                let counter = 0;
+                let length = 0;
+                counter = this.currentSlide === null ? 15 : this.addSlides
+                this.shortProducts = []
+                this.checkProductFilter()
+                for (let i = 0; i < this.currentProducts.length; i++) {
+                    try {
+                        require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        length++
+                        if (this.shortProducts.length < counter) {
+                            this.shortProducts.push(this.currentProducts[i])
+                        }
+                    } catch (e) {
+
+                    }
+                }
+                if (this.shortProducts.length > 0) {
+                    this.$parent.productLength(length)
+                }
+            },
 
             checkProductFilter() {
-                if (this.productSort === 'AlphaA') {
-                    this.currentProducts = this.alphaProductsA
-                }
-                else if (this.productSort === 'AlphaZ') {
-                    this.currentProducts = this.alphaProductsZ
-                }
-                else if (this.productSort === 'PriceL') {
-                    this.currentProducts = this.priceProductsLow
-                }
-                else if (this.productSort === 'PriceH') {
-                    this.currentProducts = this.priceProductsHigh
-                }
-                else {
-                    this.currentProducts = this.alphaProductsA
-                }
+                if (this.productSort === 'AlphaA') {this.currentProducts = this.alphaProductsA}
+                else if (this.productSort === 'AlphaZ') {this.currentProducts = this.alphaProductsZ}
+                else if (this.productSort === 'PriceL') {this.currentProducts = this.priceProductsLow}
+                else if (this.productSort === 'PriceH') {this.currentProducts = this.priceProductsHigh}
+                else {this.currentProducts = this.alphaProductsA}
             },
 
             getMini(id) {
