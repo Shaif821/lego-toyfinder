@@ -26,7 +26,7 @@
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
-                            <div @click="selected = index" class="product_details_button">
+                            <div @click="selected = index, changeImage('box', selectImage = i['ProductNumber'])" class="product_details_button">
                                 <img src="../../assets/images/layout/magnifying-glass.png">
                                 Bekijk dit product
                             </div>
@@ -46,25 +46,22 @@
                         <div class="mini_images" v-if="getMini(i['ProductNumber'])">
                             <div @click="changeImage('box', selectImage = i['ProductNumber'])"
                                  class="animated fadeIn mini_images_wrapper"
-                                 :class="[singleImage === '_box1_in' ? 'mini_images_active' : '' ]">
+                                 :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
                                 <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
                             </div>
 
                             <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
-                                 :class="[singleImage === '_prod' ? 'mini_images_active' : '' ]"
+                                 :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
                                 <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')">
                             </div>
 
-                            <div class="animated fadeIn mini_images_wrapper">
-                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
-                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div v-if="selected === index" class="product_description">
-                    <div class="remove_details" @click="selected = undefined, selectImage = undefined">
+                    <div class="remove_details" @click="selected = undefined, changeImage('box', selectImage = i['ProductNumber'])">
                         <img src="../../assets/images/layout/path.png">
                         <img src="../../assets/images/layout/rectangle.png">
                     </div>
@@ -149,7 +146,6 @@
                 alphaProductsZ: alpha_Z,
                 currentProducts: null,
                 shortProducts: [],
-                // noProduct: [],
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -159,13 +155,13 @@
                 filterLength: 0,
                 swipeOptionsProduct: {
                     preloadImages: true,
-                    slidesPerView: '3.5',
+                    slidesPerView: 'auto',
                     lazy: true,
                     speed: 900, //De snelheid
                     freeMode: true,
                     freeModeMomentum: true,
                     preventClicks: true,
-                    preventClicksPropagation: false,
+                    preventClicksPropagation: true,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }
@@ -322,6 +318,7 @@
                     this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
                 })                                                 //een slide verandert. De index is nodig voor de Cardboard component
             },
+
         },
 
         mounted() {
@@ -360,8 +357,6 @@
 </script>
 
 <style scoped>
-
-
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         width: 457px !important;
@@ -373,6 +368,10 @@
         transition: 0.5s ease-in-out;
         cursor: pointer;
         overflow: hidden;
+    }
+
+    .product_wrapper:last-child {
+        margin-right: 200px;
     }
 
     .product_wrapper_details {
@@ -397,8 +396,11 @@
         transition: 0.3s ease-in-out;
     }
 
-    .product_all_image {
+    .product_image_big {
+        border: 2px solid red;
+    }
 
+    .product_all_image {
         margin-left: 20px;
         width: 500px;
         height: 676px;
@@ -419,12 +421,13 @@
         margin-bottom: 20px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         transition: 0.3s ease-in-out;
     }
 
     .mini_images_wrapper {
         border: 2px solid rgba(0, 0, 0, 0.24);
+        margin: 0px 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -462,8 +465,8 @@
     .product_image_details img {
         max-height: 100%;
         max-width: 100%;
-        height: 90%;
-        width: 90%;
+        height: 80%;
+        width: 80%;
         transition: 0.3s ease-in-out;
     }
 

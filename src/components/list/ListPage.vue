@@ -15,7 +15,8 @@
                 <div class="phone__container__text columns is-gapless is-desktop">
                     <div class="column phone__container__column product__container">
                         <div class="phone__container__products">
-                            <p  @mouseover="showImage(product['ProductNumber'], product['Link'])" v-for="(product, index) in products" :key="index"
+                            <p @mouseover="showImage(product['ProductNumber'], product['Link'])"
+                               v-for="(product, index) in products" :key="index"
                                class="products__text">
                                 {{product['ProductNameNL']}}
                             </p>
@@ -36,7 +37,8 @@
                                             leave-active-class="animated bounceOutRight"
                                             mode="out-in">
                                     <img v-if="!noImage" class="image__product"
-                                         :key="image" :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                                         :key="image"
+                                         :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
                                 </transition>
                             </a>
                         </div>
@@ -69,14 +71,10 @@
 </template>
 
 <script>
-
-
     import productsJSON from '../../assets/products/alpha-a'
-    import Buefy from 'buefy'
 
     export default {
         name: "ListPage",
-        components: Buefy,
 
         data() {
             return {
@@ -111,8 +109,8 @@
                 id = id.split(" ")
 
                 for (let i = 0; i < id.length; i++) {
-                    for(let j = 0; j < this.allProducts.length; j++){
-                        if(id[i] === this.allProducts[j]['ProductNumber']){
+                    for (let j = 0; j < this.allProducts.length; j++) {
+                        if (id[i] === this.allProducts[j]['ProductNumber']) {
                             try {
                                 require('../../assets/images/products/' + this.allProducts[j]['ProductNumber'] + '_box1_in.png')
                                 this.products.push(this.allProducts[j])
@@ -124,8 +122,8 @@
                 }
             },
 
-            showImage(id, link){
-                if(this.noImage && this.products.length > 0) {
+            showImage(id, link) {
+                if (this.noImage && this.products.length > 0) {
                     this.image = this.products[0]['ProductNumber']
                     this.url = this.products[0]['Link']
                 }
@@ -138,19 +136,18 @@
         },
 
         mounted() {
-            if(this.$parent.$router.currentRoute.name === 'list-page'){
-                require('confetti-js')
-                require('buefy/dist/buefy.min.css')
-                this.getProducts()
-                this.showImage()
-                let confetti = new ConfettiGenerator(this.confettiSettings)
-                confetti.render()
-            }
+            require('confetti-js')
+            this.getProducts()
+            this.showImage()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
 
 <style scoped>
+
+    /*@import "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css";*/
     .list {
         padding: 0;
         margin: 0;
@@ -238,7 +235,7 @@
         color: black;
         font-size: 30px;
         height: 12%;
-        background-image: linear-gradient(to right, black 33%, rgba(155,155,155,0) 0%);
+        background-image: linear-gradient(to right, black 33%, rgba(155, 155, 155, 0) 0%);
         background-position: bottom;
         background-size: 20px 1px;
         background-repeat: repeat-x;
@@ -287,7 +284,7 @@
     }
 
     .text__image__container {
-        overflow:hidden;
+        overflow: hidden;
         margin-top: 20px;
         background: white;
         border-radius: 10px;
@@ -305,6 +302,7 @@
         align-items: center;
         justify-content: center;
     }
+
     .image__product {
         max-height: 75%;
         max-width: 75%;

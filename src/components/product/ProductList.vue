@@ -115,7 +115,7 @@
                     favoritesURL.push(this.favorites[i]['ProductNumber'])
                     this.favoritesName.push(this.favorites[i]['ProductNameNL'])
                 }
-                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/list/' + favoritesURL.join('-')
+                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
             },
         }
     }
