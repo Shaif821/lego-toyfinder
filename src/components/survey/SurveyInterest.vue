@@ -20,7 +20,7 @@
                     <div class="survey__interest__images" v-if="interest.text === ageInterest">
                         <img class="survey__interest__lego__img animated flipInY"
                              style="animation-delay: 0.4s; animation-duration: 1.5s"
-                             src="../../assets/images/layout/lego-head.png" :style="{margin: interest.pos}">
+                             :src="interest.url" :style="{margin: interest.pos}">
                         <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
                              src="../../assets/images/layout/bitmap-small.png">
                     </div>
@@ -48,7 +48,7 @@
                 <div  class="survey__interest__images" >
                     <img class="survey__interest__lego__img animated flipInY"
                          style="animation-delay: 0.4s; animation-duration: 1.5s"
-                         src="../../assets/images/layout/lego-head.png" :style="{margin: legoInterest.pos}">
+                         :src="legoInterest.url" :style="{margin: legoInterest.pos}">
                     <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
                          src="../../assets/images/layout/bitmap-small.png">
                 </div>
@@ -108,6 +108,8 @@
     .survey__interest__lego__img {
         position: absolute;
         z-index: 1;
+        width: 120px;
+        height: 120px;
     }
 
     .survey__filler-2 {

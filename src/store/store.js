@@ -74,63 +74,63 @@ const store = new Vuex.Store({
 
         interests: [
             {
-                url: require('../assets/images/survey/group-107.png'),
+                url: require('../assets/images/survey/adventure.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Avontuur',
                 pos: '49px 50px 53px 50px'
             },
             {
 
-                url: require('../assets/images/survey/group-43.png'),
+                url: require('../assets/images/survey/animal.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Dieren',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-34.png'),
+                url: require('../assets/images/survey/fantasy.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Fantasie',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-44.png'),
+                url: require('../assets/images/survey/robot.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Robot',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-107.png'),
+                url: require('../assets/images/survey/city.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Stad & Gebouwen',
                 pos: '49px 50px 53px 50px'
             },
             {
 
-                url: require('../assets/images/survey/group-43.png'),
+                url: require('../assets/images/survey/heroes.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Superhelden',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-34.png'),
+                url: require('../assets/images/survey/vehicles.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Voertuigen',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-44.png'),
+                url: require('../assets/images/survey/free.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Vrije tijd',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-44.png'),
+                url: require('../assets/images/survey/building.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Bouwstenen',
                 pos: '49px 50px 53px 50px'
             },
             {
-                url: require('../assets/images/survey/group-34.png'),
+                url: require('../assets/images/survey/space.png'),
                 speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Ruimtevaart',
                 pos: '49px 50px 53px 50px'

@@ -71,7 +71,7 @@
                     <div class="product-details-title">
 
                         <div class="product_title">
-                            <h1 v-show="selected">{{ i['ProductNameNL']}}</h1>
+                            <h1>{{ i['ProductNameNL']}}</h1>
                             <p>{{ i['Theme']}}</p>
                         </div>
 

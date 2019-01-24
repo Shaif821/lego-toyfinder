@@ -28,19 +28,23 @@
                     Scan deze QR-code met je telefoon en deel de link met familie en vrienden.
                 </p>
             </div>
-                <div :class="[!writeMail ? 'section-3-row__border' : 'section-3-row__border-out']" class="section-3-row__border">
-                    <p :class="{'border__text-out' : writeMail}" class="border__text">OF</p>
-                </div>
+            <div :class="[!writeMail ? 'section-3-row__border' : 'section-3-row__border-out']"
+                 class="section-3-row__border">
+                <p :class="{'border__text-out' : writeMail}" class="border__text">OF</p>
+            </div>
 
             <transition mode="out-in" enter-active-class="animated fadeIn"
                         leave-active-class="animated fadeOut" :class="{'section-3-row__center' : writeMail}">
-                <form :key="1" v-if="!mailResponse" @submit.prevent="sendMail()"  autocomplete="off" class="section-3-row"
+                <form :key="1" v-if="!mailResponse" @submit.prevent="sendMail()" autocomplete="off"
+                      class="section-3-row"
                       @click="writeMail = true"
                       :class="{'section-3-row__center' : writeMail}">
                     <p class="section-3-row__title">Deel over de mail:</p>
 
-                    <transition mode="out-in" enter-active-class="animated flipInX" leave-active-class="animated flipOutX">
-                        <input :key="1" v-if="!isSending" v-validate="'email'" data-vv-as="email" name="email_field" type="text" v-model="userMail"
+                    <transition mode="out-in" enter-active-class="animated flipInX"
+                                leave-active-class="animated flipOutX">
+                        <input :key="1" v-if="!isSending" v-validate="'email'" data-vv-as="email" name="email_field"
+                               type="text" v-model="userMail"
                                class="section-3-row__middle section-3-row__input" placeholder="Mijn emailadres">
                         <div :key="2" v-else>
                             <br>
@@ -62,11 +66,19 @@
                 </form>
 
                 <div :key="2" v-else class="section-3-row" :class="{'section-3-row__center' : writeMail}">
-                    <p v-if="!writeMail" class="section-3-row__title">Het is gelukt!</p>
-                    <p v-else class="section-3-row__title">Er is iets misgegaan. Probeer het later opnieuw.</p>
-                    <p class="section-3-row__bottom-title">
-                        Er is een mailtje verstuurt naar jouw emailadres.
-                    </p>
+                    <div v-if="writeMail">
+                        <p class="section-3-row__title">Het is gelukt!</p>
+                        <img class="section-3-row__image" src="../../assets/images/layout/thumb.png">
+                        <p class="section-3-row__bottom-title">
+                            Er is een mailtje verstuurt naar jouw emailadres.
+                        </p>
+                    </div>
+                    <div v-else>
+                        <p class="section-3-row__title">Er is iets misgegaan...</p>
+                        <img class="section-3-row__image section-3-row__image--down"
+                             src="../../assets/images/layout/thumb.png">
+                        <p class="section-3-row__bottom-title">Probeer het later opnieuw.</p>
+                    </div>
                 </div>
             </transition>
         </div>
@@ -135,7 +147,7 @@
                             .then(response => {
                                 if (response) {
                                     this.isSending = false,
-                                    this.userMail = ''
+                                        this.userMail = ''
                                     this.mailResponse = true
                                 }
                             })
@@ -144,9 +156,6 @@
                                     this.mailFailed = true
                                 }
                             })
-                    }
-                    else {
-                        alert('slecht')
                     }
                 })
             }
@@ -300,6 +309,16 @@
         margin: 0;
         color: white;
         font-size: 28px;
+    }
+
+    .section-3-row__image {
+        margin-top: 40px;
+        width: 120px;
+        height: 120px;
+    }
+
+    .section-3-row__image--down {
+        transform: rotate(180deg);
     }
 
     .section-3-row__middle {

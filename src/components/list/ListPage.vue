@@ -147,8 +147,6 @@
 </script>
 
 <style scoped>
-
-    /*@import "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css";*/
     .list {
         padding: 0;
         margin: 0;
@@ -267,7 +265,7 @@
     }
 
     .text__title {
-        font-family: Ubuntu, 'sans-serif';
+        /*font-family: 'Ubuntu', 'sans-serif';*/
         font-size: 60px;
         font-weight: 500;
         line-height: 1.33;
@@ -277,7 +275,7 @@
     .text__long {
         margin-top: 20px;
         max-width: 400px;
-        font-family: Ubuntu, 'sans-serif';
+        /*font-family: 'Ubuntu', 'sans-serif';*/
         font-size: 25px;
         font-weight: bold;
         line-height: 1.8;
@@ -311,7 +309,7 @@
 
     .text__share {
         margin-top: 30px;
-        font-family: Ubuntu, 'sans-serif';
+        /*font-family: Ubuntu, 'sans-serif';*/
         font-size: 25px;
         font-weight: bold;
         line-height: 1.8;
