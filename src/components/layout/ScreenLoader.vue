@@ -24,7 +24,6 @@
                 setTimeout(function () {
                     vm.$store.state.slideState = 2
                 }, 3000)
-
             }
         }
     }

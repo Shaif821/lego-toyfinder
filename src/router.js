@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import SlideScreen from './components/SlideScreen'
-import ListPage from './components/list/ListPage'
+const SlideScreen = () => import('./components/SlideScreen')
+const ListPage = () => import('./components/list/ListPage')
 
 
 Vue.use(Router);

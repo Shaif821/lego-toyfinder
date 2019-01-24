@@ -72,6 +72,8 @@
 
 <script>
     import productsJSON from '../../assets/products/alpha-a'
+    require('confetti-js')
+    require('buefy/dist/buefy.min.css')
 
     export default {
         name: "ListPage",
@@ -136,7 +138,6 @@
         },
 
         mounted() {
-            require('confetti-js')
             this.getProducts()
             this.showImage()
             let confetti = new ConfettiGenerator(this.confettiSettings)
