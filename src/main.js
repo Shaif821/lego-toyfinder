@@ -15,7 +15,6 @@ Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VueQRCode);
 Vue.use(VeeValidate);
-// Vue.use(Buefy)
 Vue.use(VueLazyload, {
     preLoad: 1.3,
     loading: require('./../src/assets/images/layout/loader.png')

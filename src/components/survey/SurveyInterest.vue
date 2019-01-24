@@ -6,7 +6,7 @@
 
         <div class="survey__filler"></div>
 
-        <div class="survey__interest__container">
+        <div class="survey__interest__container"  v-if="ageChoice !== null">
             <div class="survey__interest__wrapper"
                  v-for="(ageInterest, indexInterest) in ageChoice['interest']"
                  :key="indexInterest + 'ST'"
@@ -31,6 +31,32 @@
                     </p>
                 </div>
 
+            </div>
+        </div>
+
+        <div v-else class="survey__interest__container">
+            <div @click="$parent.changeView(legoInterest)" class="survey__interest__wrapper"
+                 v-for="(legoInterest, indexInterest) in this.$store.state.interests"
+                 :key="indexInterest + 'ST'"
+                 :style="
+                 [$store.state.interests.length === 4 ? {flex: '0 1 calc(25% - 8px)'} :
+                 ($store.state.interests.length === 7 ? {flex: '0 1 calc(25% - 8px)'} :
+                 ($store.state.interests.length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
+                 {flex: '0 1 calc(20% - 8px)'}))]">
+
+
+                <div  class="survey__interest__images" >
+                    <img class="survey__interest__lego__img animated flipInY"
+                         style="animation-delay: 0.4s; animation-duration: 1.5s"
+                         src="../../assets/images/layout/lego-head.png" :style="{margin: legoInterest.pos}">
+                    <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
+                         src="../../assets/images/layout/bitmap-small.png">
+                </div>
+
+                <p class="survey__theme__text animated flipInX"
+                   style="animation-delay: 1s; animation-duration: 2s;">
+                    {{legoInterest.text}}
+                </p>
             </div>
         </div>
 

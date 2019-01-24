@@ -150,9 +150,4 @@
         background-image: radial-gradient(circle at 49% 42%, #edf5f7, #edf5f7);
 
     }
-
-    .swiper__slide {
-        z-index: 5;
-    }
-
 </style>

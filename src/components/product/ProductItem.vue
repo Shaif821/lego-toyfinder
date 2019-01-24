@@ -26,7 +26,8 @@
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
-                            <div @click="selected = index, changeImage('box', selectImage = i['ProductNumber'])" class="product_details_button">
+                            <div @click="selected = index, changeImage('box', selectImage = i['ProductNumber'])"
+                                 class="product_details_button">
                                 <img src="../../assets/images/layout/magnifying-glass.png">
                                 Bekijk dit product
                             </div>
@@ -61,19 +62,21 @@
                 </div>
 
                 <div v-if="selected === index" class="product_description">
-                    <div class="remove_details" @click="selected = undefined, changeImage('box', selectImage = i['ProductNumber'])">
+                    <div class="remove_details"
+                         @click="selected = undefined, changeImage('box', selectImage = i['ProductNumber'])">
                         <img src="../../assets/images/layout/path.png">
                         <img src="../../assets/images/layout/rectangle.png">
                     </div>
 
                     <div class="product-details-title">
+
                         <div class="product_title">
-                            <h1>{{ i['ProductNameNL']}}</h1>
+                            <h1 v-show="selected">{{ i['ProductNameNL']}}</h1>
                             <p>{{ i['Theme']}}</p>
                         </div>
 
                         <div class="product_toy_details">
-                            <p>{{i['ProductDescriptionNL']}}</p>
+                        <p>{{i['ProductDescriptionNL']}}</p>
                         </div>
                     </div>
 
@@ -129,7 +132,6 @@
     import price_H from '../../assets/products/price-h'
     import alpha_A from '../../assets/products/alpha-a'
     import alpha_Z from '../../assets/products/alpha-z'
-
 
     export default {
         name: "ProductItem",
@@ -189,11 +191,10 @@
                     }
                 }
                 if (this.shortProducts.length > 0) {
-                    console.log(this.filterLength)
                     this.$parent.productLength(this.filterLength)
                 }
 
-                if(this.shortProducts.length <= 0) {
+                if (this.shortProducts.length <= 0) {
                     this.getAllProducts()
                     this.$parent.productLength(length)
                 }
@@ -210,44 +211,36 @@
                     if (interest.text === currentProduct['Interesse']                       //gevuld: interest & age
                         && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
                 else if (interest !== null && age === null && theme !== null) {             //gevuld: interest & theme
                     if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
                 else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
                     if (theme.theme === currentProduct['Theme'] && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
                 else if (interest == null && age !== null && theme == null) {             //Wanneer allen age gevuld is
-                    if ( age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                    if (age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
                 else if (interest !== null && age === null && theme === null) {
                     if (interest.text === currentProduct['Interesse']) {                 //Wanneer alleen interest gevuld is
-
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
                 else if (interest === null && age === null && theme !== null) {          //Wanneer alleen thema gevuld is
                     if (theme.theme === currentProduct['Theme']) {
-                        console.log('test12')
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
-
                     }
                 }
             },
 
-            getAllProducts(){
+            getAllProducts() {
                 let counter = 0;
                 let length = 0;
                 counter = this.currentSlide === null ? 15 : this.addSlides
@@ -270,11 +263,21 @@
             },
 
             checkProductFilter() {
-                if (this.productSort === 'AlphaA') {this.currentProducts = this.alphaProductsA}
-                else if (this.productSort === 'AlphaZ') {this.currentProducts = this.alphaProductsZ}
-                else if (this.productSort === 'PriceL') {this.currentProducts = this.priceProductsLow}
-                else if (this.productSort === 'PriceH') {this.currentProducts = this.priceProductsHigh}
-                else {this.currentProducts = this.alphaProductsA}
+                if (this.productSort === 'AlphaA') {
+                    this.currentProducts = this.alphaProductsA
+                }
+                else if (this.productSort === 'AlphaZ') {
+                    this.currentProducts = this.alphaProductsZ
+                }
+                else if (this.productSort === 'PriceL') {
+                    this.currentProducts = this.priceProductsLow
+                }
+                else if (this.productSort === 'PriceH') {
+                    this.currentProducts = this.priceProductsHigh
+                }
+                else {
+                    this.currentProducts = this.alphaProductsA
+                }
             },
 
             getMini(id) {
