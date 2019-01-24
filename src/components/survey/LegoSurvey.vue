@@ -95,6 +95,9 @@
                 this.$store.state.isActiveTheme = false
                 this.$store.state.currentSurvey = null
                 this.$store.state.slideState = 1
+                this.$store.state.ageChoice = null
+                this.$store.state.interestChoice = null
+                this.$store.state.themeChoice = null
             },
 
             watchView() {
