@@ -160,11 +160,10 @@
                     slidesPerView: 'auto',
                     lazy: true,
                     speed: 900, //De snelheid
-                    // freeMode: true,
-                    // freeModeMomentum: true,
+                    freeMode: true,
+                    freeModeMomentum: true,
                     preventClicks: true,
                     preventClicksPropagation: true,
-                    slideToClickedSlide: true,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }

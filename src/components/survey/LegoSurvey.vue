@@ -2,9 +2,12 @@
     <div :class="[this.$store.state.transitionSlide ? 'survey__hide' : 'survey__show']">
         <div class="survey__container">
             <div :class="[{'hide__interest' : $store.state.transitionSlide}]" class="survey__header">
-                <transition enter-active-class="animated bounceInRight bounceInCross" mode="out-in" leave-active-class="animated bounceOutUp">
-                    <div v-if="$store.state.loadSurvey" style="cursor: pointer;" @click="resetData()" class="first-slide">
-                        <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
+                <transition enter-active-class="animated bounceInRight delayAnimation" mode="out-in"
+                            leave-active-class="animated bounceOutUp">
+                    <div v-if="$store.state.loadSurvey" style="cursor: pointer;" @click="resetData()"
+                         class="first-slide">
+                        <img class="survey__header--img animated pulse infinite"
+                             src="../../assets/images/layout/close.png">
                     </div>
                 </transition>
             </div>
@@ -43,8 +46,6 @@
                 index: true,
                 view: '',
                 age: null,
-                interest: null,
-                theme: null
             }
         },
 
@@ -55,43 +56,39 @@
 
             saveChoice(choice) {  //Sla de keuze op en ga door naar de volgende slide of view
                 this.addChoice(choice, false);
-                if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') {
+                if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') { //Ga door naar de volgende slide(ScreenLoader)
                     this.nextSlide()
                 } else {
-                    this.view = 'SurveyInterest'
+                    this.view = 'SurveyInterest'  //Ga door naar de volgende view (SurveyInterest)
                 }
             },
 
-            addChoice(choice, bool) {
+            addChoice(choice, bool) {        //Check welke view het is en sla het antwoord bij de bijbehorende data op
                 switch (this.view) {
                     case 'SurveyAge':
+                        this.$store.state.ageChoice = choice
                         this.age = choice
                         break;
                     case 'SurveyInterest':
-                        this.interest = choice
+                        this.$store.state.interestChoice = choice
                         break;
                     case 'SurveyTheme':
-                        this.theme = choice
+                        this.$store.state.themeChoice = choice
                         break;
                 }
-                if (bool) {
+                if (bool) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)
                     this.nextSlide()
                 }
             },
 
-            nextSlide() {
-                this.$store.state.ageChoice = this.age
-                this.$store.state.interestChoice = this.interest
-                this.$store.state.themeChoice = this.theme
+            nextSlide() {  //Slaat de keuzes op in de store & verander de state van de slider
                 this.$store.state.transitionSlide = true
                 this.$store.state.surveyStream = true
                 this.$store.state.slideState = 2
             },
 
             resetData() {
-                this.age = null
-                this.interest = null
-                this.theme = null
+                this.age = null                       //Reset de antwoorden
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
                 this.$store.state.isActiveTheme = false
@@ -103,7 +100,7 @@
             },
 
             watchView() {
-                if (this.$store.state.currentSurvey === 'SurveyAge') {
+                if (this.$store.state.currentSurvey === 'SurveyAge') {               //(Vanuit de producten pagina) Checkt welke vieuw in currentSurvey zit
                     this.view = 'SurveyAge'
                 }
                 else if (this.$store.state.currentSurvey === 'SurveyInterest') {
@@ -133,7 +130,7 @@
 
         watch: {
             checkThemeChange() {
-                if (this.$store.state.isActiveTheme) {
+                if (this.$store.state.isActiveTheme) {  //Wanneer de gebruiker meteen naar de thema's toe wilt (vanuit de screensaver)
                     this.view = 'SurveyTheme'
                 }
                 else {
@@ -142,28 +139,15 @@
             },
 
             checkView() {
-                if (this.$store.state.currentSurvey !== null) {
-                    if (this.$store.state.currentSurvey === 'SurveyAge') {
-                        this.view = 'SurveyAge'
-                    }
-                    else if (this.$store.state.currentSurvey === 'SurveyInterest') {
-                        this.view = 'SurveyInterest'
-                    }
-                    else if (this.$store.state.currentSurvey === 'SurveyTheme') {
-                        this.view = 'SurveyTheme'
-                    }
-                    else {
-                        this.view = 'SurveyAge'
-                    }
-                }
+                this.watchView()
             }
         }
     }
 </script>
 
 <style>
-    .bounceInCross {
-        animation-delay: 0.7s;
+    .delayAnimation {
+        animation-delay: 1s !important;
     }
 
     .survey__container {

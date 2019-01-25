@@ -25,7 +25,7 @@
                             enter-active-class="animated fadeIn" mode="out-in">
                     <ScreenLoader class="swiper__slide--no-swiping"></ScreenLoader>
                 </transition>
-                <transition v-else leave-active-class="animated fadeOut" enter-active-class="animated fadeIn"
+                <transition v-else-if="this.$store.state.slideState = 3" leave-active-class="animated fadeOut" enter-active-class="animated fadeIn"
                             mode="out-in">
                     <ProductList></ProductList>
                 </transition>
@@ -79,30 +79,30 @@
         methods: {
             moveSlide(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
-                    this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
+                    this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als de slider verandert /* werkt opeens niet meer, maar blijkbaar ook niet nodig?*/
                     if (!this.$store.state.isActiveTheme) {
-                        this.swiper.slideTo(2, time, false);
+                        this.swiper.slideTo(2, time, false);   //Naar de screensaver
                     } else {
-                        this.swiper.slideTo(0, time, false);
+                        this.swiper.slideTo(0, time, false); //naar de survey
                     }
                 })
                 this.fixSlideOrder = 1;
             },
 
             toSurvey() {
-                if(this.isFullScreen){
+                if(this.isFullScreen){ //Als de pagina in fullscreen weergegeven wordt
                     this.$nextTick(() => {
                         this.$store.state.loadSurvey = true
-                        this.swiper.slideTo(0, 1500, false);
+                        this.swiper.slideTo(0, 1500, false);    //Scroll dan naar de survey pagina toe
                         let v = this
                         setTimeout(function () {
-                            v.$store.state.slideState = 4
+                            v.$store.state.slideState = 4       //En verander de state
                         }, 1550)
                     })
                 }
             },
 
-            fullScreen(){
+            fullScreen(){  //Deze functie zorgt ervoor dat, zodra er geklikt wordt op de scherm, de pagina in volledige weergave wordt getoond.
                 let element = document.getElementById("SlideScreen")
                 if(element.requestFullscreen) {
                     element.requestFullscreen();
@@ -116,30 +116,6 @@
 
                 this.isFullScreen = true
             },
-
-            idleFunction(){
-                console.log('user is idle')
-            }
-        },
-
-        mounted(){
-            let idle = false
-            document.getElementById('SlideScreen').addEventListener('mousemove', function (e) {
-                if(idle !== false) idle = false
-            })
-
-            let idleI = setInterval(function () {
-                if(idle === 'inactive'){
-                    return;
-                }
-                if(idle === true) {
-                    this.idleFunction
-                    idle = 'inactive'
-                    return
-                }
-                idle = true
-            }, 1500)
-
         },
 
         computed: {
@@ -148,7 +124,7 @@
             },
 
             checkLoadState() {
-                return this.$store.state.slideState
+                return this.$store.state.slideState   //Checkt de slideState
             },
         },
 
@@ -156,7 +132,7 @@
             checkLoadState() {
                 if (this.$store.state.slideState === 1) {
                     this.$nextTick(() => {
-                        this.swiper.slideTo(1, 1500, false);
+                        this.swiper.slideTo(2, 1500, false); //Checkt de slideState
                     })
                 }
             },

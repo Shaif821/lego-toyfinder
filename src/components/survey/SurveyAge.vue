@@ -8,17 +8,12 @@
 
         <div class="survey__age__container">
             <div class="survey__age__wrapper" v-for="(legoAge, indexAge) in this.$store.state.ages" :key="indexAge + 'SA'">
-                <div class="survey__age__images">
+                <div class="animated survey__age__images flipInY delayAnimation" style="animation-duration: 1.7s;">
                     <div @click="$parent.changeView(legoAge)">
-
-                        <img class="survey__age__lego__img animated flipInY slower"
-                             style="animation-duration: 1.7s;"
+                        <img class="survey__age__lego__img"
                              :src="legoAge.url"
                              :style="{margin: legoAge.pos}">
-
-                        <img class="animated flipInY slower"
-                             style=" animation-duration: 1.7s;"
-                             src="../../assets/images/layout/bitmap.png">
+                        <img src="../../assets/images/layout/bitmap.png">
                     </div>
                 </div>
                 <p class="animated flipInX" style="animation-delay: 1s; animation-duration: 1s;">{{legoAge.text}}</p>

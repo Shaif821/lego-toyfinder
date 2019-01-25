@@ -1,12 +1,10 @@
 <template>
     <div class="cardboard__container" :style="[this.$store.state.transitionSlide ? {height: '66px'} : {height: '150px'}]">
         <img class="cardboard__container__img" src="../../assets/images/layout/slider-border.png">
-        <transition leave-active-class="animated bounceOutRight">
-            <div v-if="index === 0 && this.$store.state.loadSurvey" class="cardboard__container__text-holder animated bounceInRight ">
-                <p class="cardboard__container__text" v-if="this.$store.state.currentSurvey === 'SurveyAge'" @click="goToProduct()">Terug</p>
+            <div v-if="index === 0 && this.$store.state.loadSurvey" class="cardboard__container__text-holder animated bounceInRight" style="animation-delay: 1s;">
+                <p class="cardboard__container__text" v-if="this.$store.state.currentSurvey !== null" @click="goToProduct()">Terug</p>
                 <p class="cardboard__container__text" v-else @click="goToProduct()">Overslaan</p>
             </div>
-        </transition>
     </div>
 </template>
 
