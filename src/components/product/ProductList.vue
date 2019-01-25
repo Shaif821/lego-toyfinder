@@ -42,10 +42,10 @@
 </template>
 
 <script>
-    import WishList from './WishList'
-    import ShareList from './ShareList'
+    const WishList = () => import('./WishList')
+    const ShareList = () => import('./ShareList')
     import ProductItem from './ProductItem'
-    import ProductButtons from './ProductButtons'
+    const ProductButtons = () => import('./ProductButtons')
 
     export default {
         name: "ProductList",

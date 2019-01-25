@@ -183,10 +183,10 @@
                     try {
                         require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
                         length++
-                        if (this.shortProducts.length < counter) {
+                        // if (this.shortProducts.length < counter) {
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
-                        }
+                        // }
                     } catch (e) {
                     }
                 }

@@ -7,8 +7,6 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VeeValidate from 'vee-validate'
 import VueLazyload from 'vue-lazyload'
 
-// require styles
-import 'swiper/dist/css/swiper.css'
 
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);

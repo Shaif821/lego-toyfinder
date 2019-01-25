@@ -275,12 +275,5 @@ const store = new Vuex.Store({
             },
         ],
     },
-
-
-    getters: {
-        getLegoTheme(state) {
-            return state.legoTheme
-        },
-    }
 })
 export default store;

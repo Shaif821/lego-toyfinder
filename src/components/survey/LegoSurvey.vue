@@ -25,9 +25,9 @@
 </template>
 
 <script>
-    import SurveyAge from './SurveyAge'
-    import SurveyInterest from './SurveyInterest'
-    import SurveyTheme from './SurveyTheme'
+    const SurveyAge = () => import('./SurveyAge')
+    const SurveyInterest = () => import('./SurveyInterest')
+    const SurveyTheme = () => import('./SurveyTheme')
 
     export default {
         name: "LegoSurvey",

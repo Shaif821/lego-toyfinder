@@ -6,8 +6,10 @@
                 <transition enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut"
                             mode="out-in">
-                    <img class="wishlist__star" :key="1" v-if="favorited.length > 0" src="../../assets/images/layout/star-icon-mini.png">
-                    <img class="wishlist__star wishlist__star--un" :key="2" v-else src="../../assets/images/layout/un)star.png">
+                    <img class="wishlist__star" :key="1" v-if="favorited.length > 0"
+                         src="../../assets/images/layout/star-icon-mini.png">
+                    <img class="wishlist__star wishlist__star--un" :key="2" v-else
+                         src="../../assets/images/layout/un)star.png">
                 </transition>
                 <img src="../../assets/images/layout/list-icon.png">
             </div>
@@ -48,7 +50,8 @@
                 <img src="../../assets/images/layout/phone.png">
 
 
-                <div class="wishlist_share" style="cursor: pointer;" :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
+                <div class="wishlist_share" style="cursor: pointer;"
+                     :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
                     <p @click="openShareList()" v-if="favorited.length > 0">
                         Deel het verlanglijstje
                     </p>
@@ -67,8 +70,7 @@
     export default {
         name: "WishList",
         props: {
-            favorited : Array,
-            isOpen : Boolean
+            favorited: Array,
         },
 
         data() {
@@ -80,7 +82,7 @@
 
         methods: {
             openWishList() {
-                if(this.isActiveWishList) {
+                if (this.isActiveWishList) {
                     this.isActiveWishList = false
                     this.notActiveWishList = true
                 } else {
@@ -89,12 +91,22 @@
                 }
             },
 
-            openShareList(){
+            openShareList() {
                 this.$parent.shareListState()
             },
 
             removeFavorited(index) {
                 this.$parent.addToFavorite(index)
+            }
+        },
+
+
+        watch: {
+            favorited(newValue) {
+                if(this.favorited.length === 5) {
+                    this.notActiveWishList = true
+                    this.isActiveWishList = true
+                }
             }
         }
     }
@@ -303,8 +315,6 @@
         transition: 0.3s ease-in-out;
         color: black;
     }
-
-
 
     .is_favorited {
         display: flex;

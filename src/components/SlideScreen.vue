@@ -41,6 +41,7 @@
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
     import CardBoard from './layout/CardBoard'
+    import 'swiper/dist/css/swiper.css'
 
     export default {
         name: "SlideScreen",
