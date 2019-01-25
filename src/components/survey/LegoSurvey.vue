@@ -1,8 +1,8 @@
 <template>
     <div :class="[this.$store.state.transitionSlide ? 'survey__hide' : 'survey__show']">
         <div class="survey__container">
-            <div class="survey__header">
-                <transition enter-active-class="animated bounceInRight bounceInCross" style="animation-delay: 1s" mode="out-in" leave-active-class="animated bounceOutUp">
+            <div :class="[{'hide__interest' : $store.state.transitionSlide}]" class="survey__header">
+                <transition enter-active-class="animated bounceInRight bounceInCross" mode="out-in" leave-active-class="animated bounceOutUp">
                     <div v-if="$store.state.loadSurvey" style="cursor: pointer;" @click="resetData()" class="first-slide">
                         <img class="survey__header--img animated pulse infinite" src="../../assets/images/layout/close.png">
                     </div>
@@ -13,7 +13,7 @@
                         leave-active-class="animated slideOutLeft"
                         enter mode="out-in">
                 <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
-                           v-if="indexAnimation === 0 && $store.state.loadSurvey"
+                           v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
                            :is="view" :ageChoice="age">
                 </component>
             </transition>
@@ -40,6 +40,7 @@
 
         data() {
             return {
+                index: true,
                 view: '',
                 age: null,
                 interest: null,
@@ -99,7 +100,6 @@
                 this.$store.state.ageChoice = null
                 this.$store.state.interestChoice = null
                 this.$store.state.themeChoice = null
-                this.$emit('moveSlide')
             },
 
             watchView() {
@@ -128,9 +128,6 @@
             },
             checkView() {
                 return this.$store.state.currentSurvey
-            },
-            checkSurvey() {
-                return this.$store.state.loadSurvey
             }
         },
 
@@ -142,12 +139,6 @@
                 else {
                     this.view = 'SurveyAge'
                 }
-            },
-
-            checkSurvey() {
-              if(!this.$store.state.loadSurvey) {
-                  this.resetData()
-              }
             },
 
             checkView() {
@@ -172,7 +163,7 @@
 
 <style>
     .bounceInCross {
-        animation-delay: 1s !important;
+        animation-delay: 0.7s;
     }
 
     .survey__container {
