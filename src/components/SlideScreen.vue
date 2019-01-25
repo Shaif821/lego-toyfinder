@@ -9,7 +9,7 @@
         <swiper ref="mySwiper" :options="swiperOption" style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
 
             <swiper-slide class="swiper__slide--no-swiping">
-                <LegoSurvey  :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey @moveSlide="toScreen()" :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide--no-swiping">
@@ -79,10 +79,13 @@
         methods: {
             moveSlide(time) {  //Deze functie zorgt ervoor dat de volgende slide verschijnt
                 this.$nextTick(() => {
+                    console.log('test3')
                     this.currentSlide = this.swiper.activeIndex    //Hiermee wordt currentSlide constant geupdatet als
                     if (!this.$store.state.isActiveTheme) {
                         this.swiper.slideTo(2, time, false);
+                        console.log(this.swiper.activeIndex)
                     } else {
+                        console.log(this.swiper.activeIndex)
                         this.swiper.slideTo(0, time, false);
                     }
                 })
@@ -91,31 +94,38 @@
 
             toSurvey() {
                 if(this.isFullScreen){
-                    this.$nextTick(() => {
-                        this.$store.state.loadSurvey = true
-                        this.swiper.slideTo(0, 1500, false);
-                        let v = this
-                        setTimeout(function () {
-                            v.$store.state.slideState = 4
-                        }, 1550)
-                    })
+                this.$nextTick(() => {
+                    this.$store.state.loadSurvey = true
+                    this.swiper.slideTo(0, 1500, false);
+                    let v = this
+                    setTimeout(function () {
+                        v.$store.state.slideState = 4
+                    }, 1550)
+                })
                 }
             },
 
-            fullScreen(){
+            toScreen() {
+                this.$nextTick(() => {
+                    console.log('tetetetetetetet')
+                    this.swiper.slideTo(2, 1500, false);
+                })
+            },
+
+            fullScreen() {
                 let element = document.getElementById("SlideScreen")
-                if(element.requestFullscreen) {
+                if (element.requestFullscreen) {
                     element.requestFullscreen();
-                } else if(element.mozRequestFullScreen) {
+                } else if (element.mozRequestFullScreen) {
                     element.mozRequestFullScreen();
-                } else if(element.webkitRequestFullscreen) {
+                } else if (element.webkitRequestFullscreen) {
                     element.webkitRequestFullscreen();
-                } else if(element.msRequestFullscreen) {
+                } else if (element.msRequestFullscreen) {
                     element.msRequestFullscreen();
                 }
 
                 this.isFullScreen = true
-            }
+            },
         },
 
 
@@ -131,11 +141,12 @@
 
         watch: {
             checkLoadState() {
-                if (this.$store.state.slideState === 1) {
-                    this.$nextTick(() => {
-                        this.swiper.slideTo(1, 1500, false);
-                    })
-                }
+                // if (this.$store.state.slideState === 1) {
+                //     // this.$nextTick(() => {
+                //     //     this.swiper.slideTo(2, 1500, false);
+                //     // })
+                //     this.moveSlide(1500)
+                // }
             },
         }
     }
