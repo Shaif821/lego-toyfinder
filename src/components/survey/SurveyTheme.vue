@@ -15,7 +15,7 @@
                               :key="indexTheme + 'STH'">
 
                     <div class="survey__theme__images" @click="$parent.changeView(legoTheme)">
-                        <img class="survey__theme__lego__img  swiper-lazy" v-lazy="legoTheme.url">
+                        <img class="survey__theme__lego__img  swiper-lazy" :src="legoTheme.url">
                         <img class="swiper-lazy" src="../../assets/images/layout/border.png">
                     </div>
 

@@ -5,19 +5,16 @@ import store from './store/store'
 import VAnimateCss from 'v-animate-css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VeeValidate from 'vee-validate'
-import VueLazyload from 'vue-lazyload'
 
 
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VeeValidate);
-Vue.use(VueLazyload, {
-    preLoad: 1.3,
-    loading: require('./../src/assets/images/layout/loader.png')
-})
+
 
 
 Vue.config.productionTip = false
+Vue.config.performance = true
 
 new Vue({
     router,

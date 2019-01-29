@@ -8,14 +8,14 @@
 
                 <div :class="{product_all_image : selected === index}">
 
-                    <div class="product_image_normal"
+                    <div class="product_image_normal" style="overflow: hidden;"
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
                             <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
+                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
                             <img class="swiper-lazy" v-else :key="switchImage"
-                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
+                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
                         </transition>
                     </div>
 
@@ -390,6 +390,10 @@
         flex-direction: row;
         width: 100%;
         transition: 0.3s ease-in-out;
+    }
+
+    .zoumIn, .zoomOut {
+        animation-duration: 0.5s !important;
     }
 
     .product_image_normal {

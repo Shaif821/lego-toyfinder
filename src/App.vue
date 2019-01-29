@@ -11,10 +11,6 @@
 <script>
     export default {
         name: 'app',
-
-        mounted(){
-
-        }
     }
 </script>
 
@@ -41,9 +37,6 @@
         background-image: radial-gradient(0% 0%, #098ddb, #1062a2);
         overflow: hidden;
     }
-
-
-
 
     *{
         -webkit-tap-highlight-color: rgba(0,0,0,0);
