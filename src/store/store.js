@@ -164,11 +164,6 @@ const store = new Vuex.Store({
                 theme: 'BrickHeadz',
             },
             {
-                url: require('../assets/images/themes/brickheadz_starwars.jpg'),
-                brand: 'LEGO®',
-                theme: 'BrickHeadz Star Wars',
-            },
-            {
                 url: require('../assets/images/themes/city_fire_police.jpg'),
                 brand: 'LEGO®',
                 theme: 'City',
@@ -177,11 +172,6 @@ const store = new Vuex.Store({
                 url: require('../assets/images/themes/classic.jpg'),
                 brand: 'LEGO®',
                 theme: 'Classic'
-            },
-            {
-                url: require('../assets/images/themes/creator_3in1.jpg'),
-                brand: 'LEGO®',
-                theme: 'Creator 3In1'
             },
             {
                 url: require('../assets/images/themes/creator_expert.jpg'),
@@ -214,11 +204,6 @@ const store = new Vuex.Store({
                 theme: 'Harry Potter™'
             },
             {
-                url: require('../assets/images/themes/juniors_jurassic-world.jpg'),
-                brand: 'LEGO®',
-                theme: 'Jurassic World™ Juniors',
-            },
-            {
                 url: require('../assets/images/themes/jurrasic_world.jpg'),
                 brand: 'LEGO®',
                 theme: 'Jurassic World™'
@@ -226,17 +211,12 @@ const store = new Vuex.Store({
             {
                 url: require('../assets/images/themes/lego_movie.jpg'),
                 brand: 'LEGO®',
-                theme: 'The Lego Movied™'
+                theme: 'The Lego Movie™'
             },
             {
                 url: require('../assets/images/themes/minecraft.jpg'),
                 brand: 'LEGO®',
                 theme: 'Minecraft™'
-            },
-            {
-                url: require('../assets/images/themes/minifigures.jpg'),
-                brand: 'LEGO®',
-                theme: 'Minifigures'
             },
             {
                 url: require('../assets/images/themes/ninjago.jpg'),
@@ -247,11 +227,6 @@ const store = new Vuex.Store({
                 url: require('../assets/images/themes/speed_champions.jpg'),
                 brand: 'LEGO®',
                 theme: 'Speed Champions'
-            },
-            {
-                url: require('../assets/images/themes/spiderman.jpg'),
-                brand: 'LEGO®',
-                theme: 'Spiderman'
             },
             {
                 url: require('../assets/images/themes/starwars.jpg'),

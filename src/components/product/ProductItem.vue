@@ -236,7 +236,9 @@
                     }
                 }
                 else if (interest === null && age === null && theme !== null) {          //Wanneer alleen thema gevuld is
+                    console.log(currentProduct['Theme'] === theme.theme);
                     if (theme.theme === currentProduct['Theme']) {
+                        // console.log(theme.theme + ' ---- ' + currentProduct['Theme'])
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
