@@ -1,5 +1,5 @@
 <template>
-    <swiper  ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
+    <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
         <swiper-slide class="product_wrapper animated zoomIn"
                       :class="{product_wrapper_details : selected === index}"
                       v-for="(i, index) in shortProducts" :key="i['ProductNumber']"
@@ -12,10 +12,15 @@
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
-                            <v-lazy-image class="swiper-lazy  product_image_prod" v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')"/>
+                            <v-lazy-image class="swiper-lazy  product_image_prod"
+                                          v-if="selectImage === i['ProductNumber']" :key="singleImage"
+                                          :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')"
+                                          :src-placeholder="loading"
+                            />
                             <v-lazy-image class="swiper-lazy" v-else :key="switchImage"
-                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')"/>
+                                          :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')"
+                                          :src-placeholder="loading"
+                            />
                         </transition>
                     </div>
 
@@ -47,13 +52,19 @@
                             <div @click="changeImage('box', selectImage = i['ProductNumber'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
-                                <v-lazy-image :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')"/>
+                                <v-lazy-image
+                                        :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')"
+                                        :src-placeholder="loading"
+                                />
                             </div>
 
                             <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
                                  :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
-                                <v-lazy-image :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')"/>
+                                <v-lazy-image
+                                        :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')"
+                                        :src-placeholder="loading"
+                                />
                             </div>
 
                         </div>
@@ -75,7 +86,7 @@
                         </div>
 
                         <div class="product_toy_details">
-                        <p>{{i['ProductDescriptionNL']}}</p>
+                            <p>{{i['ProductDescriptionNL']}}</p>
                         </div>
                     </div>
 
@@ -141,13 +152,9 @@
 
         data() {
             return {
-                priceProductsLow: price_L,
-                priceProductsHigh: price_H,
-                alphaProductsA: alpha_A,
-                alphaProductsZ: alpha_Z,
                 currentProducts: null,
                 shortProducts: [],
-                noProducts: [],
+                loading: require('../../assets/images/layout/loading.gif'),
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -188,7 +195,6 @@
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
                         }
                     } catch (e) {
-                        // this.noProducts.push(this.currentProducts[i]['ProductNumber'])
                     }
                 }
                 if (this.shortProducts.length > 0) {
@@ -220,7 +226,7 @@
                     }
                 }
                 else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
-                    if (theme.theme === currentProduct['Theme'] &&  age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                    if (theme.theme === currentProduct['Theme'] && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -265,19 +271,19 @@
 
             checkProductFilter() {
                 if (this.productSort === 'AlphaA') {
-                    this.currentProducts = this.alphaProductsA
+                    this.currentProducts = alpha_A
                 }
                 else if (this.productSort === 'AlphaZ') {
-                    this.currentProducts = this.alphaProductsZ
+                    this.currentProducts = alpha_Z
                 }
                 else if (this.productSort === 'PriceL') {
-                    this.currentProducts = this.priceProductsLow
+                    this.currentProducts = price_L
                 }
                 else if (this.productSort === 'PriceH') {
-                    this.currentProducts = this.priceProductsHigh
+                    this.currentProducts = price_H
                 }
                 else {
-                    this.currentProducts = this.alphaProductsA
+                    this.currentProducts = alpha_A
                 }
             },
 
@@ -345,8 +351,8 @@
             addToSlide() {
                 if ((this.currentSlide + 5) > this.addSlides) {
                     this.checkProductFilter()
-                    if (this.currentSlide < this.filterLength) {
-                        this.addSlides = this.currentSlide + 5 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 10
+                    if (this.currentSlide < this.currentProducts.length) {
+                        this.addSlides = this.currentSlide + 25 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 25
                         this.getProducts()
                     }
                 }
@@ -403,7 +409,6 @@
         align-items: center;
         transition: 0.3s ease-in-out;
     }
-
 
     .product_all_image {
         margin-left: 20px;

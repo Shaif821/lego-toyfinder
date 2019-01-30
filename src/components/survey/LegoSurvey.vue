@@ -72,6 +72,7 @@
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
+                        this.$store.state.themeChoice = null
                         this.age = choice
                         if(this.age.text === '1 - 2 jaar'){
                             this.nextSlide()
@@ -80,9 +81,12 @@
                         break;
                     case 'SurveyInterest':
                         this.$store.state.interestChoice = choice
+                        this.$store.state.themeChoice = null
                         break;
                     case 'SurveyTheme':
                         this.$store.state.themeChoice = choice
+                        this.$store.state.interestChoice = null
+                        this.$store.state.ageChoice = null
                         break;
                 }
                 if (bool) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)
