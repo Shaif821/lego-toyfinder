@@ -12,16 +12,15 @@
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
-                            <img class="swiper-lazy  product_image_prod" v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
-                            <img class="swiper-lazy" v-else :key="switchImage"
-                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
+                            <v-lazy-image class="swiper-lazy  product_image_prod" v-if="selectImage === i['ProductNumber']" :key="singleImage"
+                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')"/>
+                            <v-lazy-image class="swiper-lazy" v-else :key="switchImage"
+                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')"/>
                         </transition>
                     </div>
 
                     <div v-if="selected !== index">
                         <hr class="product_seperator">
-                        <!--<p class="product_name">{{ 'Min: ' + i['AgeMin'] + ' &#45;&#45;  Max: ' + i['AgeMax'] + '-&#45;&#45; Interesse: ' + i['Interesse'] + '-&#45;&#45;Thema: ' + i['Theme']}} </p>-->
                         <p class="product_name">{{ i['ProductNameNL']}} </p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
@@ -48,13 +47,13 @@
                             <div @click="changeImage('box', selectImage = i['ProductNumber'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
-                                <img v-lazy="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
+                                <v-lazy-image :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')"/>
                             </div>
 
                             <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
                                  :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
-                                <img v-lazy="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')">
+                                <v-lazy-image :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')"/>
                             </div>
 
                         </div>
@@ -344,10 +343,10 @@
 
         watch: {
             addToSlide() {
-                if ((this.currentSlide + 10) > this.addSlides) {
+                if ((this.currentSlide + 5) > this.addSlides) {
                     this.checkProductFilter()
-                    if (this.currentSlide < this.currentProducts.length) {
-                        this.addSlides = this.currentSlide + 10 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 10
+                    if (this.currentSlide < this.filterLength) {
+                        this.addSlides = this.currentSlide + 5 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 10
                         this.getProducts()
                     }
                 }

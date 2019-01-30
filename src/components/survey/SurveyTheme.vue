@@ -15,13 +15,13 @@
                               :key="indexTheme + 'STH'">
 
                     <div class="survey__theme__images" @click="$parent.changeView(legoTheme)">
-                        <img class="survey__theme__lego__img  swiper-lazy" :src="legoTheme.url">
+                        <v-lazy-image class="survey__theme__lego__img  swiper-lazy" :src="legoTheme.url"/>
                         <img class="swiper-lazy" src="../../assets/images/layout/border.png">
                     </div>
 
                     <p class="survey__theme__text animated flipInX"
                        style="animation-delay: 1s; animation-duration: 1s;">
-                        {{legoTheme.brand}} {{legoTheme.theme}}
+                        LEGO® {{legoTheme.theme}}
                     </p>
                 </swiper-slide>
             </swiper>

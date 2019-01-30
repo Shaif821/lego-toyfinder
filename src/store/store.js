@@ -23,7 +23,6 @@ const store = new Vuex.Store({
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),
-                speech: require('../assets/images/layout/bitmap.png'),
                 text: '1 - 2 jaar',
                 ageMin: 1,
                 ageMax: 2,
@@ -32,18 +31,16 @@ const store = new Vuex.Store({
             },
             {
                 url: require('../assets/images/survey/group-43.png'),
-                speech: require('../assets/images/layout/bitmap.png'),
                 text: '2 - 6 jaar',
                 ageMin: 2,
                 ageMax: 6,
                 interest: [
-                    'Dieren', 'Fantasie', 'Stad & Gebouwen', 'Superhelden', 'Vrije tijd', 'Voertuigen'
+                    'Dieren', 'Fantasie', 'Stad & Gebouwen', 'Superhelden', 'Voertuigen'
                 ],
                 pos: '70px 80px 92px 77px'
             },
             {
                 url: require('../assets/images/survey/group-34.png'),
-                speech: require('../assets/images/layout/bitmap.png'),
                 text: '6 - 12 jaar',
                 ageMin: 6,
                 ageMax: 12,
@@ -55,7 +52,6 @@ const store = new Vuex.Store({
             },
             {
                 url: require('../assets/images/survey/group-44.png'),
-                speech: require('../assets/images/layout/bitmap.png'),
                 text: '12+',
                 ageMin: 12,
                 ageMax: 99,
@@ -70,177 +66,135 @@ const store = new Vuex.Store({
         interests: [
             {
                 url: require('../assets/images/survey/adventure.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Avontuur',
-                pos: '49px 50px 53px 50px'
             },
             {
 
                 url: require('../assets/images/survey/animal.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Dieren',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/fantasy.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Fantasie',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/robot.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Robot',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/city.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Stad & Gebouwen',
-                pos: '49px 50px 53px 50px'
             },
             {
 
                 url: require('../assets/images/survey/heroes.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Superhelden',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/vehicles.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Voertuigen',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/free.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Vrije tijd',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/building.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Bouwstenen',
-                pos: '49px 50px 53px 50px'
             },
             {
                 url: require('../assets/images/survey/space.png'),
-                speech: require('../assets/images/layout/bitmap-small.png'),
                 text: 'Ruimtevaart',
-                pos: '49px 50px 53px 50px'
             },
         ],
 
         themes: [
             {
                 url: require('../assets/images/themes/architecture.jpg'),
-                brand: 'LEGO®',
                 theme: 'Architecture'
             },
             {
                 url: require('../assets/images/themes/batman.jpg'),
-                brand: 'LEGO®',
                 theme: 'Batman™'
             },
             {
                 url: require('../assets/images/themes/batman_movie.jpg'),
-                brand: 'LEGO®',
                 theme: 'BATMAN™ MOVIE'
             },
             {
                 url: require('../assets/images/themes/boost.jpg'),
-                brand: 'LEGO®',
                 theme: 'BOOST'
             },
             {
                 url: require('../assets/images/themes/brickheadz.jpg'),
-                brand: 'LEGO®',
                 theme: 'BrickHeadz',
             },
             {
                 url: require('../assets/images/themes/city_fire_police.jpg'),
-                brand: 'LEGO®',
                 theme: 'City',
             },
             {
                 url: require('../assets/images/themes/classic.jpg'),
-                brand: 'LEGO®',
                 theme: 'Classic'
             },
             {
                 url: require('../assets/images/themes/creator_expert.jpg'),
-                brand: 'LEGO®',
                 theme: 'Creator Expert'
             },
             {
                 url: require('../assets/images/themes/disney.jpg'),
-                brand: 'LEGO®',
                 theme: 'Disney™'
             },
             {
                 url: require('../assets/images/themes/duplo.jpg'),
-                brand: 'LEGO®',
                 theme: 'DUPLO®'
             },
             {
                 url: require('../assets/images/themes/elves.jpg'),
-                brand: 'LEGO®',
                 theme: 'Elves'
             },
             {
                 url: require('../assets/images/themes/friends.jpg'),
-                brand: 'LEGO®',
                 theme: 'Friends'
             },
             {
                 url: require('../assets/images/themes/hp.jpg'),
-                brand: 'LEGO®',
                 theme: 'Harry Potter™'
             },
             {
                 url: require('../assets/images/themes/jurrasic_world.jpg'),
-                brand: 'LEGO®',
                 theme: 'Jurassic World™'
             },
             {
                 url: require('../assets/images/themes/lego_movie.jpg'),
-                brand: 'LEGO®',
                 theme: 'The Lego Movie™'
             },
             {
                 url: require('../assets/images/themes/minecraft.jpg'),
-                brand: 'LEGO®',
                 theme: 'Minecraft™'
             },
             {
                 url: require('../assets/images/themes/ninjago.jpg'),
-                brand: 'LEGO®',
                 theme: 'NINJAGO®'
             },
             {
                 url: require('../assets/images/themes/speed_champions.jpg'),
-                brand: 'LEGO®',
                 theme: 'Speed Champions'
             },
             {
                 url: require('../assets/images/themes/starwars.jpg'),
-                brand: 'LEGO®',
                 theme: 'Star Wars™'
             },
             {
                 url: require('../assets/images/themes/superheroes_dc.jpg'),
-                brand: 'LEGO®',
                 theme: 'DC Comics Super Heroes'
             },
             {
                 url: require('../assets/images/themes/superheroes_marvel-bp.jpg'),
-                brand: 'LEGO®',
                 theme: 'Marvel Super Heroes'
             },
             {
                 url: require('../assets/images/themes/technic.jpg'),
-                brand: 'LEGO®',
                 theme: 'Technic'
             },
         ],

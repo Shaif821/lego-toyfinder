@@ -166,11 +166,10 @@
 <style scoped>
     .sharelist-container {
         font-family: BlueSheepLego, 'sans-serif';
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.9);
         padding: 0;
         position: absolute;
         z-index: 5;
-        /*top: 100%;*/
         transform: translateY(10px);
         height: 1080px;
         width: 1920px;

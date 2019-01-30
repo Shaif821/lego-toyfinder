@@ -12,14 +12,15 @@
                  :key="indexInterest + 'ST'"
                  :style="
                  [ageChoice['interest'].length === 4 ? {flex: '0 1 calc(25% - 8px)'} :
+                 (ageChoice['interest'].length === 5 ? {flex: '0 1 calc(40% - 200px)'} :
                  (ageChoice['interest'].length === 6 ? {flex: '0 1 calc(33% - 110px)'} :
                  (ageChoice['interest'].length === 7 ? {flex: '0 1 calc(25% - 8px)'} :
                  (ageChoice['interest'].length === 8 ? {flex: '0 1 calc(25% - 8px)'} :
-                 {flex: '0 1 calc(20% - 8px)'})))]"
+                 {flex: '0 1 calc(20% - 8px)'}))))]"
             >
                 <div v-for="interest in $store.state.interests" @click="$parent.changeView(interest)" >
                     <div class="survey__interest__images animated flipInY" v-if="interest.text === ageInterest" style="animation-delay: 0.4s; animation-duration: 1.5s;">
-                        <img class="survey__interest__lego__img " :src="interest.url" :style="{margin: interest.pos}">
+                        <img class="survey__interest__lego__img " :src="interest.url">
                         <img src="../../assets/images/layout/bitmap-small.png">
                     </div>
 
@@ -47,7 +48,7 @@
                 <div  class="survey__interest__images" >
                     <img class="survey__interest__lego__img animated flipInY"
                          style="animation-delay: 0.4s; animation-duration: 1.5s"
-                         :src="legoInterest.url" :style="{margin: legoInterest.pos}">
+                         :src="legoInterest.url">
                     <img class="animated flipInY" style="animation-delay: 0.4s; animation-duration: 1.5s;"
                          src="../../assets/images/layout/bitmap-small.png">
                 </div>
@@ -109,6 +110,7 @@
         z-index: 1;
         width: 120px;
         height: 120px;
+        margin: 49px 50px 53px 50px;
     }
 
     .survey__filler-2 {
