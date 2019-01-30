@@ -36,11 +36,11 @@
 </template>
 
 <script>
-    import ScreenLoader from './layout/ScreenLoader'
-    import ProductList from './product/ProductList'
+    const ScreenLoader = () => import('./layout/ScreenLoader')
+    const ProductList = () => import('./product/ProductList')
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
-    import CardBoard from './layout/CardBoard'
+    const CardBoard = () => import('./layout/CardBoard')
     import 'swiper/dist/css/swiper.css'
 
     export default {

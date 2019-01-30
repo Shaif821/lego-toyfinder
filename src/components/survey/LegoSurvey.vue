@@ -12,8 +12,8 @@
                 </transition>
             </div>
 
-            <transition enter-active-class="animated slideInRight"
-                        leave-active-class="animated slideOutLeft"
+            <transition enter-active-class="animated slideInRight slowDown"
+                        leave-active-class="animated slideOutLeft slowDown"
                         enter mode="out-in">
                 <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
                            v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
@@ -51,7 +51,8 @@
 
         methods: {
             changeView(choice) { //Als de gebruiker vanuit het begin scherm een keuze maakt, of vanuit de producten slide
-                this.$store.state.currentSurvey ? this.addChoice(choice, true) : this.saveChoice(choice)
+                // this.$store.state.currentSurvey ? this.addChoice(choice, true) : this.saveChoice(choice)
+                this.saveChoice(choice)
             },
 
             saveChoice(choice) {  //Sla de keuze op en ga door naar de volgende slide of view
@@ -68,6 +69,9 @@
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
                         this.age = choice
+                        if(this.age.text === '1 - 2 jaar'){
+                            this.nextSlide()
+                        }
                         break;
                     case 'SurveyInterest':
                         this.$store.state.interestChoice = choice
@@ -148,6 +152,10 @@
 <style>
     .delayAnimation {
         animation-delay: 1s !important;
+    }
+
+    .slowDown {
+        animation-duration: 1s !important;
     }
 
     .survey__container {

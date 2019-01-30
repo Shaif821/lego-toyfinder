@@ -1,5 +1,5 @@
 <template>
-    <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
+    <swiper  ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
         <swiper-slide class="product_wrapper animated zoomIn"
                       :class="{product_wrapper_details : selected === index}"
                       v-for="(i, index) in shortProducts" :key="i['ProductNumber']"
@@ -13,9 +13,9 @@
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
                             <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
+                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
                             <img class="swiper-lazy" v-else :key="switchImage"
-                                 :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
+                                 v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
                         </transition>
                     </div>
 
@@ -48,13 +48,13 @@
                             <div @click="changeImage('box', selectImage = i['ProductNumber'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
-                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
+                                <img v-lazy="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')">
                             </div>
 
                             <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
                                  :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
-                                <img :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')">
+                                <img v-lazy="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')">
                             </div>
 
                         </div>
@@ -184,10 +184,10 @@
                     try {
                         require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
                         length++
-                        // if (this.shortProducts.length < counter) {
+                        this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
+                        if (this.shortProducts.length < counter) {
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
-                            this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
-                        // }
+                        }
                     } catch (e) {
                         // this.noProducts.push(this.currentProducts[i]['ProductNumber'])
                     }
@@ -226,7 +226,7 @@
                     }
                 }
                 else if (interest == null && age !== null && theme == null) {             //Wanneer allen age gevuld is
-                    if (age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                    if (age.ageMin <= currentProduct['AgeMin'] && currentProduct['AgeMax'] <= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -236,9 +236,7 @@
                     }
                 }
                 else if (interest === null && age === null && theme !== null) {          //Wanneer alleen thema gevuld is
-                    console.log(currentProduct['Theme'] === theme.theme);
                     if (theme.theme === currentProduct['Theme']) {
-                        // console.log(theme.theme + ' ---- ' + currentProduct['Theme'])
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -346,7 +344,7 @@
 
         watch: {
             addToSlide() {
-                if ((this.currentSlide + 5) > this.addSlides) {
+                if ((this.currentSlide + 10) > this.addSlides) {
                     this.checkProductFilter()
                     if (this.currentSlide < this.currentProducts.length) {
                         this.addSlides = this.currentSlide + 10 > this.currentProducts.length ? this.currentProducts.length : this.currentSlide + 10

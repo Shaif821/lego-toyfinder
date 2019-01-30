@@ -5,13 +5,12 @@ import store from './store/store'
 import VAnimateCss from 'v-animate-css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VeeValidate from 'vee-validate'
-
+import VueLazyload from 'vue-lazyload'
 
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VeeValidate);
-
-
+Vue.use(VueLazyload)
 
 Vue.config.productionTip = false
 Vue.config.performance = true
