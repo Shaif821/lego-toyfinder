@@ -148,6 +148,7 @@
                 alphaProductsZ: alpha_Z,
                 currentProducts: null,
                 shortProducts: [],
+                noProducts: [],
                 singleImage: '_box1_in',
                 selectImage: undefined,
                 switchImage: undefined,
@@ -188,6 +189,7 @@
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
                         // }
                     } catch (e) {
+                        // this.noProducts.push(this.currentProducts[i]['ProductNumber'])
                     }
                 }
                 if (this.shortProducts.length > 0) {
