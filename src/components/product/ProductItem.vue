@@ -12,7 +12,7 @@
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
-                            <img class="swiper-lazy" v-if="selectImage === i['ProductNumber']" :key="singleImage"
+                            <img class="swiper-lazy  product_image_prod" v-if="selectImage === i['ProductNumber']" :key="singleImage"
                                  v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')">
                             <img class="swiper-lazy" v-else :key="switchImage"
                                  v-lazy="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')">
@@ -221,12 +221,12 @@
                     }
                 }
                 else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
-                    if (theme.theme === currentProduct['Theme'] && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                    if (theme.theme === currentProduct['Theme'] &&  age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
-                else if (interest == null && age !== null && theme == null) {             //Wanneer allen age gevuld is
-                    if (age.ageMin <= currentProduct['AgeMin'] && currentProduct['AgeMax'] <= age.ageMax) {
+                else if (interest == null && age !== null && theme == null) {             //Wanneer alleen age gevuld is
+                    if (currentProduct['AgeMin'] <= age.ageMin && currentProduct['AgeMax'] >= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -405,9 +405,6 @@
         transition: 0.3s ease-in-out;
     }
 
-    .product_image_big {
-        border: 2px solid red;
-    }
 
     .product_all_image {
         margin-left: 20px;
@@ -474,8 +471,8 @@
     .product_image_details img {
         max-height: 100%;
         max-width: 100%;
-        height: 80%;
-        width: 80%;
+        height: auto;
+        width: 90%;
         transition: 0.3s ease-in-out;
     }
 

@@ -60,7 +60,11 @@
                 if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') { //Ga door naar de volgende slide(ScreenLoader)
                     this.nextSlide()
                 } else {
-                    this.view = 'SurveyInterest'  //Ga door naar de volgende view (SurveyInterest)
+                    if(this.age.text === '1 - 2 jaar') {
+                        this.view = 'SurveyAge'  //Reset de view
+                    }else {
+                        this.view = 'SurveyInterest'  //Ga door naar de volgende view (SurveyInterest)
+                    }
                 }
             },
 
@@ -71,6 +75,7 @@
                         this.age = choice
                         if(this.age.text === '1 - 2 jaar'){
                             this.nextSlide()
+                            this.view = 'SurveyAge'
                         }
                         break;
                     case 'SurveyInterest':

@@ -31,7 +31,6 @@ const store = new Vuex.Store({
                 pos: '82px 103px 100px 94px'
             },
             {
-
                 url: require('../assets/images/survey/group-43.png'),
                 speech: require('../assets/images/layout/bitmap.png'),
                 text: '2 - 6 jaar',

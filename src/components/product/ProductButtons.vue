@@ -15,7 +15,7 @@
             <span class="product-buttons__text" v-else>Wat is je leeftijd?</span>
         </div>
 
-        <div v-if="this.$store.state.ageChoice.text !== '1 - 2 jaar'" @click="goToSurvey('SurveyInterest') " class="product-bottom__button product-bottom__button--last">
+        <div v-if="this.$store.state.ageChoice.text !== '1 - 2 jaar'" @click="goToSurvey('SurveyInterest')" class="product-bottom__button product-bottom__button--last">
             <span class="product-buttons__text" v-if="this.$store.state.interestChoice !== null">
                 Ik hou van <span class="product_survey_choice">{{ this.$store.state.interestChoice.text }}</span>
             </span>
