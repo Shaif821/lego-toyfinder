@@ -37,7 +37,7 @@
 
             <div class="screensaver__footer">
                 <div class="screensaver__footer--filler"></div>
-                <div class="screensaver__footer--hand animated bounce infinite" style=" animation-duration: 3s;">
+                <div class="screensaver__footer--hand animated tada infinite" style=" animation-duration: 3s;">
                     <img src="../../assets/images/layout/touch.png">
                 </div>
                 <div @click="toThemes" class="screensaver__footer--text">

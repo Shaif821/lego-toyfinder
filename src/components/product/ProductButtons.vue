@@ -1,13 +1,5 @@
 <template>
-    <div >
-        <div @click="goToSurvey('SurveyTheme')" class="product-bottom__button">
-            <span class="product-buttons__text" v-if="this.$store.state.themeChoice !== null">
-                LEGO®
-                {{ this.$store.state.themeChoice.theme }}
-            </span>
-            <span class="product-buttons__text" v-else>Kies een thema</span>
-        </div>
-
+    <div>
         <div @click="goToSurvey('SurveyAge')" class="product-bottom__button">
             <span class="product-buttons__text" v-if="this.$store.state.ageChoice !== null">
                 Ik ben <span class="product_survey_choice">{{ this.$store.state.ageChoice.text  }}</span>
@@ -20,6 +12,14 @@
                 Ik hou van <span class="product_survey_choice">{{ this.$store.state.interestChoice.text }}</span>
             </span>
             <span class="product-buttons__text" v-else>Wat vind je leuk?</span>
+        </div>
+
+        <div @click="goToSurvey('SurveyTheme')" class="product-bottom__button">
+            <span class="product-buttons__text" v-if="this.$store.state.themeChoice !== null">
+                LEGO®
+                {{ this.$store.state.themeChoice.theme }}
+            </span>
+            <span class="product-buttons__text" v-else>Bekijk het productenoverzicht</span>
         </div>
     </div>
 </template>

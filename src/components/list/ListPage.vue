@@ -76,6 +76,7 @@
 
 <script>
     import productsJSON from '../../assets/products/alpha-a'
+
     require('confetti-js')
 
     export default {
@@ -200,12 +201,13 @@
     }
 
     .wishlist__container {
+        border: 2px solid red;
         flex: 1;
         height: 100%;
-        width: 60%;
+        width: 70%;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-around;
         align-items: flex-start;
         flex-wrap: wrap-reverse;
         margin-top: -110px;
@@ -213,13 +215,14 @@
 
     .phone__container {
         position: relative;
-        min-width: 450px;
+        min-width: 300px;
         max-height: 860px;
         height: auto;
         width: auto;
         display: flex;
         align-items: flex-end;
         justify-content: center;
+        border: 1px solid green;
     }
 
     .phone__wrapper {
@@ -293,10 +296,11 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        min-width: 400px;
+        min-width: 300px;
         max-height: 800px;
         height: auto;
         width: auto;
+        border: 1px solid purple;
     }
 
     .share__title {
@@ -327,7 +331,6 @@
     }
 
     .share__text {
-
         flex: 1;
     }
 
@@ -390,7 +393,7 @@
     }
 
     .social_link:visited {
-        color:#ffc600;
+        color: #ffc600;
     }
 
     .list__footer {
@@ -408,5 +411,55 @@
         max-width: 100%;
     }
 
+    @media screen and (max-width: 1220px) {
+        .share__container {
+            border: 2px solid orange;
+        }
 
+        .phone__container {
+            min-width: 250px;
+            border: 2px solid lightskyblue;
+        }
+
+        .phone__container__img {
+            width: 75%;
+        }
+
+        .product__wrapper {
+            left: 6%;
+            width: 63%;
+            border: 1px solid red;
+        }
+
+        .products__text__link {
+            font-size: 20px;
+        }
+
+        .share__container {
+            min-width: 250px;
+        }
+
+        .share__title__text {
+            font-size: 45px;
+        }
+
+        .share__text__content {
+            font-size: 15px;
+            width: 250px;
+        }
+
+        .share__image__container {
+            width: 250px;
+            height: 196px;
+        }
+
+        .text__share {
+            font-size: 15px;
+        }
+
+        .share__social {
+            font-size: 25px;
+            width: 55%;
+        }
+    }
 </style>

@@ -69,14 +69,18 @@
                         this.$store.state.ageChoice = choice
                         this.age = choice
                         this.$store.state.interestChoice = null
+                        this.$store.state.themeChoice = null
                         if(this.age.text === '1 - 2 jaar'){
                             this.nextSlide()
                         }
                         break;
                     case 'SurveyInterest':
                         this.$store.state.interestChoice = choice
+                        this.$store.state.themeChoice = null
                         break;
                     case 'SurveyTheme':
+                        this.$store.state.interestChoice = null
+                        this.$store.state.ageChoice = null
                         this.$store.state.themeChoice = choice
                         break;
                 }
