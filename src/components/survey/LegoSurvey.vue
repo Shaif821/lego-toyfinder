@@ -51,8 +51,7 @@
 
         methods: {
             changeView(choice) { //Als de gebruiker vanuit het begin scherm een keuze maakt, of vanuit de producten slide
-                // this.$store.state.currentSurvey ? this.addChoice(choice, true) : this.saveChoice(choice)
-                this.saveChoice(choice)
+                this.$store.state.currentSurvey ? this.addChoice(choice, true) :this.saveChoice(choice)
             },
 
             saveChoice(choice) {  //Sla de keuze op en ga door naar de volgende slide of view
@@ -60,11 +59,7 @@
                 if (this.view === 'SurveyInterest' || this.view === 'SurveyTheme') { //Ga door naar de volgende slide(ScreenLoader)
                     this.nextSlide()
                 } else {
-                    if(this.age.text === '1 - 2 jaar') {
-                        this.view = 'SurveyAge'  //Reset de view
-                    }else {
-                        this.view = 'SurveyInterest'  //Ga door naar de volgende view (SurveyInterest)
-                    }
+                    this.view = 'SurveyInterest'  //Ga door naar de volgende view (SurveyInterest)
                 }
             },
 
@@ -72,21 +67,17 @@
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
-                        this.$store.state.themeChoice = null
                         this.age = choice
+                        this.$store.state.interestChoice = null
                         if(this.age.text === '1 - 2 jaar'){
                             this.nextSlide()
-                            this.view = 'SurveyAge'
                         }
                         break;
                     case 'SurveyInterest':
                         this.$store.state.interestChoice = choice
-                        this.$store.state.themeChoice = null
                         break;
                     case 'SurveyTheme':
                         this.$store.state.themeChoice = choice
-                        this.$store.state.interestChoice = null
-                        this.$store.state.ageChoice = null
                         break;
                 }
                 if (bool) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)

@@ -14,12 +14,12 @@
             <div class="phone__container">
                 <div class="phone__container__text columns is-gapless is-desktop">
                     <div class="column phone__container__column product__container">
-                        <div class="phone__container__products">
-                            <p @mouseover="showImage(product['ProductNumber'], product['Link'])"
-                               v-for="(product, index) in products" :key="index"
-                               class="products__text">
-                                {{product['ProductNameNL']}}
-                            </p>
+                        <div class="phone__container__products" >
+                            <div class="products__text" v-for="(product, index) in products" :key="index" @mouseover="showImage(product['ProductNumber'], product['Link'])">
+                                <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank" class="products__text__link">
+                                    {{product['ProductNameNL']}}
+                                </a>
+                            </div>
                         </div>
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
@@ -33,8 +33,8 @@
 
                         <div class="text__image__container">
                             <a :href="url" target="_blank" class="image__wrapper">
-                                <transition enter-active-class="animated bounceInLeft"
-                                            leave-active-class="animated bounceOutRight"
+                                <transition enter-active-class="animated bounceInLeft delayAnimation"
+                                            leave-active-class="animated bounceOutRight delayAnimation"
                                             mode="out-in">
                                     <img v-if="!noImage" class="image__product"
                                          :key="image"
@@ -46,7 +46,10 @@
                         <p class="text__share">Deel jouw lijstje</p>
 
                         <div class="text__share__buttons">
-                            <i class="fab fa-whatsapp"></i>
+                            <a class="social_link"
+                               :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
                             <i class="fab fa-facebook-f"></i>
                             <i class="fab fa-twitter"></i>
                             <i class="fas fa-envelope"></i>
@@ -86,6 +89,7 @@
                 image: null,
                 noImage: true,
                 url: null,
+                siteUrl: window.location.href,
                 confettiSettings: {
                     target: 'list__confetti',
                     max: 20,
@@ -147,6 +151,12 @@
 </script>
 
 <style scoped>
+    @import "https://use.fontawesome.com/releases/v5.3.1/css/all.css";
+
+    .delayAnimation {
+        animation-duration: 0.5s;
+    }
+
     .list {
         padding: 0;
         margin: 0;
@@ -243,6 +253,14 @@
 
     }
 
+    .products__text__link {
+        color: black;
+    }
+
+    .products__text__link:visited {
+        color: black;
+    }
+
     .products__text:hover {
         transition: 0.5s ease-in-out;
         background-color: #e0e6ed;
@@ -325,6 +343,14 @@
         color: #ffc600;
         font-size: 35px;
         margin-top: 20px;
+    }
+
+    .social_link {
+        color: #ffc600;
+    }
+
+    .social_link:visited {
+        color:#ffc600;
     }
 
     .hero-foot {
