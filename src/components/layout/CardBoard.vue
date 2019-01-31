@@ -32,7 +32,7 @@
         padding: 0;
         margin: 0;
         z-index: 100;
-        transition: ease-in-out 0.3s;
+        transition: ease-in-out 0.2s;
     }
 
     .cardboard__container__img {

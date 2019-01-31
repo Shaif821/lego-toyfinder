@@ -138,7 +138,6 @@
 </template>
 
 <script>
-    import price_L from '../../assets/products/price-l'
     import alpha_A from '../../assets/products/alpha-a'
 
     export default {
@@ -150,7 +149,9 @@
 
         data() {
             return {
+                countFilter: null,
                 currentProducts: null,
+                ogProducts: null,
                 shortProducts: [],
                 loading: require('../../assets/images/layout/loading.gif'),
                 singleImage: '_box1_in',
@@ -268,23 +269,33 @@
             },
 
             checkProductFilter() {
+                this.currentProducts = alpha_A
+                if(this.countFilter === null) {
+                    this.ogProducts = this.currentProducts.slice()
+                }
+
+
                 if (this.productSort === 'AlphaA') {
-                    this.currentProducts = alpha_A
+                    this.currentProducts = this.ogProducts
                 }
                 else if (this.productSort === 'AlphaZ') {
-                    this.currentProducts = alpha_A
                     this.currentProducts = this.currentProducts.slice().reverse()
                 }
                 else if (this.productSort === 'PriceL') {
-                    this.currentProducts = price_L
+                    this.currentProducts = this.currentProducts.sort(function (a, b) {
+                        return a.RRP - b.RRP
+                    })
                 }
                 else if (this.productSort === 'PriceH') {
-                    this.currentProducts = price_L
-                    this.currentProducts = this.currentProducts.slice().reverse()
+                    this.currentProducts = this.currentProducts.sort(function (a, b) {
+                        return b.RRP - a.RRP
+                    })
                 }
                 else {
-                    this.currentProducts = alpha_A
+                    this.currentProducts = this.ogProducts
                 }
+
+                this.countFilter = 1
             },
 
             getMini(id) {
