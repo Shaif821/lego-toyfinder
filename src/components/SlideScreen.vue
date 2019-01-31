@@ -141,6 +141,10 @@
 </script>
 
 <style scoped>
+    .slidescreen__container {
+        overflow: hidden;
+    }
+
     .slidescreen__container--normal {
         background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }

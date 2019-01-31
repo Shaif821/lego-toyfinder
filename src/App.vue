@@ -35,7 +35,7 @@
         transition: 0.3s ease-in-out;
         z-index: 0;
         background-image: radial-gradient(0% 0%, #098ddb, #1062a2);
-        overflow: hidden;
+
     }
 
     *{

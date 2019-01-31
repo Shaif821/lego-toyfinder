@@ -2,73 +2,72 @@
     <div class="list">
         <canvas id="list__confetti" class="list__canvas"></canvas>
 
-        <section class="list__container">
-            <div class="list__header">
-                <img class="navbar__logo" src="../../assets/images/layout/logo@2x.png" alt="Logo">
+        <section class="hero is-large list__container">
+            <!-- Hero head: will stick at the top -->
+            <div class="hero-head">
+                <!--<nav class="navbar">-->
+                <img class="navbar__logo" src="../../assets/images/layout/logo.png" alt="Logo">
+                <!--</nav>-->
             </div>
 
-            <div class="wishlist__container">
-
-                <div class="phone__container">
-                    <div class="phone__wrapper">
+            <!-- Hero content: will be in the middle -->
+            <div class="phone__container">
+                <div class="phone__container__text columns is-gapless is-desktop">
+                    <div class="column phone__container__column product__container">
+                        <div class="phone__container__products" >
+                            <div class="products__text" v-for="(product, index) in products" :key="index" @mouseover="showImage(product['ProductNumber'], product['Link'])">
+                                <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank" class="products__text__link">
+                                    {{product['ProductNameNL']}}
+                                </a>
+                            </div>
+                        </div>
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
 
-                    <div class="product__wrapper">
-                        <div class="products__text" v-for="(product, index) in products" :key="index"
-                             @mouseover="showImage(product['ProductNumber'], product['Link'])">
-                            <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank"
-                               class="products__text__link">
-                                {{product['ProductNameNL']}}
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                    <div class="column text__container">
+                        <p class="text__title">Wenslijstje</p>
 
-
-                <div class="share__container">
-                    <div class="share__title">
-                        <h1 class="share__title__text">Wenslijstje</h1>
-                        <img class="share__title__star" src="../../assets/images/layout/star.png">
-                    </div>
-
-                    <div class="share__text">
-                        <p class="share__text__content">
+                        <p class="text__long">
                             Deze producten zijn te koop in de winkel of online op lego.be
                         </p>
-                    </div>
-                    <div class="share__image__container">
-                        <a :href="url" target="_blank" class="image__wrapper">
-                            <transition enter-active-class="animated bounceInLeft delayAnimation"
-                                        leave-active-class="animated bounceOutRight delayAnimation"
-                                        mode="out-in">
-                                <img v-if="!noImage" class="image__product"
-                                     :key="image"
-                                     :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
-                            </transition>
-                        </a>
-                    </div>
 
-                    <p class="text__share">Deel jouw lijstje</p>
+                        <div class="text__image__container">
+                            <a :href="url" target="_blank" class="image__wrapper">
+                                <transition enter-active-class="animated bounceInLeft delayAnimation"
+                                            leave-active-class="animated bounceOutRight delayAnimation"
+                                            mode="out-in">
+                                    <img v-if="!noImage" class="image__product"
+                                         :key="image"
+                                         :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                                </transition>
+                            </a>
+                        </div>
 
-                    <div class="share__social">
-                        <a class="social_link"
-                           :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                        <i class="fab fa-facebook-f"></i>
-                        <i class="fab fa-twitter"></i>
-                        <i class="fas fa-envelope"></i>
-                        <i class="fas fa-link"></i>
+                        <p class="text__share">Deel jouw lijstje</p>
+
+                        <div class="text__share__buttons">
+                            <a class="social_link"
+                               :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fas fa-envelope"></i>
+                            <i class="fas fa-link"></i>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Hero footer: will stick at the bottom -->
-            <div class="list__footer">
-                <div class=" footer__img__container">
-                    <img class="image footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
-                </div>
+            <div class="hero-foot">
+                <nav class="tabs">
+                    <div class=" footer__img__container">
+                        <figure class="image">
+                            <img class="footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
+                        </figure>
+                    </div>
+                </nav>
             </div>
         </section>
     </div>
@@ -77,6 +76,7 @@
 <script>
     import productsJSON from '../../assets/products/alpha-a'
     require('confetti-js')
+    // require('buefy/dist/buefy.min.css')
 
     export default {
         name: "ListPage",
@@ -144,15 +144,14 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
 
 <style scoped>
     @import "https://use.fontawesome.com/releases/v5.3.1/css/all.css";
-    @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
     .delayAnimation {
         animation-duration: 0.5s;
@@ -161,11 +160,10 @@
     .list {
         padding: 0;
         margin: 0;
-        min-height: 100vh;
-        min-width: 100vw;
-        background-color: rgba(0, 0, 0, 0.7);
+        height: 100vh;
+        width: 100vw;
         overflow: hidden;
-
+        background-color: rgba(0, 0, 0, 0.7);
     }
 
     .list__canvas {
@@ -185,160 +183,133 @@
         overflow: hidden;
     }
 
-    .list__header {
+    .hero-head {
         width: 100%;
         text-align: left;
     }
 
     .navbar__logo {
-        max-width: 100%;
-        max-height: 100%;
-        width: 9%;
-        height: 9%;
         margin-top: 40px;
         margin-left: 40px;
     }
 
-    .wishlist__container {
-        flex: 1;
-        height: 100%;
-        width: 60%;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: flex-start;
-        flex-wrap: wrap-reverse;
-        margin-top: -4%;
-    }
-
     .phone__container {
-        position: relative;
-        min-width: 450px;
+        margin-top: -30px;
+        max-width: 1130px;
+        width: 100%;
         max-height: 860px;
-        height: auto;
-        width: auto;
-        display: flex;
+        height: 860px;
+        z-index: 100;
+        justify-content: flex-end;
         align-items: flex-end;
-        justify-content: center;
+        display: flex;
     }
 
-    .phone__wrapper {
-        position: relative;
-        margin-bottom: -46px;
-        width: auto;
-        text-align: left;
+    .phone__container__text {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .phone__container__column {
+        max-width: 500px;
+        min-width: 300px;
+        max-height: 860px;
     }
 
     .phone__container__img {
         max-width: 500px;
         max-height: 860px;
-        width: 85%;
+        width: 75%;
         height: 100%;
+        margin-bottom: -20px;
     }
 
-    .product__wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        max-width: 500px;
-        width: 69%;
-        height: 85%;
-        position: absolute;
-        margin-left: -8%;
-        margin-top: 5%;
-        transition: 0.5s ease-in-out;
-        opacity: 1;
+    .phone__container__products {
+        position: relative;
+        max-width: 320px;
+        left: 18%;
+        max-height: 860px;
+        height: 860px;
+        margin-bottom: -197%;
     }
 
     .products__text {
-        flex: 1;
         display: flex;
         align-items: center;
         justify-content: center;
+        font-family: BlueSheepLego, 'sans-serif';
+        line-height: 1.17;
+        color: black;
+        font-size: 30px;
+        height: 12%;
         background-image: linear-gradient(to right, black 33%, rgba(155, 155, 155, 0) 0%);
         background-position: bottom;
         background-size: 20px 1px;
         background-repeat: repeat-x;
-        width: 100%;
         transition: 0.5s ease-in-out;
+        opacity: 1;
+
     }
 
     .products__text__link {
-        font-family: BlueSheepLego, 'sans-serif';
-        line-height: 1.17;
         color: black;
-        font-size: 25px;
-        text-decoration: none;
     }
 
     .products__text__link:visited {
         color: black;
     }
 
-    .share__container {
+    .products__text:hover {
+        transition: 0.5s ease-in-out;
+        background-color: #e0e6ed;
+    }
+
+    .phone__container__column {
+        height: 100%;
+    }
+
+    .text__container {
+        max-width: 427px;
+        min-width: 200px;
+        max-height: 700px;
+        width: 75%;
+        height: 100%;
+        margin-top: -125px !important;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
-        min-width: 400px;
-        max-height: 800px;
-        height: auto;
-        width: auto;
     }
 
-    .share__title {
-        padding: 0;
-        margin-bottom: -12%;
-        flex: 1;
-    }
-
-    .share__title__text {
-        width: 400px;
-        height: 80px;
-        font-family: Ubuntu, 'sans-serif';
-        font-size: 55px;
+    .text__title {
+        /*font-family: 'Ubuntu', 'sans-serif';*/
+        font-size: 60px;
         font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
         line-height: 1.33;
-        letter-spacing: normal;
-        text-align: center;
         color: white;
     }
 
-    .share__title__star {
-        position: absolute;
-        z-index: 1;
-        margin-top: -11%;
-        margin-left: -15%;
-    }
-
-    .share__text {
-
-        flex: 1;
-    }
-
-    .share__text__content {
-        width: 400px;
-        height: 90px;
-        font-family: Ubuntu, 'sans-serif';
-        font-size: 20px;
+    .text__long {
+        margin-top: 20px;
+        max-width: 400px;
+        /*font-family: 'Ubuntu', 'sans-serif';*/
+        font-size: 25px;
         font-weight: bold;
-        font-style: normal;
-        font-stretch: normal;
         line-height: 1.8;
-        letter-spacing: normal;
-        text-align: center;
         color: white;
     }
 
-    .share__image__container {
+    .text__image__container {
         overflow: hidden;
-        width: 327px;
-        height: 276px;
+        margin-top: 20px;
+        background: white;
         border-radius: 10px;
-        background-color: white;
+        width: 350px;
+        height: 276px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .image__wrapper {
@@ -355,15 +326,15 @@
     }
 
     .text__share {
-        margin-top: 20px;
-        font-family: Ubuntu, 'sans-serif';
+        margin-top: 30px;
+        /*font-family: Ubuntu, 'sans-serif';*/
         font-size: 25px;
         font-weight: bold;
         line-height: 1.8;
         color: white;
     }
 
-    .share__social {
+    .text__share__buttons {
         max-width: 280px;
         width: 100%;
         display: flex;
@@ -371,6 +342,7 @@
         align-items: center;
         color: #ffc600;
         font-size: 35px;
+        margin-top: 20px;
     }
 
     .social_link {
@@ -381,20 +353,20 @@
         color:#ffc600;
     }
 
-    .list__footer {
+    .hero-foot {
         width: 100%;
         z-index: 200;
+        margin-top: -40px;
     }
 
     .footer__img__container {
         width: 100%;
     }
 
-    .footer__img {
-        margin-bottom: -5px;
-        width: 100%;
-        max-width: 100%;
+    /*Media Queries*/
+    @media screen and (max-width: 1216px) {
+        .text__container {
+            display: none;
+        }
     }
-
-
 </style>

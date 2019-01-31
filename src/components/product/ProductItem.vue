@@ -139,9 +139,7 @@
 
 <script>
     import price_L from '../../assets/products/price-l'
-    import price_H from '../../assets/products/price-h'
     import alpha_A from '../../assets/products/alpha-a'
-    import alpha_Z from '../../assets/products/alpha-z'
 
     export default {
         name: "ProductItem",
@@ -274,13 +272,15 @@
                     this.currentProducts = alpha_A
                 }
                 else if (this.productSort === 'AlphaZ') {
-                    this.currentProducts = alpha_Z
+                    this.currentProducts = alpha_A
+                    this.currentProducts = this.currentProducts.reverse()
                 }
                 else if (this.productSort === 'PriceL') {
                     this.currentProducts = price_L
                 }
                 else if (this.productSort === 'PriceH') {
-                    this.currentProducts = price_H
+                    this.currentProducts = price_L
+                    this.currentProducts = this.currentProducts.reverse()
                 }
                 else {
                     this.currentProducts = alpha_A
