@@ -57,7 +57,6 @@
                     direction: 'vertical',         //De richting
                     speed: 900,                    //De snelheid
                     slidesPerView: 'auto',         //Hiermee wordt automatisch bepaald hoeveel slides er
-                    mousewheel: true,              //-zichtbaar zijn, dus zoveel mogelijk slides die er in passen qua hoogte
                     autoHeight: true,              //De height staat niet vast
                     resistanceRatio: 0.15,
                     preventClicks: true,
