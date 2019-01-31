@@ -273,14 +273,14 @@
                 }
                 else if (this.productSort === 'AlphaZ') {
                     this.currentProducts = alpha_A
-                    this.currentProducts = this.currentProducts.reverse()
+                    this.currentProducts = this.currentProducts.slice().reverse()
                 }
                 else if (this.productSort === 'PriceL') {
                     this.currentProducts = price_L
                 }
                 else if (this.productSort === 'PriceH') {
                     this.currentProducts = price_L
-                    this.currentProducts = this.currentProducts.reverse()
+                    this.currentProducts = this.currentProducts.slice().reverse()
                 }
                 else {
                     this.currentProducts = alpha_A
