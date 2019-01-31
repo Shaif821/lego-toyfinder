@@ -11,6 +11,10 @@
 <script>
     export default {
         name: 'app',
+
+        mounted(){
+            onselectstart = (e) => {e.preventDefault()} //Prevents the user from selecting text etc.
+        }
     }
 </script>
 

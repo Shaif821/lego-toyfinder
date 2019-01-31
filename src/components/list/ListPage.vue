@@ -193,8 +193,8 @@
     .navbar__logo {
         max-width: 100%;
         max-height: 100%;
-        width: 9%;
-        height: 9%;
+        width: 120px;
+        height: 120px;
         margin-top: 40px;
         margin-left: 40px;
     }
@@ -208,7 +208,7 @@
         justify-content: space-between;
         align-items: flex-start;
         flex-wrap: wrap-reverse;
-        margin-top: -4%;
+        margin-top: -110px;
     }
 
     .phone__container {
@@ -243,10 +243,10 @@
         justify-content: flex-start;
         max-width: 500px;
         width: 69%;
-        height: 85%;
+        height: 83%;
         position: absolute;
-        margin-left: -8%;
-        margin-top: 5%;
+        left: 8.5%;
+        top: 20%;
         transition: 0.5s ease-in-out;
         opacity: 1;
     }
@@ -268,12 +268,24 @@
         font-family: BlueSheepLego, 'sans-serif';
         line-height: 1.17;
         color: black;
+        height: 99%;
+        width: 100%;
         font-size: 25px;
         text-decoration: none;
+        transition: 0.3s ease-in-out;
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .products__text__link:visited {
         color: black;
+    }
+
+    .products__text__link:hover {
+        background: #EAEBED;
+        transition: 0.3s ease-in-out;
     }
 
     .share__container {
@@ -391,7 +403,7 @@
     }
 
     .footer__img {
-        margin-bottom: -5px;
+        padding-bottom: -5px;
         width: 100%;
         max-width: 100%;
     }
