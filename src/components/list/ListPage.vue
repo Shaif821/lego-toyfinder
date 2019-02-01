@@ -1,5 +1,12 @@
 <template>
     <div class="list">
+        <modal name="productItem"
+                :width="300" :height="300">
+            <div class="modal__image__wrapper">
+                <img v-if="!noImage" class="image__product modal__image" :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+            </div>
+        </modal>
+
         <canvas id="list__confetti" class="list__canvas"></canvas>
 
         <section class="list__container">
@@ -15,13 +22,22 @@
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
 
-                    <div class="product__wrapper">
+                    <div v-if="window.width >= 800" class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index"
                              @mouseover="showImage(product['ProductNumber'], product['Link'])">
                             <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank"
                                class="products__text__link">
                                 {{product['ProductNameNL']}}
                             </a>
+                        </div>
+                    </div>
+
+                    <div v-else class="product__wrapper">
+                        <div class="products__text" v-for="(product, index) in products" :key="index"
+                             @click="imageModal(product['ProductNumber'], product['Link'])">
+                            <p class="products__text__link">
+                                {{product['ProductNameNL']}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -37,7 +53,6 @@
                             Deze producten zijn te koop in de winkel of online op lego.be.
                             <span v-if="window.width <= 785">
                             Druk op de producten om de afbeeldingen te bekijken.
-                            {{window.width}}
                         </span>
                         </p>
 
@@ -150,6 +165,12 @@
                 this.noImage = false
             },
 
+            imageModal(id, link) {
+                this.$modal.show('productItem');
+                this.image = id
+                this.url = link
+            },
+
             handleResize() {
                 this.window.width = window.innerWidth;
                 this.window.height = window.innerHeight;
@@ -168,8 +189,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
@@ -201,6 +222,7 @@
         max-width: 95vw;
         min-height: 100vh;
         width: 100%;
+        overflow: hidden;
     }
 
     .list__container {
@@ -398,6 +420,18 @@
     .image__product {
         max-height: 75%;
         max-width: 75%;
+    }
+
+    .modal__image__wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal__image {
+        margin: 0 auto;
     }
 
     .text__share {
@@ -674,6 +708,11 @@
             margin-top: 10px;
         }
 
+        .list__container {
+            position: unset;
+            overflow: auto;
+        }
+
         .list__header {
             text-align: center;
             width: 100%;
@@ -689,9 +728,8 @@
         }
 
         .wishlist__container {
-            border: 2px solid red;
             margin-top: 0;
-            padding-top: 100px;
+            /*padding-top: 100px;*/
             width: 95%;
         }
 

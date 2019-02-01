@@ -5,12 +5,14 @@ import store from './store/store'
 import VAnimateCss from 'v-animate-css';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import VeeValidate from 'vee-validate'
+import VModal from 'vue-js-modal'
 import { VLazyImagePlugin } from "v-lazy-image";
 
 Vue.use(VLazyImagePlugin);
 Vue.use(VAnimateCss);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VeeValidate);
+Vue.use(VModal)
 
 Vue.config.productionTip = false
 Vue.config.performance = true
