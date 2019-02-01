@@ -5,6 +5,7 @@
         <section class="list__container">
             <div class="list__header">
                 <img class="navbar__logo" src="../../assets/images/layout/logo@2x.png" alt="Logo">
+                <h1 v-if="window.width <= 516" class="navbar__text">Wenslijstje</h1>
             </div>
 
             <div class="wishlist__container">
@@ -25,18 +26,23 @@
                     </div>
                 </div>
 
-
                 <div class="share__container">
-                    <div class="share__title">
+                    <div v-if="window.width > 516" class="share__title">
                         <h1 class="share__title__text">Wenslijstje</h1>
                         <img class="share__title__star" src="../../assets/images/layout/star.png">
                     </div>
 
                     <div class="share__text">
                         <p class="share__text__content">
-                            Deze producten zijn te koop in de winkel of online op lego.be
+                            Deze producten zijn te koop in de winkel of online op lego.be.
+                            <span v-if="window.width <= 785">
+                            Druk op de producten om de afbeeldingen te bekijken.
+                            {{window.width}}
+                        </span>
                         </p>
+
                     </div>
+
                     <div class="share__image__container">
                         <a :href="url" target="_blank" class="image__wrapper">
                             <transition enter-active-class="animated bounceInLeft delayAnimation"
@@ -50,13 +56,12 @@
                     </div>
 
                     <p class="text__share">Deel jouw lijstje</p>
-
                     <div class="share__social">
+                        <i class="fab fa-whatsapp"></i>
                         <a class="social_link"
                            :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
-                            <i class="fab fa-whatsapp"></i>
+                            <i class="fab fa-facebook-f"></i>
                         </a>
-                        <i class="fab fa-facebook-f"></i>
                         <i class="fab fa-twitter"></i>
                         <i class="fas fa-envelope"></i>
                         <i class="fas fa-link"></i>
@@ -90,10 +95,14 @@
                 image: null,
                 noImage: true,
                 url: null,
+                window: {
+                    width: 0,
+                    height: 0
+                },
                 siteUrl: window.location.href,
                 confettiSettings: {
                     target: 'list__confetti',
-                    max: 20,
+                    max: 7,
                     size: 3,
                     rotate: true,
                     props: [
@@ -139,7 +148,21 @@
                     this.url = link
                 }
                 this.noImage = false
+            },
+
+            handleResize() {
+                this.window.width = window.innerWidth;
+                this.window.height = window.innerHeight;
             }
+        },
+
+        created() {
+            window.addEventListener('resize', this.handleResize)
+            this.handleResize();
+        },
+
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize)
         },
 
         mounted() {
@@ -163,14 +186,21 @@
         padding: 0;
         margin: 0;
         min-height: 100vh;
-        min-width: 100vw;
+        max-width: 100vw;
         background-color: rgba(0, 0, 0, 0.7);
         overflow: hidden;
-
     }
 
     .list__canvas {
-        position: relative;
+        padding: 0;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        max-width: 95vw;
+        min-height: 100vh;
+        width: 100%;
     }
 
     .list__container {
@@ -184,6 +214,7 @@
         flex-direction: column;
         align-items: center;
         overflow: hidden;
+        justify-content: space-between;
     }
 
     .list__header {
@@ -201,8 +232,8 @@
     }
 
     .wishlist__container {
-        flex: 1;
-        height: 100%;
+        flex: 1 1 0;
+        height: auto;
         width: 70%;
         display: flex;
         flex-direction: row;
@@ -329,6 +360,8 @@
 
     .share__text {
         flex: 1;
+        display: flex;
+        flex-direction: column;
     }
 
     .share__text__content {
@@ -346,6 +379,7 @@
     }
 
     .share__image__container {
+        border: 1px solid transparent;
         overflow: hidden;
         width: 327px;
         height: 276px;
@@ -399,11 +433,12 @@
     }
 
     .footer__img__container {
+        height: auto;
         width: 100%;
     }
 
     .footer__img {
-        padding-bottom: -5px;
+        margin-top: 2px;
         width: 100%;
         max-width: 100%;
     }
@@ -466,6 +501,7 @@
             max-height: 100%;
             width: 5%;
         }
+
         .navbar__logo {
             margin-top: 20px;
             margin-left: 20px;
@@ -476,37 +512,200 @@
         .navbar__logo {
             margin-top: 10px;
             margin-left: 10px;
+            width: 100px;
+            height: 100px;
         }
+
         .wishlist__container {
             width: 90%;
         }
+
+        .product__wrapper {
+            left: 7%;
+            width: 71%;
+        }
+
         .share__title__star {
             margin-top: -140px;
             margin-left: -160px;
         }
+
+        .phone__container__img {
+            width: 85%;
+        }
+
+        .footer__img {
+            width: 100%;
+            max-height: 100%;
+            height: 10%;
+        }
     }
 
     @media screen and (max-width: 785px) {
-        .list__container {overflow: scroll;}
-        .share__container {flex: 1;}
-        .phone__container {flex: 1;}
-        .share__image__container, .text__share, .share__social {display: none;}
-        .share__title__text {font-size: 10vw;}
-        .share__title__star {
-            margin-top: -22%;
-            margin-left: -33%;
-            width: 10%;
+        .list__container {
+            overflow-y: scroll;
         }
-        .share__text {
+
+        .wishlist__container {
+            display: flex;
+            flex-direction: column-reverse;
+            flex: 1 0 auto;
+            /*justify-content: flex-start; !* align items in Main Axis *!*/
+            /*align-items: stretch; !* align items in Cross Axis *!*/
+            /*align-content: stretch; !* Extra space in Cross Axis *!*/
+            margin-top: -80px;
+            margin-bottom: -30px;
+        }
+
+        .list__footer {
+            flex-shrink: 0;
+        }
+
+        .share__container {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone__container {
+            flex: 2;
+            width: 100%;
+            max-height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone__wrapper {
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 50px;
+            margin-bottom: 0px;
+            height: 100%;
         }
+
+        .phone__container__img {
+            width: 80%;
+        }
+
+        .product__wrapper {
+            left: unset;
+            width: 100%;
+            height: 79%;
+            top: 18.1%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .products__text {
+            flex: 1;
+            height: 18%;
+            width: 58%;
+        }
+
+        .products__text__link:hover {
+            background: none;
+        }
+
+        .share__image__container, .text__share, .share__social {
+            display: none;
+        }
+
+        .share__title__text {
+            width: auto;
+            font-size: 10vw;
+        }
+
+        .share__title__star {
+            display: none;
+        }
+
+        .share__title {
+            flex: 1;
+        }
+
+        .share__text {
+            padding-bottom: 50px;
+            padding-top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            flex: 2;
+        }
+
         .share__text__content {
+            margin: 0;
+            padding: 0;
             font-size: 2.5vw;
-            width:65%;
-            margin:0 auto;
+            height: auto;
+            width: 100%;
+        }
+
+        .list__canvas {
+            min-width: 100vw;
+        }
+
+        .footer__img {
+            width: 100%;
+            height: 40px;
+            max-width: 100%;
+        }
+
+    }
+
+    @media screen and (max-width: 516px) {
+        .navbar__text {
+            font-family: Ubuntu, 'sans-serif';
+            font-size: 10vw;
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+            line-height: 1.33;
+            letter-spacing: normal;
+            text-align: center;
+            color: white;
+            margin-right: 20px;
+            margin-top: 10px;
+        }
+
+        .list__header {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .navbar__logo {
+            width: 18%;
+            height: 60%;
+        }
+
+        .wishlist__container {
+            border: 2px solid red;
+            margin-top: 0;
+            padding-top: 100px;
+            width: 95%;
+        }
+
+        .phone__container, .share__container {
+            min-width: 150px;
+        }
+
+        .share__text__content {
+            width: 85%;
+            font-size: 3.5vw;
+        }
+
+        .share__text {
+            padding-top: 20px;
         }
     }
 
