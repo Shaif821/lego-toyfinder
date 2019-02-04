@@ -6,7 +6,7 @@
                 <img v-if="!noImage" class="image__product modal__image"
                      :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
                 <a :href="url !== null ? url : '#'" target="_blank"
-                   class="products__text__link">
+                   class="products__text__link products__text__link--image">
                     <p>Bekijk het product</p>
                 </a>
             </div>
@@ -195,8 +195,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            // let confetti = new ConfettiGenerator(this.confettiSettings)
+            // confetti.render()
         }
     }
 </script>
@@ -479,6 +479,8 @@
         max-width: 100%;
     }
 
+
+
     @media screen and (max-width: 1220px) {
         .wishlist__container {
             height: auto;
@@ -587,7 +589,7 @@
         }
 
         .phone__container__img {
-            width: 80%;
+            width: 70%;
             min-width: 350px;
         }
 
@@ -654,7 +656,7 @@
         }
 
         .phone__container__img {
-            width: 80%;
+            width: 50%;
         }
 
         .product__wrapper {
@@ -670,7 +672,16 @@
         .products__text {
             flex: 1;
             height: 18%;
-            width: 58%;
+            max-width: 100%;
+            width:54%;
+        }
+
+        .products__text__link {
+            font-size: 3vw;
+        }
+
+        .products__text__link--image {
+            font-size: 3vw;
         }
 
         .products__text__link:hover {
@@ -770,23 +781,26 @@
         }
 
         .phone__container__img {
-            width: 100%;
+            width: 70%;
             min-width: 100px;
         }
 
         .share__text__content {
             width: 85%;
-            font-size: 3.5vw;
+            font-size: 2.5vw;
             margin: 0;
-            padding-top: 10px;
+            padding-top: 40px;
         }
 
         .products__text {
-            width: 77%;
+            width: 60%;
+        }
+
+        .products__text__link {
+            font-size: 4vw;
         }
 
         .product__wrapper {
-            left: 1%;
         }
 
         .share__title__star {
