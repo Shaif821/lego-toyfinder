@@ -41,7 +41,7 @@
     const ProductList = () => import('./product/ProductList')
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
-
+    import VAnimateCss from 'v-animate-css';
     const CardBoard = () => import('./layout/CardBoard')
     import 'swiper/dist/css/swiper.css'
 

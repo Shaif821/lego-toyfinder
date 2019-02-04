@@ -18,7 +18,10 @@
         <section class="list__container">
             <div class="list__header">
                 <img class="navbar__logo" src="../../assets/images/layout/logo@2x.png" alt="Logo">
-                <h1 v-if="window.width <= 516" class="navbar__text">Wenslijstje</h1>
+                <div v-if="window.width <= 516">
+                    <h1 class="navbar__text">Wenslijstje</h1>
+                    <img class="share__title__star" src="../../assets/images/layout/star.png">
+                </div>
             </div>
 
             <div class="wishlist__container">
@@ -54,15 +57,12 @@
                         <img class="share__title__star" src="../../assets/images/layout/star.png">
                     </div>
 
-                    <div class="share__text">
-                        <p class="share__text__content">
-                            Deze producten zijn te koop in de winkel of online op lego.be.
-                            <span v-if="window.width <= 785">
+                    <p class="share__text__content">
+                        Deze producten zijn te koop in de winkel of online op lego.be.
+                        <span v-if="window.width <= 785">
                             Druk op de producten om de afbeeldingen te bekijken.
                         </span>
-                        </p>
-
-                    </div>
+                    </p>
 
                     <div class="share__image__container">
                         <a :href="url" target="_blank" class="image__wrapper">
@@ -195,8 +195,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
@@ -226,7 +226,7 @@
         left: 0;
         right: 0;
         max-width: 95vw;
-        min-height: 100vh;
+        height: 100vh;
         width: 100%;
         overflow: hidden;
     }
@@ -249,7 +249,6 @@
         width: 100%;
         text-align: left;
     }
-
 
     .navbar__logo {
         max-width: 100%;
@@ -274,7 +273,7 @@
 
     .phone__container {
         position: relative;
-            min-width: 500px;
+        min-width: 500px;
         max-height: 100%;
         height: 100%;
         flex: 1;
@@ -352,7 +351,7 @@
     }
 
     .share__container {
-        flex: 1 ;
+        flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -375,10 +374,6 @@
         font-family: Ubuntu, 'sans-serif';
         font-size: 55px;
         font-weight: 500;
-        font-style: normal;
-        font-stretch: normal;
-        line-height: 1.33;
-        letter-spacing: normal;
         text-align: center;
         color: white;
     }
@@ -388,12 +383,6 @@
         z-index: 1;
         margin-top: -170px;
         margin-left: -225px;
-    }
-
-    .share__text {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
     }
 
     .share__text__content {
@@ -430,6 +419,8 @@
     .image__product {
         max-height: 75%;
         max-width: 75%;
+        height: 100%;
+        width: 100%;
     }
 
     .modal__image__wrapper {
@@ -496,12 +487,14 @@
         .share__container {
             min-width: 350px;
             width: 350px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .phone__container {
             min-width: 350px;
             width: 350px;
-            border: 2px solid green;
         }
 
         .phone__container__img {
@@ -521,13 +514,17 @@
             width: 100%;
         }
 
+        .share__title {
+            flex: unset;
+        }
+
         .share__title__text {
-            font-size: 45px;
+            font-size: 55px;
         }
 
         .share__text__content {
-            font-size: 15px;
-            width: 250px;
+            font-size: 18px;
+            width: 90%;
         }
 
         .share__image__container {
@@ -536,7 +533,7 @@
         }
 
         .text__share {
-            font-size: 15px;
+            font-size: 18px;
         }
 
         .share__social {
@@ -546,7 +543,7 @@
 
         .share__title__star {
             margin-top: -150px;
-            margin-left: -180px;
+            margin-left: -190px;
             max-width: 100%;
             max-height: 100%;
             width: 5%;
@@ -576,8 +573,17 @@
         }
 
         .share__title__star {
-            margin-top: -140px;
-            margin-left: -160px;
+            margin-top: -150px;
+            margin-left: -190px;
+        }
+
+        .share__text__content {
+            width: 85%;
+        }
+
+        .share__image__container {
+            width: 70%;
+            height: 40%;
         }
 
         .phone__container__img {
@@ -595,6 +601,10 @@
     @media screen and (max-width: 785px) {
         .list__container {
             overflow-y: scroll;
+        }
+
+        .share__title {
+            flex: 1;
         }
 
         .wishlist__container {
@@ -617,8 +627,12 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
+        }
+
+        .share__title__text {
+            height: unset;
         }
 
         .phone__container {
@@ -673,26 +687,19 @@
         }
 
         .share__title__star {
-            display: none;
+            margin-top: -24%;
+            margin-left: -33%;
+            width: 10%;
         }
 
         .share__title {
             flex: 1;
         }
 
-        .share__text {
+        .share__text__content {
             padding-bottom: 50px;
             padding-top: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
             flex: 2;
-        }
-
-        .share__text__content {
-            margin: 0;
-            padding: 0;
             font-size: 2.5vw;
             height: auto;
             width: 100%;
@@ -710,7 +717,7 @@
 
     }
 
-    @media screen and (max-width: 516px) {
+    @media screen and (max-width: 616px) {
         .navbar__text {
             font-family: Ubuntu, 'sans-serif';
             font-size: 10vw;
@@ -746,7 +753,6 @@
 
         .wishlist__container {
             margin-top: 0;
-            /*padding-top: 100px;*/
             width: 95%;
         }
 
@@ -766,24 +772,27 @@
         .phone__container__img {
             width: 100%;
             min-width: 100px;
-            border: 2px solid ;
         }
 
         .share__text__content {
             width: 85%;
             font-size: 3.5vw;
+            margin: 0;
+            padding-top: 10px;
         }
 
-        .share__text {
-            padding-top: 20px;
-        }
-
-        .products__text  {
-            width:77%;
+        .products__text {
+            width: 77%;
         }
 
         .product__wrapper {
             left: 1%;
+        }
+
+        .share__title__star {
+            margin-top: -24%;
+            margin-left: -35%;
+            width: 10%;
         }
     }
 
