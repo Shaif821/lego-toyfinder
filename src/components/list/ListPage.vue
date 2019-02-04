@@ -1,10 +1,16 @@
 <template>
     <div class="list">
         <modal name="productItem"
-                :width="300" :height="300">
+               :width="300" :height="300">
             <div class="modal__image__wrapper">
-                <img v-if="!noImage" class="image__product modal__image" :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                <img v-if="!noImage" class="image__product modal__image"
+                     :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                <a :href="url !== null ? url : '#'" target="_blank"
+                   class="products__text__link">
+                    <p>Bekijk het product</p>
+                </a>
             </div>
+
         </modal>
 
         <canvas id="list__confetti" class="list__canvas"></canvas>
@@ -189,8 +195,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            // let confetti = new ConfettiGenerator(this.confettiSettings)
+            // confetti.render()
         }
     }
 </script>
@@ -244,6 +250,7 @@
         text-align: left;
     }
 
+
     .navbar__logo {
         max-width: 100%;
         max-height: 100%;
@@ -267,26 +274,28 @@
 
     .phone__container {
         position: relative;
-        min-width: 300px;
-        max-height: 860px;
-        height: auto;
-        width: auto;
+            min-width: 500px;
+        max-height: 100%;
+        height: 100%;
+        flex: 1;
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
     }
 
     .phone__wrapper {
         position: relative;
         margin-bottom: -46px;
-        width: auto;
-        text-align: left;
+        width: 100%;
+        height: 100%;
     }
 
     .phone__container__img {
-        max-width: 500px;
-        max-height: 860px;
-        width: 85%;
+        max-width: 100%;
+        max-height: 100%;
+        width: 70%;
+        min-width: 70%;
+        min-height: 90%;
         height: 100%;
     }
 
@@ -296,11 +305,11 @@
         align-items: center;
         justify-content: flex-start;
         max-width: 500px;
-        width: 69%;
-        height: 83%;
+        width: 66%;
+        height: 78%;
         position: absolute;
-        left: 8.5%;
-        top: 20%;
+        left: 17%;
+        top: 22%;
         transition: 0.5s ease-in-out;
         opacity: 1;
     }
@@ -314,7 +323,7 @@
         background-position: bottom;
         background-size: 20px 1px;
         background-repeat: repeat-x;
-        width: 100%;
+        width: 86%;
         transition: 0.5s ease-in-out;
     }
 
@@ -343,13 +352,14 @@
     }
 
     .share__container {
+        flex: 1 ;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
         min-width: 300px;
-        max-height: 800px;
-        height: auto;
+        max-height: 100%;
+        height: 100%;
         width: auto;
     }
 
@@ -428,6 +438,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
 
     .modal__image {
@@ -490,19 +501,24 @@
         .phone__container {
             min-width: 350px;
             width: 350px;
+            border: 2px solid green;
         }
 
         .phone__container__img {
-            width: 100%;
+            width: 90%;
         }
 
         .product__wrapper {
-            left: 8%;
-            width: 85%;
+            left: 12.5%;
+            width: 75%;
         }
 
         .products__text__link {
             font-size: 20px;
+        }
+
+        .products__text {
+            width: 100%;
         }
 
         .share__title__text {
@@ -555,8 +571,8 @@
         }
 
         .product__wrapper {
-            left: 7%;
-            width: 71%;
+            left: 16%;
+            width: 68%;
         }
 
         .share__title__star {
@@ -565,7 +581,8 @@
         }
 
         .phone__container__img {
-            width: 85%;
+            width: 80%;
+            min-width: 350px;
         }
 
         .footer__img {
@@ -737,6 +754,21 @@
             min-width: 150px;
         }
 
+        .phone__wrapper {
+            min-width: 50px;
+        }
+
+        .phone__container {
+            min-width: 10px;
+            width: 100%;
+        }
+
+        .phone__container__img {
+            width: 100%;
+            min-width: 100px;
+            border: 2px solid ;
+        }
+
         .share__text__content {
             width: 85%;
             font-size: 3.5vw;
@@ -744,6 +776,14 @@
 
         .share__text {
             padding-top: 20px;
+        }
+
+        .products__text  {
+            width:77%;
+        }
+
+        .product__wrapper {
+            left: 1%;
         }
     }
 

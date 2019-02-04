@@ -9,7 +9,7 @@
         <swiper ref="mySwiper" :options="swiperOption" style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
 
             <swiper-slide class="swiper__slide--no-swiping">
-                <LegoSurvey  :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide--no-swiping">
@@ -25,7 +25,8 @@
                             enter-active-class="animated fadeIn" mode="out-in">
                     <ScreenLoader class="swiper__slide--no-swiping"></ScreenLoader>
                 </transition>
-                <transition v-else-if="this.$store.state.slideState = 3" leave-active-class="animated fadeOut" enter-active-class="animated fadeIn"
+                <transition v-else-if="this.$store.state.slideState = 3" leave-active-class="animated fadeOut"
+                            enter-active-class="animated fadeIn"
                             mode="out-in">
                     <ProductList></ProductList>
                 </transition>
@@ -40,6 +41,7 @@
     const ProductList = () => import('./product/ProductList')
     import ScreenSaver from './layout/ScreenSaver'
     import LegoSurvey from './survey/LegoSurvey'
+
     const CardBoard = () => import('./layout/CardBoard')
     import 'swiper/dist/css/swiper.css'
 
@@ -63,6 +65,7 @@
                     preventClicksPropagation: true,
                     preloadImages: true,
                     isFullScreen: false,
+                    idle: false,
                     noSwipingClass: 'swiper__slide--no-swiping',
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
@@ -90,7 +93,7 @@
             },
 
             toSurvey() {
-                if(this.isFullScreen){ //Als de pagina in fullscreen weergegeven wordt
+                if (this.isFullScreen) { //Als de pagina in fullscreen weergegeven wordt
                     this.$nextTick(() => {
                         this.$store.state.loadSurvey = true
                         this.swiper.slideTo(0, 1500, false);    //Scroll dan naar de survey pagina toe
@@ -102,20 +105,21 @@
                 }
             },
 
-            fullScreen(){  //Deze functie zorgt ervoor dat, zodra er geklikt wordt op de scherm, de pagina in volledige weergave wordt getoond.
+            fullScreen() {  //Deze functie zorgt ervoor dat, zodra er geklikt wordt op de scherm, de pagina in volledige weergave wordt getoond.
                 let element = document.getElementById("SlideScreen")
-                if(element.requestFullscreen) {
+                if (element.requestFullscreen) {
                     element.requestFullscreen();
-                } else if(element.mozRequestFullScreen) {
+                } else if (element.mozRequestFullScreen) {
                     element.mozRequestFullScreen();
-                } else if(element.webkitRequestFullscreen) {
+                } else if (element.webkitRequestFullscreen) {
                     element.webkitRequestFullscreen();
-                } else if(element.msRequestFullscreen) {
+                } else if (element.msRequestFullscreen) {
                     element.msRequestFullscreen();
                 }
 
                 this.isFullScreen = true
             },
+
         },
 
         computed: {
