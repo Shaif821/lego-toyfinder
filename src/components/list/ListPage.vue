@@ -120,27 +120,28 @@
                 </div>
                 <div v-if="window.width <= 785" class="share__social__footer">
                     <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'"
-                       class="social_link">
+                       class="social__link--footer">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a target="_blank" class="social_link"
+                    <a target="_blank" class="social__link--footer"
                        :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                     <a target="_blank"
                        :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl + '%20'"
-                       class="social_link">
+                       class="social__link--footer">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a target="_blank" class="social_link"
+                    <a target="_blank" class="social__link--footer"
                        :href="'mailto:?subject=LEGO® Wenslijstje&body=Bekijk mijn  LEGO® Wenslijstje: ' + siteUrl"
                        title="LEGO® Wenslijstje">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <a @click="copyUrl()" target="_blank" class="social_link">
+                    <a @click="copyUrl()" target="_blank" class="social__link--footer">
                         <i class="fas fa-link"></i>
                     </a>
                 </div>
+                <div class="filler"></div>
             </div>
         </section>
     </div>
@@ -287,8 +288,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            // let confetti = new ConfettiGenerator(this.confettiSettings)
+            // confetti.render()
         }
     }
 </script>
@@ -604,7 +605,6 @@
 
     .footer__img__container {
         height: auto;
-        width: 100%;
     }
 
     .footer__img {
@@ -656,8 +656,8 @@
         }
 
         .product__wrapper {
-            left: 12.5%;
-            width: 75%;
+            left: 21%;
+            width: 59%;
         }
 
         .products__text__link {
@@ -695,6 +695,14 @@
             width: 75%;
         }
 
+        .social__link--footer {
+            color: white;
+        }
+
+        .social__link--footer:visited {
+            color: white;
+        }
+
         .share__title__star {
             margin-top: -150px;
             margin-left: -190px;
@@ -718,13 +726,12 @@
         }
 
         .share__social__footer {
-            padding-bottom: 10px;
-            width: 50%;
+            width: 55%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #ffc600;
-            font-size: 25px;
+            color: white;
+            font-size: 30px;
         }
 
         .wishlist__container {
@@ -775,8 +782,6 @@
             height: 62%;
         }
 
-
-
         .footer__img {
             width: 100%;
             max-height: 100%;
@@ -796,17 +801,32 @@
             margin: 0;
             display: flex;
             flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer__img__container {
+            height: 20px;
+            display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .footer__img {
-            max-height: 27px;
+            margin-top: -1px;
+            height: 100%;
             max-width: 100%;
-            height: 50%;
             width: 100%;
             padding: 0;
-            margin-top: -20px;
+            transform: rotate(180deg);
+        }
+
+        .share__social__footer {
+            padding-bottom: 0px;
+        }
+
+        .list__footer {
+            min-height: 80px;
         }
 
         .list__container {
@@ -821,9 +841,6 @@
             display: flex;
             flex-direction: column-reverse;
             flex: 1 0 auto;
-            /*justify-content: flex-start; !* align items in Main Axis *!*/
-            /*align-items: stretch; !* align items in Cross Axis *!*/
-            /*align-content: stretch; !* Extra space in Cross Axis *!*/
             margin-top: -80px;
             margin-bottom: -30px;
         }
@@ -870,8 +887,8 @@
 
         .product__wrapper {
             left: unset;
-            width: 100%;
-            height: 79%;
+            width: 40%;
+            height: 75%;
             top: 18.1%;
             display: flex;
             justify-content: center;
@@ -881,12 +898,10 @@
         .products__text {
             flex: 1;
             height: 18%;
-            max-width: 100%;
-            width: 54%;
         }
 
         .products__text__link {
-            font-size: 3vw;
+            font-size: 15px;
         }
 
         .products__text__link:hover {
@@ -923,12 +938,6 @@
 
         .list__canvas {
             min-width: 100vw;
-        }
-
-        .footer__img {
-            width: 100%;
-            height: 40px;
-            max-width: 100%;
         }
 
     }
@@ -983,15 +992,13 @@
             padding-top: 40px;
         }
 
-        .products__text {
-            width: 60%;
-        }
-
         .products__text__link {
             font-size: 4vw;
         }
 
         .product__wrapper {
+            height: 78%;
+            width: 60%;
         }
 
         .share__title__star {
