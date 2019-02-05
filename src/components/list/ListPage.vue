@@ -1,7 +1,7 @@
 <template>
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
-               :width="350" :height="350">
+               :width="350" :height="350" class="animated pulse">
             <div class="modal__container">
                 <div class="modal__header">
                     <p @click="hideModal()">X</p>
@@ -23,11 +23,19 @@
             </div>
         </modal>
 
+        <modal name="copyLink"
+               :width="300" :height="70" class="animated pulse">
+            <div class="copy__link__container">
+                <p class="copy__link__text">Linkadres is gekopieerd</p>
+            </div>
+        </modal>
+
         <canvas id="list__confetti" class="list__canvas"></canvas>
 
         <section class="list__container">
             <div class="list__header">
                 <img class="navbar__logo" src="../../assets/images/layout/logo@2x.png" alt="Logo">
+                <span id="linkUrl" style="opacity: 0;">{{siteUrl}}</span>
             </div>
 
             <div class="wishlist__container">
@@ -42,7 +50,7 @@
                              @mouseover="showImage(product['ProductNumber'], product['Link'])">
                             <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank"
                                class="products__text__link">
-                                {{product['ProductNameNL']}} {{window.width}}1
+                                {{product['ProductNameNL']}}
                             </a>
                         </div>
                     </div>
@@ -51,7 +59,7 @@
                         <div class="products__text" v-for="(product, index) in products" :key="index"
                              @click="imageModal(product['ProductNumber'], product['Link'])">
                             <p class="products__text__link">
-                                {{product['ProductNameNL']}} {{window.width}}
+                                {{product['ProductNameNL']}}
                             </p>
                         </div>
                     </div>
@@ -88,7 +96,9 @@
                            :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a target="_blank" :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'" class="social_link">
+                        <a target="_blank"
+                           :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'"
+                           class="social_link">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a target="_blank" class="social_link"
@@ -96,7 +106,9 @@
                            title="LEGO® Wenslijstje">
                             <i class="fas fa-envelope"></i>
                         </a>
-                        <i class="fas fa-link"></i>
+                        <a @click="copyUrl()" target="_blank" class="social_link">
+                            <i class="fas fa-link"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -107,14 +119,17 @@
                     <img class="image footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
                 </div>
                 <div v-if="window.width <= 785" class="share__social__footer">
-                    <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'" class="social_link">
+                    <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'"
+                       class="social_link">
                         <i class="fab fa-whatsapp"></i>
                     </a>
                     <a target="_blank" class="social_link"
                        :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a target="_blank" :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl + '%20'" class="social_link">
+                    <a target="_blank"
+                       :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl + '%20'"
+                       class="social_link">
                         <i class="fab fa-twitter"></i>
                     </a>
                     <a target="_blank" class="social_link"
@@ -122,7 +137,9 @@
                        title="LEGO® Wenslijstje">
                         <i class="fas fa-envelope"></i>
                     </a>
-                    <i class="fas fa-link"></i>
+                    <a @click="copyUrl()" target="_blank" class="social_link">
+                        <i class="fas fa-link"></i>
+                    </a>
                 </div>
             </div>
         </section>
@@ -208,6 +225,7 @@
 
             hideModal() {
                 this.$modal.hide('productItem')
+                this.$modal.hide('copyLink')
             },
 
             handleResize() {
@@ -239,6 +257,21 @@
                         this.url = this.products[(this.products.length - 1)]['Link']
                     }
                 }
+            },
+
+            copyUrl() {
+                let range = document.createRange()
+                range.selectNode(document.getElementById("linkUrl"));
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand("copy")
+
+                this.$modal.show('copyLink');
+
+                let vm = this
+                setTimeout(function () {
+                    vm.$modal.hide('copyLink')
+                }, 1200)
             }
         },
 
@@ -263,6 +296,10 @@
 <style scoped>
     @import "https://use.fontawesome.com/releases/v5.3.1/css/all.css";
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
+
+    .v--modal-overlay {
+        background: rgba(0,0,0,0.8);
+    }
 
     .delayAnimation {
         animation-duration: 0.5s;
@@ -576,6 +613,25 @@
         max-width: 100%;
     }
 
+    .copy__link__container {
+        margin: 0 auto;
+        height: 70px;
+        width: 95%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .copy__link__text {
+        padding: 0;
+        margin: 0;
+        font-family: BlueSheepLego, 'sans-serif';
+        color: black;
+        width: 100%;
+        font-size: 25px;
+        text-align: center;
+    }
+
     @media screen and (max-width: 1220px) {
         .wishlist__container {
             height: auto;
@@ -715,9 +771,11 @@
         .product__wrapper {
             width: 63%;
             left: 19%;
-            top:31%;
+            top: 31%;
             height: 62%;
         }
+
+
 
         .footer__img {
             width: 100%;
@@ -727,6 +785,10 @@
     }
 
     @media screen and (max-width: 785px) {
+        .copy__link__text {
+            font-size: 20px;
+        }
+
         .list__footer {
             z-index: 999999;
             background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
