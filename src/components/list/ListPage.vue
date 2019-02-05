@@ -106,7 +106,7 @@
                 <div class="footer__img__container">
                     <img class="image footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
                 </div>
-                <div v-if="window.width < 1050" class="share__social__footer">
+                <div v-if="window.width <= 785" class="share__social__footer">
                     <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'" class="social_link">
                         <i class="fab fa-whatsapp"></i>
                     </a>
@@ -254,8 +254,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
@@ -579,6 +579,7 @@
     @media screen and (max-width: 1220px) {
         .wishlist__container {
             height: auto;
+            width: 90%;
         }
 
         .share__container {
@@ -595,7 +596,7 @@
         }
 
         .phone__container__img {
-            width: 90%;
+            width: 60%;
         }
 
         .product__wrapper {
@@ -660,17 +661,6 @@
             height: 100px;
         }
 
-        .list__footer {
-            z-index: 999999;
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
         .share__social__footer {
             padding-bottom: 10px;
             width: 50%;
@@ -679,16 +669,6 @@
             align-items: center;
             color: #ffc600;
             font-size: 25px;
-        }
-
-        .footer__img {
-            max-height: 100%;
-            max-width: 100%;
-            height: 27px;
-            width: 100%;
-            padding: 0;
-            margin-top: -30px;
-
         }
 
         .wishlist__container {
@@ -710,13 +690,33 @@
         }
 
         .share__image__container {
-            width: 70%;
-            height: 40%;
+            width: 60%;
+            height: 35%;
+        }
+
+        .share__container {
+            justify-content: flex-end;
+        }
+
+        .phone__wrapper {
+            height: 100%;
+            margin-bottom: -180px;
+        }
+
+        .share__social {
+            padding-bottom: 20px;
         }
 
         .phone__container__img {
-            width: 70%;
-            min-width: 350px;
+            width: 75%;
+            min-width: 300px;
+        }
+
+        .product__wrapper {
+            width: 63%;
+            left: 19%;
+            top:31%;
+            height: 62%;
         }
 
         .footer__img {
@@ -727,6 +727,26 @@
     }
 
     @media screen and (max-width: 785px) {
+        .list__footer {
+            z-index: 999999;
+            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer__img {
+            max-height: 27px;
+            max-width: 100%;
+            height: 50%;
+            width: 100%;
+            padding: 0;
+            margin-top: -20px;
+        }
+
         .list__container {
             overflow-y: scroll;
         }
@@ -783,6 +803,7 @@
 
         .phone__container__img {
             width: 50%;
+            min-width: 100px;
         }
 
         .product__wrapper {
