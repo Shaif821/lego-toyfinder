@@ -1,16 +1,26 @@
 <template>
     <div class="list">
-        <modal name="productItem"
-               :width="300" :height="300">
-            <div class="modal__image__wrapper">
-                <img v-if="!noImage" class="image__product modal__image"
-                     :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+        <modal v-if="window.width < 785" name="productItem"
+               :width="350" :height="350">
+            <div class="modal__container">
+                <div class="modal__header">
+                    <p @click="hideModal()">X</p>
+                </div>
+                <div class="modal__image__wrapper">
+                    <i @click="prevProduct(image)" class="fas modal__arrows--left fa-arrow-left"></i>
+                    <transition enter-active-class="animated bounceInRight delayAnimation"
+                                leave-active-class="animated bounceOutLeft delayAnimation"
+                                mode="out-in">
+                        <img v-if="!noImage" class="image__product modal__image" :key="image"
+                             :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                    </transition>
+                    <i @click="nextProduct(image)" class="fas modal__arrows--right fa-arrow-right"></i>
+                </div>
                 <a :href="url !== null ? url : '#'" target="_blank"
                    class="products__text__link products__text__link--image">
                     <p>Bekijk het product</p>
                 </a>
             </div>
-
         </modal>
 
         <canvas id="list__confetti" class="list__canvas"></canvas>
@@ -18,10 +28,6 @@
         <section class="list__container">
             <div class="list__header">
                 <img class="navbar__logo" src="../../assets/images/layout/logo@2x.png" alt="Logo">
-                <div v-if="window.width <= 516">
-                    <h1 class="navbar__text">Wenslijstje</h1>
-                    <img class="share__title__star" src="../../assets/images/layout/star.png">
-                </div>
             </div>
 
             <div class="wishlist__container">
@@ -31,12 +37,12 @@
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
 
-                    <div v-if="window.width >= 800" class="product__wrapper">
+                    <div v-if="window.width >= 785" class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index"
                              @mouseover="showImage(product['ProductNumber'], product['Link'])">
                             <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank"
                                class="products__text__link">
-                                {{product['ProductNameNL']}}
+                                {{product['ProductNameNL']}} {{window.width}}1
                             </a>
                         </div>
                     </div>
@@ -45,14 +51,14 @@
                         <div class="products__text" v-for="(product, index) in products" :key="index"
                              @click="imageModal(product['ProductNumber'], product['Link'])">
                             <p class="products__text__link">
-                                {{product['ProductNameNL']}}
+                                {{product['ProductNameNL']}} {{window.width}}
                             </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="share__container">
-                    <div v-if="window.width > 516" class="share__title">
+                    <div class="share__title">
                         <h1 class="share__title__text">Wenslijstje</h1>
                         <img class="share__title__star" src="../../assets/images/layout/star.png">
                     </div>
@@ -78,13 +84,18 @@
 
                     <p class="text__share">Deel jouw lijstje</p>
                     <div class="share__social">
-                        <i class="fab fa-whatsapp"></i>
-                        <a class="social_link"
+                        <a target="_blank" class="social_link"
                            :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <i class="fab fa-twitter"></i>
-                        <i class="fas fa-envelope"></i>
+                        <a target="_blank" :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'" class="social_link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a target="_blank" class="social_link"
+                           :href="'mailto:?subject=LEGO® Wenslijstje&body=Bekijk mijn  LEGO® Wenslijstje: ' + siteUrl"
+                           title="LEGO® Wenslijstje">
+                            <i class="fas fa-envelope"></i>
+                        </a>
                         <i class="fas fa-link"></i>
                     </div>
                 </div>
@@ -92,8 +103,26 @@
 
             <!-- Hero footer: will stick at the bottom -->
             <div class="list__footer">
-                <div class=" footer__img__container">
+                <div class="footer__img__container">
                     <img class="image footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
+                </div>
+                <div v-if="window.width < 1050" class="share__social__footer">
+                    <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'" class="social_link">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                    <a target="_blank" class="social_link"
+                       :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a target="_blank" :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl + '%20'" class="social_link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a target="_blank" class="social_link"
+                       :href="'mailto:?subject=LEGO® Wenslijstje&body=Bekijk mijn  LEGO® Wenslijstje: ' + siteUrl"
+                       title="LEGO® Wenslijstje">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <i class="fas fa-link"></i>
                 </div>
             </div>
         </section>
@@ -172,14 +201,44 @@
             },
 
             imageModal(id, link) {
-                this.$modal.show('productItem');
+                this.$modal.show('productItem', {});
                 this.image = id
                 this.url = link
+            },
+
+            hideModal() {
+                this.$modal.hide('productItem')
             },
 
             handleResize() {
                 this.window.width = window.innerWidth;
                 this.window.height = window.innerHeight;
+            },
+
+            nextProduct(id) {
+                for (let i = 0; i < this.products.length; i++) {
+                    if (this.products[i]['ProductNumber'] === id && (i + 1) !== this.products.length) {
+                        this.image = this.products[i + 1]['ProductNumber']
+                        this.url = this.products[i + 1]['Link']
+                    }
+                    else if (this.products[i]['ProductNumber'] === id && (i + 1) === this.products.length) {
+                        this.image = this.products[0]['ProductNumber']
+                        this.url = this.products[0]['Link']
+                    }
+                }
+            },
+
+            prevProduct(id) {
+                for (let i = 0; i < this.products.length; i++) {
+                    if (this.products[i]['ProductNumber'] === id && i !== 0) {
+                        this.image = this.products[i - 1]['ProductNumber']
+                        this.url = this.products[i - 1]['Link']
+                    }
+                    else if (i === 0) {
+                        this.image = this.products[(this.products.length - 1)]['ProductNumber']
+                        this.url = this.products[(this.products.length - 1)]['Link']
+                    }
+                }
             }
         },
 
@@ -423,17 +482,55 @@
         width: 100%;
     }
 
+    .modal__container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal__header {
+        max-height: 30px;
+        width: 100%;
+        justify-content: flex-end;
+        align-items: flex-end;
+    }
+
+    .modal__header p {
+        font-family: Ubuntu, 'sans-serif';
+        margin-top: 5px;
+        margin-right: 10px;
+        font-size: 25px;
+        padding: 0;
+        text-align: right;
+    }
+
     .modal__image__wrapper {
         width: 100%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
+        flex-direction: row;
+    }
+
+    .modal__arrows--left {
+        margin-left: 10px;
+    }
+
+    .modal__arrows--right {
+        margin-right: 10px;
     }
 
     .modal__image {
         margin: 0 auto;
+    }
+
+    .products__text__link--image {
+        font-size: 3vw;
+        height: unset;
     }
 
     .text__share {
@@ -478,8 +575,6 @@
         width: 100%;
         max-width: 100%;
     }
-
-
 
     @media screen and (max-width: 1220px) {
         .wishlist__container {
@@ -563,6 +658,37 @@
             margin-left: 10px;
             width: 100px;
             height: 100px;
+        }
+
+        .list__footer {
+            z-index: 999999;
+            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .share__social__footer {
+            padding-bottom: 10px;
+            width: 50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffc600;
+            font-size: 25px;
+        }
+
+        .footer__img {
+            max-height: 100%;
+            max-width: 100%;
+            height: 27px;
+            width: 100%;
+            padding: 0;
+            margin-top: -30px;
+
         }
 
         .wishlist__container {
@@ -673,14 +799,10 @@
             flex: 1;
             height: 18%;
             max-width: 100%;
-            width:54%;
+            width: 54%;
         }
 
         .products__text__link {
-            font-size: 3vw;
-        }
-
-        .products__text__link--image {
             font-size: 3vw;
         }
 
@@ -729,20 +851,6 @@
     }
 
     @media screen and (max-width: 616px) {
-        .navbar__text {
-            font-family: Ubuntu, 'sans-serif';
-            font-size: 10vw;
-            font-weight: 500;
-            font-style: normal;
-            font-stretch: normal;
-            line-height: 1.33;
-            letter-spacing: normal;
-            text-align: center;
-            color: white;
-            margin-right: 20px;
-            margin-top: 10px;
-        }
-
         .list__container {
             position: unset;
             overflow: auto;
@@ -787,7 +895,7 @@
 
         .share__text__content {
             width: 85%;
-            font-size: 2.5vw;
+            font-size: 13px;
             margin: 0;
             padding-top: 40px;
         }
@@ -809,6 +917,4 @@
             width: 10%;
         }
     }
-
-
 </style>
