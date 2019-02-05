@@ -1,15 +1,15 @@
 <template>
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
-               :width="'70%'" :minWidth="'100px'" :height="'auto'" :minheight="'100px'" class="animated pulse">
+               :width="'70%'" :height="'auto'" class="animated pulse">
             <div class="modal__container">
                 <div class="modal__image__wrapper">
                     <i @click="prevProduct(image)" class="fas modal__arrows--left fa-angle-left"></i>
                     <transition enter-active-class="animated bounceInRight delayAnimation"
                                 leave-active-class="animated bounceOutLeft delayAnimation"
                                 mode="out-in">
-                        <v-lazy-image v-if="!noImage" class="image__product modal__image" :key="image"
-                             :src="require('../../assets/images/products/' + image +  '_box1_in.png')"/>
+                        <img v-if="!noImage" class="image__product modal__image" :key="image"
+                             :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
                     </transition>
                     <i @click="nextProduct(image)" class="fas modal__arrows--right fa-angle-right"></i>
                 </div>
@@ -216,7 +216,9 @@
             },
 
             imageModal(id, link) {
-                this.$modal.show('productItem', {});
+                this.$modal.show('productItem', {
+                    adaptive: true
+                });
                 this.image = id
                 this.url = link
             },
@@ -285,8 +287,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            // let confetti = new ConfettiGenerator(this.confettiSettings)
+            // confetti.render()
         }
     }
 </script>
