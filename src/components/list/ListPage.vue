@@ -1,20 +1,17 @@
 <template>
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
-               :width="350" :height="350" class="animated pulse">
+               :width="'70%'" :minWidth="'100px'" :height="'auto'" :minheight="'100px'" class="animated pulse">
             <div class="modal__container">
-                <div class="modal__header">
-                    <p @click="hideModal()">X</p>
-                </div>
                 <div class="modal__image__wrapper">
-                    <i @click="prevProduct(image)" class="fas modal__arrows--left fa-arrow-left"></i>
+                    <i @click="prevProduct(image)" class="fas modal__arrows--left fa-angle-left"></i>
                     <transition enter-active-class="animated bounceInRight delayAnimation"
                                 leave-active-class="animated bounceOutLeft delayAnimation"
                                 mode="out-in">
-                        <img v-if="!noImage" class="image__product modal__image" :key="image"
-                             :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
+                        <v-lazy-image v-if="!noImage" class="image__product modal__image" :key="image"
+                             :src="require('../../assets/images/products/' + image +  '_box1_in.png')"/>
                     </transition>
-                    <i @click="nextProduct(image)" class="fas modal__arrows--right fa-arrow-right"></i>
+                    <i @click="nextProduct(image)" class="fas modal__arrows--right fa-angle-right"></i>
                 </div>
                 <a :href="url !== null ? url : '#'" target="_blank"
                    class="products__text__link products__text__link--image">
@@ -288,8 +285,8 @@
         mounted() {
             this.getProducts()
             this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
@@ -348,6 +345,7 @@
     }
 
     .navbar__logo {
+        z-index: 9999;
         max-width: 100%;
         max-height: 100%;
         width: 120px;
@@ -530,6 +528,9 @@
     }
 
     .modal__header {
+        position: absolute;
+        z-index: 999999;
+        left: 2%;
         max-height: 30px;
         width: 100%;
         justify-content: flex-end;
@@ -555,10 +556,12 @@
     }
 
     .modal__arrows--left {
+        font-size: 30px;
         margin-left: 10px;
     }
 
     .modal__arrows--right {
+        font-size: 30px;
         margin-right: 10px;
     }
 
@@ -772,7 +775,7 @@
 
         .phone__container__img {
             width: 75%;
-            min-width: 300px;
+            min-width: 350px;
         }
 
         .product__wrapper {
@@ -796,7 +799,14 @@
 
         .list__footer {
             z-index: 999999;
-            background-image: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            /* Safari 5.1 to 6.0 */
+            background:-webkit-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            /* For Opera 11.6 to 12.0 */
+            background:-o-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            /* For Firefox 3.6 to 15 */
+            background:-moz-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            /* Standard syntax */
+            background: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
             padding: 0;
             margin: 0;
             display: flex;

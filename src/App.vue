@@ -38,8 +38,14 @@
         color: #2c3e50;
         transition: 0.3s ease-in-out;
         z-index: 0;
-        background-image: radial-gradient(0% 0%, #098ddb, #1062a2);
-
+        /* Safari 5.1 to 6.0 */
+        background:-webkit-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+        /* For Opera 11.6 to 12.0 */
+        background:-o-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+        /* For Firefox 3.6 to 15 */
+        background:-moz-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+        /* Standard syntax */
+        background: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }
 
     *{
