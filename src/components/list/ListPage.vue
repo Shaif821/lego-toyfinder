@@ -2,6 +2,9 @@
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
                :width="'70%'" :height="'auto'" class="animated pulse">
+            <div @click="$modal.hide('productItem')" class="modal__close__container">
+                <img class="animated pulse modal__close__image" style="transition: 0.7s ease-in-out" src="../../assets/images/layout/close.png">
+            </div>
             <div class="modal__container">
                 <div class="modal__image__wrapper">
                     <i @click="prevProduct(image)" class="fas modal__arrows--left fa-angle-left"></i>
@@ -37,16 +40,17 @@
 
             <div class="wishlist__container">
 
-                <div class="phone__container">
+                <div v-if="$router.currentRoute.name === 'list-page'" class="phone__container">
                     <div class="phone__wrapper">
                         <img class="phone__container__img" src="../../assets/images/layout/phone.png">
                     </div>
 
                     <div v-if="window.width >= 785" class="product__wrapper">
-                        <div class="products__text" v-for="(product, index) in products" :key="index"
-                             @mouseover="showImage(product['ProductNumber'], product['Link'])">
-                            <a :href="product['Link'] !== null ? product['Link'] : '#'" target="_blank"
-                               class="products__text__link">
+                        <div class="products__text" v-for="(product, index) in products" :key="index">
+                            <a :href="product['Link'] !== null ? product['Link'] : '#'"
+                               @mouseover="showImage(product['ProductNumber'], product['Link'], index)"
+                               :class="{'products__text__link--active' : selected === index}"
+                               target="_blank" class="products__text__link">
                                 {{product['ProductNameNL']}}
                             </a>
                         </div>
@@ -63,19 +67,26 @@
                 </div>
 
                 <div class="share__container">
-                    <div class="share__title">
+
+                    <p v-if="$router.currentRoute.name === 'list-page-no'" class="share__text__content no__products">
+                        <span>
+                            Ga naar <a class="link__site" href="https://www.toychamp.be/"> toychamp.be </a> en bekijk het assortiment
+                        </span>
+                    </p>
+
+                    <div v-if="$router.currentRoute.name === 'list-page'" class="share__title">
                         <h1 class="share__title__text">Wenslijstje</h1>
                         <img class="share__title__star" src="../../assets/images/layout/star.png">
                     </div>
 
-                    <p class="share__text__content">
+                    <p v-if="$router.currentRoute.name === 'list-page'" class="share__text__content">
                         Deze producten zijn te koop in de winkel of online op lego.be.
                         <span v-if="window.width <= 785">
                             Druk op de producten om de afbeeldingen te bekijken.
                         </span>
                     </p>
 
-                    <div class="share__image__container">
+                    <div v-if="$router.currentRoute.name === 'list-page'" class="share__image__container">
                         <a :href="url" target="_blank" class="image__wrapper">
                             <transition enter-active-class="animated bounceInLeft delayAnimation"
                                         leave-active-class="animated bounceOutRight delayAnimation"
@@ -87,8 +98,8 @@
                         </a>
                     </div>
 
-                    <p class="text__share">Deel jouw lijstje</p>
-                    <div class="share__social">
+                    <p v-if="$router.currentRoute.name === 'list-page'" class="text__share">Deel jouw lijstje</p>
+                    <div v-if="$router.currentRoute.name === 'list-page'" class="share__social">
                         <a target="_blank" class="social_link"
                            :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                             <i class="fab fa-facebook-f"></i>
@@ -115,7 +126,8 @@
                 <div class="footer__img__container">
                     <img class="image footer__img" src="../../assets/images/layout/slider-border-list.png" alt="Logo">
                 </div>
-                <div v-if="window.width <= 785" class="share__social__footer">
+                <div v-if="window.width <= 785 && $router.currentRoute.name === 'list-page'"
+                     class="share__social__footer">
                     <a :href="'https://wa.me/?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'"
                        class="social__link--footer">
                         <i class="fab fa-whatsapp"></i>
@@ -159,6 +171,7 @@
                 noProducts: [],
                 image: null,
                 noImage: true,
+                selected: undefined,
                 url: null,
                 window: {
                     width: 0,
@@ -203,21 +216,25 @@
                 }
             },
 
-            showImage(id, link) {
+            showImage(id, link, index) {
                 if (this.noImage && this.products.length > 0) {
                     this.image = this.products[0]['ProductNumber']
                     this.url = this.products[0]['Link']
+                    this.selected = index
                 }
                 else {
                     this.image = id
                     this.url = link
+                    this.selected = index
                 }
                 this.noImage = false
             },
 
             imageModal(id, link) {
                 this.$modal.show('productItem', {
-                    adaptive: true
+                    adaptive: true,
+                    minWidth: '200px',
+                    minHeight: '200px',
                 });
                 this.image = id
                 this.url = link
@@ -285,20 +302,22 @@
         },
 
         mounted() {
-            this.getProducts()
-            this.showImage()
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            if (this.$router.currentRoute.name === "list-page") {
+                this.getProducts()
+                this.showImage()
+            }
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
 
-<style scoped>
+<style>
     @import "https://use.fontawesome.com/releases/v5.3.1/css/all.css";
     @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
     .v--modal-overlay {
-        background: rgba(0,0,0,0.8);
+        background: rgba(0, 0, 0, 0.8);
     }
 
     .delayAnimation {
@@ -321,7 +340,7 @@
         top: 0;
         left: 0;
         right: 0;
-        max-width: 95vw;
+        max-width: 99vw;
         height: 100vh;
         width: 100%;
         overflow: hidden;
@@ -419,7 +438,7 @@
         background-position: bottom;
         background-size: 20px 1px;
         background-repeat: repeat-x;
-        width: 86%;
+        width: 89%;
         transition: 0.5s ease-in-out;
     }
 
@@ -442,7 +461,7 @@
         color: black;
     }
 
-    .products__text__link:hover {
+    .products__text__link--active {
         background: #EAEBED;
         transition: 0.3s ease-in-out;
     }
@@ -482,6 +501,15 @@
         margin-left: -225px;
     }
 
+    .link__site {
+        color: white;
+        text-decoration: none;
+    }
+
+    .link__site:visited {
+        color: white;
+    }
+
     .share__text__content {
         width: 400px;
         height: 90px;
@@ -494,6 +522,16 @@
         letter-spacing: normal;
         text-align: center;
         color: white;
+    }
+
+    .no__products {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        width: 100%;
+        min-height: 75vh;
+        font-size: 2vw;
     }
 
     .share__image__container {
@@ -529,16 +567,6 @@
         align-items: center;
     }
 
-    .modal__header {
-        position: absolute;
-        z-index: 999999;
-        left: 2%;
-        max-height: 30px;
-        width: 100%;
-        justify-content: flex-end;
-        align-items: flex-end;
-    }
-
     .modal__header p {
         font-family: Ubuntu, 'sans-serif';
         margin-top: 5px;
@@ -569,6 +597,23 @@
 
     .modal__image {
         margin: 0 auto;
+    }
+
+    .modal__close__container {
+        position: absolute;
+        top: -15%;
+        right: -20%;
+    }
+
+    .modal__close__image {
+        max-width: 100%;
+        max-height: 100%;
+        width: 60%;
+        height: 60%;
+    }
+
+    .v--modal-overlay .v--modal-box {
+        overflow: unset;
     }
 
     .products__text__link--image {
@@ -605,7 +650,8 @@
 
     .list__footer {
         width: 100%;
-        z-index: 200;
+        z-index: 999999;
+
     }
 
     .footer__img__container {
@@ -743,11 +789,6 @@
             width: 90%;
         }
 
-        .product__wrapper {
-            left: 16%;
-            width: 68%;
-        }
-
         .share__title__star {
             margin-top: -150px;
             margin-left: -190px;
@@ -783,7 +824,7 @@
         .product__wrapper {
             width: 63%;
             left: 19%;
-            top: 31%;
+            top: 33%;
             height: 62%;
         }
 
@@ -792,9 +833,14 @@
             max-height: 100%;
             height: 10%;
         }
+
+        .no__products {
+            font-size: 35px;
+        }
     }
 
     @media screen and (max-width: 785px) {
+
         .copy__link__text {
             font-size: 20px;
         }
@@ -802,11 +848,11 @@
         .list__footer {
             z-index: 999999;
             /* Safari 5.1 to 6.0 */
-            background:-webkit-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            background: -webkit-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
             /* For Opera 11.6 to 12.0 */
-            background:-o-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            background: -o-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
             /* For Firefox 3.6 to 15 */
-            background:-moz-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
+            background: -moz-radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
             /* Standard syntax */
             background: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
             padding: 0;
@@ -955,6 +1001,10 @@
     }
 
     @media screen and (max-width: 616px) {
+        .no__products {
+            font-size: 105px;
+        }
+
         .list__container {
             position: unset;
             overflow: auto;
@@ -1017,6 +1067,15 @@
             margin-top: -24%;
             margin-left: -35%;
             width: 10%;
+        }
+
+        .modal__close__container {
+            top: -25%;
+            right: -30%;
+        }
+
+        .modal__close__image {
+            width: 45%;
         }
     }
 </style>

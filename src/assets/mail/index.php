@@ -12,17 +12,23 @@ $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 
 
 
-$favorites = $data['favorites'];
+$favoritesList = $data['favorites'];
+$favorites = ' ';
+
+for($i = 0; $i < count($favoritesList); $i++){
+    $favorites .= '<li>' . $favoritesList[$i] . '</li>';
+}
+
 $url = $data['url'];
 
-$emailContent = "
-<h1>Wenslijstjes</h1>
-<p>Bedankt voor het aanmaken van jouw wenslijstje.</p>
-<p><b>Mijn lijstje:</b></p>
-<ul><li>".  $favorites[0] ."</li></ul>
+$emailContent = "<div style='display:flex; flex-direction: column; justify-content: center; align-items: center; color: #297fca'>
+<h1 style='width: 100%; text-align: left; font-size: 40px; font-weight: 600;'>Wenslijstje</h1>
+<p style='width: 100%; text-align: left; font-size: 24px;'>Bedankt voor het aanmaken van jouw wenslijstje.</p>
+<p>Mijn lijstje:</p>
+<ul>".  $favorites ."</ul>
 <br><br>
 <p>Je kunt jouw lijstje ook online bekijken via deze unieke link:<br>
-". $url ."</p>";
+". $url . "</p></div>";
 
 
 mail($email, 'Lego wenslijstje', $emailContent, $headers);

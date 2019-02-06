@@ -1,8 +1,7 @@
 <template>
     <div>
-        <WishList  :favorited="favorites"></WishList>
+        <WishList :favorited="favorites"></WishList>
         <div class="product__list__container">
-
             <div class="product__list__header">
                 <div class="product__list__header__wrapper">
                     <p class="product__list__header__count">{{productCount}} resultaten</p>
@@ -98,10 +97,6 @@
             }
         },
 
-        mounted(){
-
-        },
-
         computed: {
             addToURL() {
                 return this.favorites
@@ -111,6 +106,7 @@
         watch: {
             addToURL() {
                 let favoritesURL = []
+                this.favoritesName = []
                 for (let i = 0; i < this.favorites.length; i++) {
                     favoritesURL.push(this.favorites[i]['ProductNumber'])
                     this.favoritesName.push(this.favorites[i]['ProductNameNL'])

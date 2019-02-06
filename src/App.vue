@@ -48,6 +48,8 @@
         background: radial-gradient(circle at 49% 42%, #098ddb, #1062a2);
     }
 
+
+
     *{
         -webkit-tap-highlight-color: rgba(0,0,0,0);
         -webkit-tap-highlight-color: transparent;
