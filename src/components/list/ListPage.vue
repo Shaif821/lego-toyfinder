@@ -1,9 +1,15 @@
 <template>
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
-               :width="'70%'" :height="'auto'" class="animated pulse">
+               :width="'60%'"
+               :height="'auto'"
+               :max-width="200"
+               :max-height="300"
+               :min-height="200"
+               class="animated pulse">
             <div @click="$modal.hide('productItem')" class="modal__close__container">
-                <img class="animated pulse modal__close__image" style="transition: 0.7s ease-in-out" src="../../assets/images/layout/close.png">
+                <img class="animated pulse modal__close__image" style="transition: 0.7s ease-in-out"
+                     src="../../assets/images/layout/close.png">
             </div>
             <div class="modal__container">
                 <div class="modal__image__wrapper">
@@ -233,8 +239,8 @@
             imageModal(id, link) {
                 this.$modal.show('productItem', {
                     adaptive: true,
-                    minWidth: '200px',
-                    minHeight: '200px',
+                    maxWidth: '400px',
+                    maxHeight: '400px',
                 });
                 this.image = id
                 this.url = link
@@ -583,6 +589,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: row;
+        overflow: hidden;
     }
 
     .modal__arrows--left {
@@ -601,8 +608,8 @@
 
     .modal__close__container {
         position: absolute;
-        top: -15%;
-        right: -20%;
+        top: -8%;
+        right: -15%;
     }
 
     .modal__close__image {
@@ -820,7 +827,6 @@
 
         .share__social {
             padding-bottom: 20px;
-            border: 1px solid red;
         }
 
         .phone__container__img {
@@ -1077,12 +1083,12 @@
         }
 
         .modal__close__container {
-            top: -25%;
-            right: -30%;
+            top: -10%;
+            right: -18%;
         }
 
         .modal__close__image {
-            width: 45%;
+            width: 60%;
         }
     }
 </style>
