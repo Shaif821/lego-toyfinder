@@ -1,7 +1,7 @@
 <template>
     <div class="list">
         <modal v-if="window.width < 785" name="productItem"
-               :width="'60%'"
+               :width="'70%'"
                :height="'auto'"
                :max-width="200"
                :max-height="300"
@@ -608,8 +608,8 @@
 
     .modal__close__container {
         position: absolute;
-        top: -8%;
-        right: -15%;
+        top: -7%;
+        right: -12%;
     }
 
     .modal__close__image {
@@ -1083,8 +1083,8 @@
         }
 
         .modal__close__container {
-            top: -10%;
-            right: -18%;
+            top: -8%;
+            right: -15%;
         }
 
         .modal__close__image {
