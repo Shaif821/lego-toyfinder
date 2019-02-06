@@ -769,6 +769,7 @@
     }
 
     @media screen and (max-width: 1050px) {
+
         .navbar__logo {
             margin-top: 10px;
             margin-left: 10px;
@@ -783,6 +784,11 @@
             align-items: center;
             color: white;
             font-size: 30px;
+            flex: 2;
+        }
+
+        .filler {
+            flex: 1;
         }
 
         .wishlist__container {
@@ -814,6 +820,7 @@
 
         .share__social {
             padding-bottom: 20px;
+            border: 1px solid red;
         }
 
         .phone__container__img {
