@@ -12,6 +12,7 @@
                      src="../../assets/images/layout/close.png">
             </div>
             <div class="modal__container">
+                <div class="filler__modal"></div>
                 <div class="modal__image__wrapper">
                     <i @click="prevProduct(image)" class="fas modal__arrows--left fa-angle-left"></i>
                     <transition enter-active-class="animated bounceInRight delayAnimation"
@@ -156,7 +157,7 @@
                         <i class="fas fa-link"></i>
                     </a>
                 </div>
-                <div class="filler"></div>
+                <div v-if="window.width <= 785 && $router.currentRoute.name === 'list-page'" class="filler"></div>
             </div>
         </section>
     </div>
@@ -571,6 +572,11 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        overflow: hidden;
+    }
+
+    .filler {
+        height: 10px;
     }
 
     .modal__header p {
@@ -794,8 +800,9 @@
             flex: 2;
         }
 
-        .filler {
-            flex: 1;
+        .filler__modal {
+            height: 30px;
+            width: 100%;
         }
 
         .wishlist__container {
