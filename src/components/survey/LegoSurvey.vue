@@ -70,7 +70,7 @@
                         this.age = choice
                         this.$store.state.interestChoice = null
                         this.$store.state.themeChoice = null
-                        if(this.age.text === '1 - 2 jaar'){
+                        if(this.age.text === '1 - 3 jaar'){
                             this.nextSlide()
                         }
                         break;

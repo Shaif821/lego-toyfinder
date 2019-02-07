@@ -23,15 +23,15 @@ const store = new Vuex.Store({
         ages: [
             {
                 url: require('../assets/images/survey/group-107.png'),
-                text: '1 - 2 jaar',
+                text: '1 - 3 jaar',
                 ageMin: 1,
-                ageMax: 2,
+                ageMax: 3,
                 interest: [],
                 pos: '82px 103px 100px 94px'
             },
             {
                 url: require('../assets/images/survey/group-43.png'),
-                text: '2 - 6 jaar',
+                text: '3 - 6 jaar',
                 ageMin: 2,
                 ageMax: 6,
                 interest: [

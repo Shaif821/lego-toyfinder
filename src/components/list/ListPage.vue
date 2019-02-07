@@ -87,7 +87,8 @@
                     </div>
 
                     <p v-if="$router.currentRoute.name === 'list-page'" class="share__text__content">
-                        Deze producten zijn te koop in de winkel of online op lego.be.
+                        Deze producten zijn te koop in de winkel of online op
+                        <a target="_blank" class="social__link--footer" href="https://www.toychamp.be/">toychamp.be</a>.
                         <span v-if="window.width <= 785">
                             Druk op de producten om de afbeeldingen te bekijken.
                         </span>
@@ -696,6 +697,16 @@
         text-align: center;
     }
 
+    .social__link--footer {
+        text-decoration: none;
+        color: white;
+    }
+
+    .social__link--footer:visited {
+        color: white;
+    }
+
+
     @media screen and (max-width: 1220px) {
         .wishlist__container {
             height: auto;
@@ -759,13 +770,6 @@
             width: 75%;
         }
 
-        .social__link--footer {
-            color: white;
-        }
-
-        .social__link--footer:visited {
-            color: white;
-        }
 
         .share__title__star {
             margin-top: -150px;

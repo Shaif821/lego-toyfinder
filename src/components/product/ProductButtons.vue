@@ -7,11 +7,13 @@
             <span class="product-buttons__text" v-else>Wat is je leeftijd?</span>
         </div>
 
-        <div v-if="$store.state.ageChoice === null || $store.state.ageChoice !== null && $store.state.ageChoice.text !== '1 - 2 jaar'"  @click="$store.state.ageChoice.text !== '1 - 2 jaar' ? goToSurvey('SurveyInterest') : goToSurvey('SurveyAge') " class="product-bottom__button product-bottom__button--last">
+        <div v-if="buttonState"
+             @click="buttonState ? goToSurvey('SurveyInterest') : goToSurvey('SurveyAge') "
+             class="product-bottom__button product-bottom__button--last">
             <span class="product-buttons__text" v-if="this.$store.state.interestChoice !== null">
                 Ik hou van <span class="product_survey_choice">{{ this.$store.state.interestChoice.text }}</span>
             </span>
-            <span class="product-buttons__text" v-else>Wat vind je leuk?</span>
+            <span class="product-buttons__text" v-else>Wat vind je leuk? </span>
         </div>
 
         <div @click="goToSurvey('SurveyTheme')" class="product-bottom__button">
@@ -28,6 +30,12 @@
     export default {
         name: "ProductButtons",
 
+        data() {
+            return {
+                buttonState: null,
+            }
+        },
+
         methods: {
             goToSurvey(survey) {
                 this.$store.state.legoSurveyStatus = true
@@ -37,7 +45,18 @@
                 this.$store.state.loadSurvey = true
                 this.$store.state.currentSurvey = survey
             },
+
+            checkButtonState() {
+                if (this.$store.state.ageChoice !== null ) {
+                    this.buttonState = this.$store.state.ageChoice.text !== '1 - 3 jaar';
+                }
+                else this.buttonState = this.$store.state.ageChoice === null;
+            }
         },
+
+        mounted() {
+            this.checkButtonState()
+        }
     }
 </script>
 

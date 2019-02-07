@@ -9,7 +9,7 @@
         <swiper ref="mySwiper" :options="swiperOption" style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
 
             <swiper-slide class="swiper__slide--no-swiping">
-                <LegoSurvey :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey  :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide--no-swiping">
@@ -130,7 +130,6 @@
                 window.onkeypress = resetTimer;  //catches keyboard actions
 
                 function reload() {
-                    console.log('etettttttttttt')
                     window.location = self.location.href;  //Reloads the current page
                 }
 

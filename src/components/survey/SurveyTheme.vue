@@ -9,8 +9,7 @@
         <div class="survey__theme__wrapper">
             <swiper :options="swiperOption">
                 <swiper-slide class="survey__theme__slider animated flipInY "
-                              :style="{animationDelay: '0.' + indexTheme + 'STH'}"
-                              style="animation-duration: 1.5s;"
+                              style="animation-duration: 1.2s; animation-delay: 0.7s;"
                               v-for="(legoTheme, indexTheme) in this.$store.state.themes"
                               :key="indexTheme + 'STH'">
 

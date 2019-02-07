@@ -194,6 +194,7 @@
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
                         }
                     } catch (e) {
+                        return {}
                     }
                 }
                 if (this.shortProducts.length > 0) {
@@ -260,7 +261,7 @@
                             this.shortProducts.push(this.currentProducts[i])
                         }
                     } catch (e) {
-
+                        return {}
                     }
                 }
                 if (this.shortProducts.length > 0) {
