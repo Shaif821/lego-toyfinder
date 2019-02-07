@@ -20,7 +20,8 @@
                     </div>
 
                     <p class="survey__theme__text animated flipInX"
-                       style="animation-delay: 1s; animation-duration: 1s;">
+                       :style="{animationDelay: '2.' + indexTheme + 's'}"
+                       style="animation-duration: 1s;">
                         LEGO® {{legoTheme.theme}}
                     </p>
                 </swiper-slide>

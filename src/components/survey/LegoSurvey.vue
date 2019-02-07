@@ -82,8 +82,9 @@
                         }
                         break;
                     case 'SurveyInterest':
-                        this.$store.state.interestChoice = choice
+                        this.$store.state.ageChoice = null
                         this.$store.state.themeChoice = null
+                        this.$store.state.interestChoice = choice
                         break;
                     case 'SurveyTheme':
                         this.$store.state.interestChoice = null
