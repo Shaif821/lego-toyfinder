@@ -54,8 +54,8 @@
 
                     <div v-if="window.width >= 785" class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index">
-                            <a :href="product['Link'] !== null ? product['Link'] : '#'"
-                               @mouseover="showImage(product['Product Number'], product['Link'], index)"
+                            <a :href="product['Link Toychamp'] !== null ? product['Link Toychamp'] : '#'"
+                               @mouseover="showImage(product['Product Number'], product['Link Toychamp'], index)"
                                :class="{'products__text__link--active' : selected === index}"
                                target="_blank" class="products__text__link">
                                 {{product['Product Name NL']}}
@@ -65,7 +65,7 @@
 
                     <div v-else class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index"
-                             @click="imageModal(product['Product Number'], product['Link'])">
+                             @click="imageModal(product['Product Number'], product['Link Toychamp'])">
                             <p class="products__text__link">
                                 {{product['Product Name NL']}}
                             </p>
@@ -226,7 +226,7 @@
             showImage(id, link, index) {
                 if (this.noImage && this.products.length > 0) {
                     this.image = this.products[0]['Product Number']
-                    this.url = this.products[0]['Link']
+                    this.url = this.products[0]['Link Toychamp']
                     this.selected = index
                 }
                 else {
@@ -261,11 +261,11 @@
                 for (let i = 0; i < this.products.length; i++) {
                     if (this.products[i]['Product Number'] === id && (i + 1) !== this.products.length) {
                         this.image = this.products[i + 1]['Product Number']
-                        this.url = this.products[i + 1]['Link']
+                        this.url = this.products[i + 1]['Link Toychamp']
                     }
-                    else if (this.products[i]['ProductNumber'] === id && (i + 1) === this.products.length) {
+                    else if (this.products[i]['Product Number'] === id && (i + 1) === this.products.length) {
                         this.image = this.products[0]['Product Number']
-                        this.url = this.products[0]['Link']
+                        this.url = this.products[0]['Link Toychamp']
                     }
                 }
             },
@@ -274,11 +274,11 @@
                 for (let i = 0; i < this.products.length; i++) {
                     if (this.products[i]['Product Number'] === id && i !== 0) {
                         this.image = this.products[i - 1]['Product Number']
-                        this.url = this.products[i - 1]['Link']
+                        this.url = this.products[i - 1]['Link Toychamp']
                     }
                     else if (i === 0) {
                         this.image = this.products[(this.products.length - 1)]['Product Number']
-                        this.url = this.products[(this.products.length - 1)]['Link']
+                        this.url = this.products[(this.products.length - 1)]['Link Toychamp']
                     }
                 }
             },
@@ -313,8 +313,8 @@
                 this.getProducts()
                 this.showImage()
             }
-            // let confetti = new ConfettiGenerator(this.confettiSettings)
-            // confetti.render()
+            let confetti = new ConfettiGenerator(this.confettiSettings)
+            confetti.render()
         }
     }
 </script>
