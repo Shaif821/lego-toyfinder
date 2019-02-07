@@ -12,8 +12,15 @@
                 </transition>
             </div>
 
-            <transition enter-active-class="animated slideInRight slowDown"
+            <transition v-if="view !== 'SurveyTheme'" enter-active-class="animated slideInRight slowDown"
                         leave-active-class="animated slideOutLeft slowDown"
+                        enter mode="out-in">
+                <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
+                           v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
+                           :is="view" :ageChoice="age">
+                </component>
+            </transition>
+            <transition v-else enter-active-class="animated slideInRight slowDown--down"
                         enter mode="out-in">
                 <component :class="[{'hide__interest' : $store.state.transitionSlide}]"
                            v-if="indexAnimation === 0 && this.$store.state.loadSurvey"
@@ -160,6 +167,10 @@
 
     .slowDown {
         animation-duration: 1s !important;
+    }
+
+    .slowDown--down {
+        animation-duration: 1.5s !important;
     }
 
     .survey__container {
