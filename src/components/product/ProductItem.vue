@@ -2,9 +2,9 @@
     <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
         <swiper-slide class="product_wrapper animated zoomIn"
                       :class="{product_wrapper_details : selected === index}"
-                      v-for="(i, index) in shortProducts" :key="i['ProductNumber']"
+                      v-for="(i, index) in shortProducts" :key="i['Product Number']"
                       :style="{animationDelay: '0.' + index + 's'}">
-            <div v-if="testImage(i['ProductNumber']) !== false" class="pre_product_details swiper-lazy">
+            <div v-if="testImage(i['Product Number']) !== false" class="pre_product_details swiper-lazy">
 
                 <div :class="{product_all_image : selected === index}">
 
@@ -13,12 +13,12 @@
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
                             <v-lazy-image class="swiper-lazy  product_image_prod"
-                                          v-if="selectImage === i['ProductNumber']" :key="singleImage"
-                                          :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + singleImage + '.png')"
+                                          v-if="selectImage === i['Product Number']" :key="singleImage"
+                                          :src="require('../../assets/images/products/' + testImage(i['Product Number']) + singleImage + '.png')"
                                           :src-placeholder="loading"
                             />
                             <v-lazy-image class="swiper-lazy" v-else :key="switchImage"
-                                          :src="require('../../assets/images/products/' + testImage(i['ProductNumber']) + switchImage + '.png')"
+                                          :src="require('../../assets/images/products/' + testImage(i['Product Number']) + switchImage + '.png')"
                                           :src-placeholder="loading"
                             />
                         </transition>
@@ -26,11 +26,11 @@
 
                     <div v-if="selected !== index">
                         <hr class="product_seperator">
-                        <p class="product_name">{{ i['ProductNameNL']}} </p>
+                        <p class="product_name">{{ i['Product Name NL']}} </p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
-                            <div @click="selected = index, changeImage('box', selectImage = i['ProductNumber'])"
+                            <div @click="selected = index, changeImage('box', selectImage = i['Product Number'])"
                                  class="product_details_button">
                                 <img src="../../assets/images/layout/magnifying-glass.png">
                                 Bekijk dit product
@@ -48,21 +48,21 @@
                     </div>
 
                     <div v-else class="product_more_images">
-                        <div class="mini_images" v-if="getMini(i['ProductNumber'])">
-                            <div @click="changeImage('box', selectImage = i['ProductNumber'])"
+                        <div class="mini_images" v-if="getMini(i['Product Number'])">
+                            <div @click="changeImage('box', selectImage = i['Product Number'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
                                 <v-lazy-image
-                                        :src="require('../../assets/images/products/' + i['ProductNumber'] + '_box1_in.png')"
+                                        :src="require('../../assets/images/products/' + i['Product Number'] + '_box1_in.png')"
                                         :src-placeholder="loading"
                                 />
                             </div>
 
-                            <div @click="changeImage('prod', selectImage = i['ProductNumber'])"
+                            <div @click="changeImage('prod', selectImage = i['Product Number'])"
                                  :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
                                 <v-lazy-image
-                                        :src="require('../../assets/images/products/' + i['ProductNumber'] + '_prod.png')"
+                                        :src="require('../../assets/images/products/' + i['Product Number'] + '_prod.png')"
                                         :src-placeholder="loading"
                                 />
                             </div>
@@ -73,7 +73,7 @@
 
                 <div v-if="selected === index" class="product_description">
                     <div class="remove_details"
-                         @click="selected = undefined, changeImage('box', selectImage = i['ProductNumber'])">
+                         @click="selected = undefined, changeImage('box', selectImage = i['Product Number'])">
                         <img src="../../assets/images/layout/path.png">
                         <img src="../../assets/images/layout/rectangle.png">
                     </div>
@@ -81,12 +81,12 @@
                     <div class="product-details-title">
 
                         <div class="product_title">
-                            <h1>{{ i['ProductNameNL']}}</h1>
+                            <h1>{{ i['Product Name NL']}}</h1>
                             <p>{{ i['Theme']}}</p>
                         </div>
 
                         <div class="product_toy_details">
-                            <p>{{i['ProductDescriptionNL']}}</p>
+                            <p>{{i['Product Description NL']}}</p>
                         </div>
                     </div>
 
@@ -95,12 +95,12 @@
                         <div class="product_rest_details">
                             <div class="details_wrapper">
                                 <p>Leeftijd</p>
-                                <p>{{i['AgeMark']}}</p>
+                                <p>{{i['Age Mark']}}</p>
                             </div>
 
                             <div class="details_wrapper">
                                 <p>Aantal stukjes</p>
-                                <p>{{i['NumberOfPieces']}}</p>
+                                <p>{{i['Number of Pieces']}}</p>
                             </div>
 
                             <div class="details_wrapper">
@@ -150,7 +150,7 @@
         data() {
             return {
                 countFilter: null,
-                currentProducts: null,
+                currentProducts: alpha_A,
                 ogProducts: null,
                 shortProducts: [],
                 loading: require('../../assets/images/layout/loading.gif'),
@@ -187,7 +187,7 @@
                 this.checkProductFilter()
                 for (let i = 0; i < this.currentProducts.length; i++) {
                     try {
-                        require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        require('../../assets/images/products/' + this.currentProducts[i]['Product Number'] + this.singleImage + '.png')
                         length++
                         this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
                         if (this.shortProducts.length < counter) {
@@ -209,13 +209,13 @@
             checkFilters(currentProduct, theme, age, interest, bool) {
                 if (interest !== null && age !== null && theme !== null) {                  //Wanneer alle filters zijn gevuld
                     if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']
-                        && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest !== null && age !== null && theme === null) {
                     if (interest.text === currentProduct['Interesse']                       //gevuld: interest & age
-                        && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                        && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -225,12 +225,12 @@
                     }
                 }
                 else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
-                    if (theme.theme === currentProduct['Theme'] && age.ageMin <= currentProduct['AgeMin'] && age.ageMax >= currentProduct['AgeMax']) {
+                    if (theme.theme === currentProduct['Theme'] && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest == null && age !== null && theme == null) {             //Wanneer alleen age gevuld is
-                    if (currentProduct['AgeMin'] <= age.ageMin && currentProduct['AgeMax'] >= age.ageMax) {
+                    if (currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
                         bool ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
@@ -254,7 +254,7 @@
                 this.checkProductFilter()
                 for (let i = 0; i < this.currentProducts.length; i++) {
                     try {
-                        require('../../assets/images/products/' + this.currentProducts[i]['ProductNumber'] + this.singleImage + '.png')
+                        require('../../assets/images/products/' + this.currentProducts[i]['Product Number'] + this.singleImage + '.png')
                         length++
                         if (this.shortProducts.length < counter) {
                             this.shortProducts.push(this.currentProducts[i])
@@ -270,11 +270,9 @@
 
             checkProductFilter() {
                 this.currentProducts = alpha_A
-                if(this.countFilter === null) {
+                if (this.countFilter === null) {
                     this.ogProducts = this.currentProducts.slice()
                 }
-
-
                 if (this.productSort === 'AlphaA') {
                     this.currentProducts = this.ogProducts
                 }

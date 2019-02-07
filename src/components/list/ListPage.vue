@@ -55,19 +55,19 @@
                     <div v-if="window.width >= 785" class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index">
                             <a :href="product['Link'] !== null ? product['Link'] : '#'"
-                               @mouseover="showImage(product['ProductNumber'], product['Link'], index)"
+                               @mouseover="showImage(product['Product Number'], product['Link'], index)"
                                :class="{'products__text__link--active' : selected === index}"
                                target="_blank" class="products__text__link">
-                                {{product['ProductNameNL']}}
+                                {{product['Product Name NL']}}
                             </a>
                         </div>
                     </div>
 
                     <div v-else class="product__wrapper">
                         <div class="products__text" v-for="(product, index) in products" :key="index"
-                             @click="imageModal(product['ProductNumber'], product['Link'])">
+                             @click="imageModal(product['Product Number'], product['Link'])">
                             <p class="products__text__link">
-                                {{product['ProductNameNL']}}
+                                {{product['Product Name NL']}}
                             </p>
                         </div>
                     </div>
@@ -211,9 +211,9 @@
 
                 for (let i = 0; i < id.length; i++) {
                     for (let j = 0; j < this.allProducts.length; j++) {
-                        if (id[i] === this.allProducts[j]['ProductNumber']) {
+                        if (id[i] === this.allProducts[j]['Product Number']) {
                             try {
-                                require('../../assets/images/products/' + this.allProducts[j]['ProductNumber'] + '_box1_in.png')
+                                require('../../assets/images/products/' + this.allProducts[j]['Product Number'] + '_box1_in.png')
                                 this.products.push(this.allProducts[j])
                             } catch (e) {
                                 this.noProducts.push(1)
@@ -225,7 +225,7 @@
 
             showImage(id, link, index) {
                 if (this.noImage && this.products.length > 0) {
-                    this.image = this.products[0]['ProductNumber']
+                    this.image = this.products[0]['Product Number']
                     this.url = this.products[0]['Link']
                     this.selected = index
                 }
@@ -259,12 +259,12 @@
 
             nextProduct(id) {
                 for (let i = 0; i < this.products.length; i++) {
-                    if (this.products[i]['ProductNumber'] === id && (i + 1) !== this.products.length) {
-                        this.image = this.products[i + 1]['ProductNumber']
+                    if (this.products[i]['Product Number'] === id && (i + 1) !== this.products.length) {
+                        this.image = this.products[i + 1]['Product Number']
                         this.url = this.products[i + 1]['Link']
                     }
                     else if (this.products[i]['ProductNumber'] === id && (i + 1) === this.products.length) {
-                        this.image = this.products[0]['ProductNumber']
+                        this.image = this.products[0]['Product Number']
                         this.url = this.products[0]['Link']
                     }
                 }
@@ -272,12 +272,12 @@
 
             prevProduct(id) {
                 for (let i = 0; i < this.products.length; i++) {
-                    if (this.products[i]['ProductNumber'] === id && i !== 0) {
-                        this.image = this.products[i - 1]['ProductNumber']
+                    if (this.products[i]['Product Number'] === id && i !== 0) {
+                        this.image = this.products[i - 1]['Product Number']
                         this.url = this.products[i - 1]['Link']
                     }
                     else if (i === 0) {
-                        this.image = this.products[(this.products.length - 1)]['ProductNumber']
+                        this.image = this.products[(this.products.length - 1)]['Product Number']
                         this.url = this.products[(this.products.length - 1)]['Link']
                     }
                 }
@@ -313,8 +313,8 @@
                 this.getProducts()
                 this.showImage()
             }
-            let confetti = new ConfettiGenerator(this.confettiSettings)
-            confetti.render()
+            // let confetti = new ConfettiGenerator(this.confettiSettings)
+            // confetti.render()
         }
     }
 </script>
