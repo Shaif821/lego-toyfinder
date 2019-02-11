@@ -170,7 +170,6 @@
                     freeModeMomentum: true,
                     preventClicks: true,
                     preventClicksPropagation: true,
-                    slideToClickedSlide: true,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }
