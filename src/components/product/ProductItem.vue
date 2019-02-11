@@ -9,7 +9,6 @@
                  class="pre_product_details swiper-lazy">
 
                 <div :class="{product_all_image : selected === index}">
-
                     <div @click="selected = selected === index ? selected = undefined : selected = index, changeImage('box', selectImage = i['Product Number'])"
                          class="product_image_normal" style="overflow: hidden;"
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
