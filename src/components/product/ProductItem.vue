@@ -163,6 +163,7 @@
                 swipeOptionsProduct: {
                     preloadImages: true,
                     slidesPerView: 'auto',
+                    centeredSlides: true,
                     lazy: true,
                     speed: 900, //De snelheid
                     freeMode: true,
