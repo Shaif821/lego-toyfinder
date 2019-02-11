@@ -139,7 +139,7 @@
                     if (result) {
                         this.isSending = true
                         axios
-                            .post('https://shaif.nl/lego-toyfinder/mail/index.php', {
+                            .post('/mail/index.php', {
                                 email: this.userMail,
                                 favorites: this.favorites,
                                 url: this.url
