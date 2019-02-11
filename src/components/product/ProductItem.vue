@@ -17,12 +17,10 @@
                             <v-lazy-image class="swiper-lazy  product_image_prod"
                                           v-if="selectImage === i['Product Number']" :key="singleImage"
                                           :src="require('../../assets/images/products/' + testImage(i['Product Number']) + singleImage + '.png')"
-                                          :src-placeholder="loading"
-                            />
+                                          :src-placeholder="loading"/>
                             <v-lazy-image class="swiper-lazy" v-else :key="switchImage"
                                           :src="require('../../assets/images/products/' + testImage(i['Product Number']) + switchImage + '.png')"
-                                          :src-placeholder="loading"
-                            />
+                                          :src-placeholder="loading"/>
                         </transition>
                     </div>
 
@@ -171,6 +169,7 @@
                     freeModeMomentum: true,
                     preventClicks: true,
                     preventClicksPropagation: true,
+                    slideToClickedSlide: true,
                     onClick: (swiper, event) => {
                         this.test(swiper, event)
                     }
@@ -502,8 +501,10 @@
 
     .product_image img {
         transition: 0.3s ease-in-out;
-        width: 307px;
-        height: 276px;
+        max-width: 80%;
+        max-height: 80%;
+        width: auto;
+        height: auto;
     }
 
     .product_description {
