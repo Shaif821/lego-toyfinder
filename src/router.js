@@ -13,20 +13,19 @@ export default new Router({
 
     routes: [
         {
-            path: '/lego-toyfinder/toyfinder',
+            path: '/toyfinder',
             name: 'toyfinder',
             component: SlideScreen
         },
         {
-            path: '/lego-toyfinder/:id',
+            path: '/:id',
             name: 'list-page',
             component: ListPage
         },
         {
-            path: '/lego-toyfinder/',
+            path: '/',
             name: 'list-page-no',
             component: ListPage
         }
     ]
 })
-
