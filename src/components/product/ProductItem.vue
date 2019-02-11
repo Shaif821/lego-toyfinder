@@ -1,14 +1,17 @@
 <template>
     <swiper ref="mySwiper" @slideChange="changeSwiperIndex" :options="swipeOptionsProduct" style="width: 1920px;">
-        <swiper-slide class="product_wrapper animated zoomIn"
+        <swiper-slide  class="product_wrapper animated zoomIn"
                       :class="{product_wrapper_details : selected === index}"
                       v-for="(i, index) in shortProducts" :key="i['Product Number']"
                       :style="{animationDelay: '0.' + index + 's'}">
-            <div v-if="testImage(i['Product Number']) !== false" class="pre_product_details swiper-lazy">
+            <div
+                 v-if="testImage(i['Product Number']) !== false"
+                 class="pre_product_details swiper-lazy">
 
                 <div :class="{product_all_image : selected === index}">
 
-                    <div class="product_image_normal" style="overflow: hidden;"
+                    <div @click="selected = selected === index ? selected = undefined : selected = index, changeImage('box', selectImage = i['Product Number'])"
+                         class="product_image_normal" style="overflow: hidden;"
                          :class="[selected === index ? 'product_image_details' : 'product_image']">
                         <transition enter-active-class="animated zoomIn faster"
                                     leave-active-class="animated zoomOut faster" mode="out-in">
@@ -24,13 +27,14 @@
                         </transition>
                     </div>
 
-                    <div v-if="selected !== index">
+                    <div @click="selected = selected === index ? selected = undefined : selected = index, changeImage('box', selectImage = i['Product Number'])"
+                        v-if="selected !== index">
                         <hr class="product_seperator">
                         <p class="product_name">{{ i['Product Name NL']}} </p>
                         <p class="product_price">€ {{parseFloat(i['RRP'])}}</p>
 
                         <div class="product_buttons">
-                            <div @click="selected = index, changeImage('box', selectImage = i['Product Number'])"
+                            <div @click.stop="selected = index, changeImage('box', selectImage = i['Product Number'])"
                                  class="product_details_button">
                                 <img src="../../assets/images/layout/magnifying-glass.png">
                                 Bekijk dit product
@@ -52,19 +56,15 @@
                             <div @click="changeImage('box', selectImage = i['Product Number'])"
                                  class="animated fadeIn mini_images_wrapper"
                                  :class="[singleImage === '_box1_in' ? 'mini_images_active' : 'test' ]">
-                                <v-lazy-image
-                                        :src="require('../../assets/images/products/' + i['Product Number'] + '_box1_in.png')"
-                                        :src-placeholder="loading"
-                                />
+                                <span class="mini__images"  :style="{backgroundImage: `url(${require('../../assets/images/products/' + i['Product Number'] + '_box1_in.png')})`}">
+                                </span>
                             </div>
 
                             <div @click="changeImage('prod', selectImage = i['Product Number'])"
                                  :class="[singleImage === '_prod' ? 'mini_images_active' : 'test' ]"
                                  class="mini_images_wrapper animated fadeIn">
-                                <v-lazy-image
-                                        :src="require('../../assets/images/products/' + i['Product Number'] + '_prod.png')"
-                                        :src-placeholder="loading"
-                                />
+                                <span class="mini__images"  :style="{backgroundImage: `url(${require('../../assets/images/products/' + i['Product Number'] + '_prod.png')})`}">
+                                </span>
                             </div>
 
                         </div>
@@ -78,7 +78,8 @@
                         <img src="../../assets/images/layout/rectangle.png">
                     </div>
 
-                    <div class="product-details-title">
+                    <div @click="selected = selected === index ? selected = undefined : selected = index, changeImage('box', selectImage = i['Product Number'])"
+                         class="product-details-title">
 
                         <div class="product_title">
                             <h1>{{ i['Product Name NL']}}</h1>
@@ -92,7 +93,8 @@
 
 
                     <div class="details-favorite">
-                        <div class="product_rest_details">
+                        <div @click="selected = selected === index ? selected = undefined : selected = index, changeImage('box', selectImage = i['Product Number'])"
+                             class="product_rest_details">
                             <div class="details_wrapper">
                                 <p>Leeftijd</p>
                                 <p>{{i['Age Mark']}}</p>
@@ -117,7 +119,7 @@
                             <p>Voeg toe aan verlanglijstje</p>
 
                             <div>
-                                <div class="product_favorite">
+                                <div class="product_favorite animated zoomIn">
                                     <transition enter-active-class="animated bounceIn"
                                                 leave-active-class="animated bounceOut"
                                                 mode="out-in">
@@ -446,6 +448,7 @@
     }
 
     .mini_images_wrapper {
+        padding:10px;
         border: 2px solid rgba(0, 0, 0, 0.24);
         margin: 0px 20px;
         display: flex;
@@ -456,6 +459,13 @@
         transition: 0.3s ease-in-out;
     }
 
+    .mini__images {
+        width: 100%;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
     .mini_images_active {
         transition: 0.3s ease-in-out;
         border: 2px solid #297fca;
@@ -464,8 +474,8 @@
     .mini_images img {
         max-height: 100%;
         max-width: 100%;
-        height: 75%;
-        width: 75%;
+        height: auto;
+        width: auto;
         transition: 0.3s ease-in-out;
     }
 
@@ -483,10 +493,11 @@
     }
 
     .product_image_details img {
+        padding: 10px;
         max-height: 100%;
         max-width: 100%;
         height: auto;
-        width: 90%;
+        width: auto;
         transition: 0.3s ease-in-out;
     }
 
