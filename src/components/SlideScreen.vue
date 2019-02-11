@@ -135,7 +135,7 @@
 
                 function resetTimer() {
                     clearTimeout(t);
-                    t = setTimeout(reload, 60000);  // time is in milliseconds (1000 is 1 second)
+                    t = setTimeout(reload, 300000);  // time is in milliseconds (1000 is 1 second)
                 }
             }
 
