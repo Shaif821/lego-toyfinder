@@ -71,6 +71,10 @@
             },
 
             addChoice(choice, bool) {        //Check welke view het is en sla het antwoord bij de bijbehorende data op
+                // this.$store.state.ageChoice = null
+                // this.$store.state.interestChoice = null
+                // this.$store.state.themeChoice = null
+
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
@@ -82,7 +86,6 @@
                         }
                         break;
                     case 'SurveyInterest':
-                        this.$store.state.ageChoice = null
                         this.$store.state.themeChoice = null
                         this.$store.state.interestChoice = choice
                         break;
