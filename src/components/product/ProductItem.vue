@@ -37,7 +37,7 @@
                                 Bekijk dit product
                             </div>
 
-                            <div class="product_favorite" @click="$parent.addToFavorite(i)">
+                            <div class="product_favorite" @click.stop="$parent.addToFavorite(i)">
                                 <transition enter-active-class="animated bounceIn"
                                             mode="out-in">
                                     <img key="1" v-if="favorite.includes(i)"
@@ -112,11 +112,11 @@
                             </div>
                         </div>
 
-                        <div @click="$parent.addToFavorite(i)" class="product_details_footer">
+                        <div @click.stop="$parent.addToFavorite(i)" class="product_details_footer">
                             <p>Voeg toe aan verlanglijstje</p>
 
                             <div>
-                                <div class="product_favorite animated zoomIn">
+                                <div class="product_favorite">
                                     <transition enter-active-class="animated bounceIn"
                                                 leave-active-class="animated bounceOut"
                                                 mode="out-in">
