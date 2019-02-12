@@ -19,13 +19,14 @@
                  {flex: '0 1 calc(20% - 8px)'}))))]"
             >
                 <div v-for="interest in $store.state.interests" @click="$parent.changeView(interest)" >
-                    <div class="survey__interest__images animated flipInY" v-if="interest.text === ageInterest" style="animation-delay: 0.4s; animation-duration: 1.5s;">
+                    <div class="survey__interest__images animated flipInY" v-if="interest.text === ageInterest" style="animation-duration: 1.5s;"
+                         :style="{animationDelay: '1.' + indexInterest + 's'}">
                         <img class="survey__interest__lego__img " :src="interest.url">
                         <img src="../../assets/images/layout/bitmap-small.png">
                     </div>
 
                     <p v-if="interest.text === ageInterest" class="survey__theme__text animated flipInX"
-                       style="animation-delay: 1s; animation-duration: 2s;">
+                       style="animation-duration: 2s;" :style="{animationDelay: '2.' + indexInterest + 's'}">
                         {{interest.text}}
                     </p>
                 </div>
