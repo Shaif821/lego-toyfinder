@@ -9,7 +9,7 @@
         <swiper ref="mySwiper" :options="swiperOption" style="height: 1080px; padding: 0; margin: 0; overflow: hidden;">
 
             <swiper-slide class="swiper__slide--no-swiping">
-                <LegoSurvey  :indexAnimation="currentSlide"></LegoSurvey>
+                <LegoSurvey :resetApp="reset"  :indexAnimation="currentSlide"></LegoSurvey>
             </swiper-slide>
 
             <swiper-slide class="swiper__slide--no-swiping">
@@ -76,6 +76,7 @@
                 },
                 currentSlide: null,
                 fixSlideOrder: 0,
+                reset: false,
             }
         },
 
@@ -129,8 +130,14 @@
                 window.onscroll = resetTimer;    // catches scrolling
                 window.onkeypress = resetTimer;  //catches keyboard actions
 
+                let vm = this
+
                 function reload() {
-                    window.location = self.location.href;  //Reloads the current page
+                    vm.reset = true
+                    let v = vm
+                    setTimeout(function () {
+                        v.reset = false
+                    }, 1000)
                 }
 
                 function resetTimer() {

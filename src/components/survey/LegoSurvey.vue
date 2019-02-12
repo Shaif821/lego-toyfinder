@@ -45,7 +45,8 @@
         },
 
         props: {
-            indexAnimation: Number
+            indexAnimation: Number,
+            resetApp: Boolean
         },
 
         data() {
@@ -107,6 +108,10 @@
             },
 
             resetData() {
+                if(this.resetApp){
+                    this.$store.state.surveyStream = null
+                    this.$store.state.transitionSlide = false
+                }
                 this.age = null                       //Reset de antwoorden
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'
@@ -144,6 +149,9 @@
             },
             checkView() {
                 return this.$store.state.currentSurvey
+            },
+            checkReset(){
+                return this.resetApp
             }
         },
 
@@ -154,6 +162,12 @@
                 }
                 else {
                     this.view = 'SurveyAge'
+                }
+            },
+
+            checkReset(){
+                if(this.resetApp) {
+                    this.resetData()
                 }
             },
 
