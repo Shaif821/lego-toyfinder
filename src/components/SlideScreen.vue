@@ -143,11 +143,23 @@
                     clearTimeout(t);
                     t = setTimeout(reload, 30000);  // time is in milliseconds (1000 is 1 second)
                 }
+            },
+
+            disableRightClick(){
+                let blockContextMenu, myElement;
+
+                blockContextMenu = function (evt) {
+                    evt.preventDefault();
+                };
+
+                myElement = document.getElementById('SlideScreen');
+                myElement.addEventListener('contextmenu', blockContextMenu);
             }
         },
 
         mounted() {
             this.idleTimer()
+            this.disableRightClick()
         },
 
         computed: {
