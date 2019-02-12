@@ -117,7 +117,6 @@
                 } else if (element.msRequestFullscreen) {
                     element.msRequestFullscreen();
                 }
-
                 this.isFullScreen = true
             },
 
@@ -142,10 +141,9 @@
 
                 function resetTimer() {
                     clearTimeout(t);
-                    t = setTimeout(reload, 300000);  // time is in milliseconds (1000 is 1 second)
+                    t = setTimeout(reload, 30000);  // time is in milliseconds (1000 is 1 second)
                 }
             }
-
         },
 
         mounted() {
