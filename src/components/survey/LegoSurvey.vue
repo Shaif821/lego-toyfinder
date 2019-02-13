@@ -71,7 +71,7 @@
                 }
             },
 
-            addChoice(choice, loadProduct) {        //Check welke view het is en sla het antwoord bij de bijbehorende data op
+            addChoice(choice, loadProduct) {  //Check welke view het is en sla het antwoord bij de bijbehorende data op
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice

@@ -179,16 +179,18 @@
         methods: {
             getProducts() {
                 let counter = 0;
-                let length = 0;
+                let length = 0; //De totale aantal van de producten (Wordt weergegeven op de pagina, links boven)
                 this.filterLength = 0
-                counter = this.currentSlide === null ? 15 : this.addSlides
-                this.shortProducts = []
-                this.checkProductFilter()
+                counter = this.currentSlide === null ? 15 : this.addSlides //Wanneer de huidige slides null is krijg het de waarde van 15, wanneer het al een waarde heeft, wordt de nieuwe waarde this.addslides
+                this.shortProducts = [] //Hierin komen de producten
+                this.checkProductFilter() //Checkt welke filters gekozen zijn
                 for (let i = 0; i < this.currentProducts.length; i++) {
                     try {
+                        //Checkt of de afbeelding binnen gehaald kan worden (dus of het bestaat), Daarna wordt er gekeken of de producten
+                        //de juiste filters bevatten, en vervolgens worden de producten toegevoegd aan de shortProducts (wat dus weergegeven wordt)
                         require('../../assets/images/products/' + this.currentProducts[i]['Product Number'] + this.singleImage + '.png')
-                        length++
                         this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, false)
+                        length++
                         if (this.shortProducts.length < counter) {
                             this.checkFilters(this.currentProducts[i], this.$store.state.themeChoice, this.$store.state.ageChoice, this.$store.state.interestChoice, true)
                         }
@@ -196,52 +198,54 @@
                         return {}
                     }
                 }
+                //Als de producten gefilterd zijn, wordt de total resultaten doorgegeven
                 if (this.shortProducts.length > 0) {
                     this.$parent.productLength(this.filterLength)
                 }
 
+                //Als de producten geen filters bevatten, dan worden alle producten opgehaald
                 if (this.shortProducts.length <= 0) {
                     this.getAllProducts()
                     this.$parent.productLength(length)
                 }
             },
 
-            checkFilters(currentProduct, theme, age, interest, bool) {
+            checkFilters(currentProduct, theme, age, interest, allResult) {
                 if (interest !== null && age !== null && theme !== null) {                  //Wanneer alle filters zijn gevuld
                     if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']
                         && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest !== null && age !== null && theme === null) {
                     if (interest.text === currentProduct['Interesse']                       //gevuld: interest & age
                         && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest !== null && age === null && theme !== null) {             //gevuld: interest & theme
                     if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest === null && age !== null && theme !== null) {             //gevuld: age & theme
                     if (theme.theme === currentProduct['Theme'] && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest == null && age !== null && theme == null) {             //Wanneer alleen age gevuld is
                     if (currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest !== null && age === null && theme === null) {
                     if (interest.text === currentProduct['Interesse']) {                 //Wanneer alleen interest gevuld is
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
                 else if (interest === null && age === null && theme !== null) {          //Wanneer alleen thema gevuld is
                     if (theme.theme === currentProduct['Theme']) {
-                        bool ? this.shortProducts.push(currentProduct) : this.filterLength++
+                        allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
                     }
                 }
             },
@@ -292,7 +296,6 @@
                 else {
                     this.currentProducts = this.ogProducts
                 }
-
                 this.countFilter = 1
             },
 
