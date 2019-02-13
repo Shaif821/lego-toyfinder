@@ -9,6 +9,10 @@ const store = new Vuex.Store({
         interestChoice: null,
         themeChoice: null,
 
+        favorites: [],
+        favoritesName: [],
+        wishListUrl: null,
+
         loadSurvey: false,      //Of de survey geladen moet worden of niet       =====> Screensaver & product pagina                       : ScreenSaver & Product
         isActiveTheme: false,  //Checkt of het thema gedeelte actief is          =====> Wanneer de survey pagina wordt weergegeven         : ScreenSaver & Product
 

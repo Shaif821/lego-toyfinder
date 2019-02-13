@@ -1,6 +1,6 @@
 <template>
     <div>
-        <WishList :favorited="favorites"></WishList>
+        <WishList></WishList>
         <div class="product__list__container">
             <div class="product__list__header">
                 <div class="product__list__header__wrapper">
@@ -28,7 +28,7 @@
 
             <div class="filler_second"></div>
 
-            <ProductItem :productSort="productType" :favorite="favorites" class="product__list__item"></ProductItem>
+            <ProductItem :productSort="productType" class="product__list__item"></ProductItem>
 
             <div class="product__list__filler"></div>
 
@@ -57,7 +57,6 @@
 
         data() {
             return {
-                favorites: [],
                 shareListActive: false,
                 wishListUrl: null,
                 favoritesName: [],
@@ -69,19 +68,19 @@
         methods: {
             addToFavorite(index) {
                 let pos = undefined;
-                if (this.favorites.includes(index)) {
-                    pos = this.favorites.indexOf(index)
-                    this.favorites.splice(pos, 1)
+                if (this.$store.state.favorites.includes(index)) {
+                    pos = this.$store.state.favorites.indexOf(index)
+                    this.$store.state.favorites.splice(pos, 1)
                 }
                 else {
-                    if (this.favorites.length <= 4) {
-                        this.favorites.push(index)
+                    if (this.$store.state.favorites.length <= 4) {
+                        this.$store.state.favorites.push(index)
                     }
                 }
             },
 
             removeFavorite() {
-                this.favorites = []
+                this.$store.state.favorites = []
             },
 
             productLength(length) {
@@ -94,25 +93,29 @@
 
             changFilter(type) {
                 this.productType = type
+            },
+
+            qrCode(){
+                let favoritesURL = []
+                let urlLink = document.URL.replace('/toyfinder', '/')
+                this.favoritesName = []
+                for (let i = 0; i < this.$store.state.favorites.length; i++) {
+                    favoritesURL.push(this.$store.state.favorites[i]['Product Number'])
+                    this.favoritesName.push(this.$store.state.favorites[i]['Product Name NL'])
+                }
+                this.wishListUrl = urlLink + favoritesURL.join('-')
             }
         },
 
         computed: {
             addToURL() {
-                return this.favorites
+                return this.$store.state.favorites
             },
         },
 
         watch: {
             addToURL() {
-                let favoritesURL = []
-                let urlLink = document.URL.replace('/toyfinder', '/')
-                this.favoritesName = []
-                for (let i = 0; i < this.favorites.length; i++) {
-                    favoritesURL.push(this.favorites[i]['Product Number'])
-                    this.favoritesName.push(this.favorites[i]['Product Name NL'])
-                }
-                this.wishListUrl = urlLink + favoritesURL.join('-')
+                this.qrCode()
             },
         }
     }

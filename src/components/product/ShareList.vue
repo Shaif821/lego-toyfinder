@@ -104,7 +104,6 @@
         props: {
             isOpen: Boolean,
             url: String,
-            favorites: Array
         },
 
         data() {
@@ -141,7 +140,7 @@
                         axios
                             .post('/mail/index.php', {
                                 email: this.userMail,
-                                favorites: this.favorites,
+                                favorites: this.$store.state.favorites,
                                 url: this.url
                             })
                             .then(response => {

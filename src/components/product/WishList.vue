@@ -6,7 +6,7 @@
                 <transition enter-active-class="animated bounceIn"
                             leave-active-class="animated bounceOut"
                             mode="out-in">
-                    <img class="wishlist__star" :key="1" v-if="favorited.length > 0"
+                    <img class="wishlist__star" :key="1" v-if="$store.state.favorites.length > 0"
                          src="../../assets/images/layout/star-icon-mini.png">
                     <img class="wishlist__star wishlist__star--un" :key="2" v-else
                          src="../../assets/images/layout/un)star.png">
@@ -29,17 +29,17 @@
                         <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX"
                                     class="contain_favorite_text" mode="out-in">
 
-                            <span class="is_favorited" :key="favorited[i - 1]['Product Name NL']" v-if="favorited[i - 1]">
-                                    <p>{{favorited[i - 1]['Product Name NL']}}</p>
-                                    <img style="cursor: pointer" @click="removeFavorited(favorited[i - 1])"
+                            <span class="is_favorited" :key="$store.state.favorites[i - 1]['Product Name NL']" v-if="$store.state.favorites[i - 1]">
+                                    <p>{{$store.state.favorites[i - 1]['Product Name NL']}}</p>
+                                    <img style="cursor: pointer" @click="removeFavorited($store.state.favorites[i - 1])"
                                          src="../../assets/images/layout/close-yellow.png">
                             </span>
 
-                            <span :key="i + ' -not_favorited'" v-else-if="!favorited[i - 1] && index === 0">
+                            <span :key="i + ' -not_favorited'" v-else-if="!$store.state.favorites[i - 1] && index === 0">
                                   <p class="not_favorited">Je lijstje is nog leeg</p>
                             </span>
 
-                            <span :key="favorited[i - 1]" v-else>
+                            <span :key="$store.state.favorites[i - 1]" v-else>
                                 <p class="has_star">{{i}}</p>
                             </span>
 
@@ -51,8 +51,8 @@
 
 
                 <div class="wishlist_share" style="cursor: pointer;"
-                     :class="[favorited.length > 0 ? 'favorited' : 'un_favorited']">
-                    <p @click="openShareList()" v-if="favorited.length > 0">
+                     :class="[$store.state.favorites.length > 0 ? 'favorited' : 'un_favorited']">
+                    <p @click="openShareList()" v-if="$store.state.favorites.length > 0">
                         Deel het verlanglijstje
                     </p>
 
@@ -69,9 +69,6 @@
 <script>
     export default {
         name: "WishList",
-        props: {
-            favorited: Array,
-        },
 
         data() {
             return {
@@ -82,6 +79,7 @@
 
         methods: {
             openWishList() {
+                this.$parent.qrCode()
                 if (this.isActiveWishList) {
                     this.isActiveWishList = false
                     this.notActiveWishList = true
@@ -103,7 +101,7 @@
 
         watch: {
             favorited(newValue) {
-                if(this.favorited.length === 5) {
+                if(this.$store.state.favorites.length === 5) {
                     this.notActiveWishList = true
                     this.isActiveWishList = true
                 }

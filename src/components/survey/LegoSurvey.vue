@@ -108,6 +108,7 @@
                     this.$store.state.surveyStream = null
                     this.$store.state.transitionSlide = false
                 }
+                this.$store.state.favorites = []
                 this.age = null                       //Reset de antwoorden
                 this.$store.state.loadSurvey = false
                 this.view = 'SurveyAge'

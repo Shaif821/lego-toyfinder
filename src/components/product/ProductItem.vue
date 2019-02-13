@@ -40,7 +40,7 @@
                             <div class="product_favorite" @click.stop="$parent.addToFavorite(i)">
                                 <transition enter-active-class="animated bounceIn"
                                             mode="out-in">
-                                    <img key="1" v-if="favorite.includes(i)"
+                                    <img key="1" v-if="$store.state.favorites.includes(i)"
                                          src="../../assets/images/layout/favorited_star.png">
                                     <img key="2" v-else src="../../assets/images/layout/un)star.png">
                                 </transition>
@@ -120,7 +120,7 @@
                                     <transition enter-active-class="animated bounceIn"
                                                 leave-active-class="animated bounceOut"
                                                 mode="out-in">
-                                        <img :key="1" v-if="favorite.includes(i)"
+                                        <img :key="1" v-if="$store.state.favorites.includes(i)"
                                              class="animated bounceIn"
                                              src="../../assets/images/layout/favorited_star.png">
                                         <img :key="2" v-else
@@ -142,7 +142,6 @@
     export default {
         name: "ProductItem",
         props: {
-            favorite: Array,
             productSort: String,
         },
 
@@ -211,7 +210,7 @@
             },
 
             checkFilters(currentProduct, theme, age, interest, allResult) {
-                if (interest !== null && age !== null && theme !== null) {                  //Wanneer alle filters zijn gevuld
+                if (interest !== null && age !== null && theme !== null) {   //Wanneer alle filters zijn gevuld
                     if (interest.text === currentProduct['Interesse'] && theme.theme === currentProduct['Theme']
                         && currentProduct['Age Min'] >= age.ageMin && currentProduct['Age Max'] <= age.ageMax) {
                         allResult ? this.shortProducts.push(currentProduct) : this.filterLength++
