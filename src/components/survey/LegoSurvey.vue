@@ -71,11 +71,7 @@
                 }
             },
 
-            addChoice(choice, bool) {        //Check welke view het is en sla het antwoord bij de bijbehorende data op
-                // this.$store.state.ageChoice = null
-                // this.$store.state.interestChoice = null
-                // this.$store.state.themeChoice = null
-
+            addChoice(choice, loadProduct) {        //Check welke view het is en sla het antwoord bij de bijbehorende data op
                 switch (this.view) {
                     case 'SurveyAge':
                         this.$store.state.ageChoice = choice
@@ -96,7 +92,7 @@
                         this.$store.state.themeChoice = choice
                         break;
                 }
-                if (bool) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)
+                if (loadProduct) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)
                     this.nextSlide()
                 }
             },
