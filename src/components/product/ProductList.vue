@@ -106,7 +106,7 @@
         watch: {
             addToURL() {
                 let favoritesURL = []
-                let urlLink = document.URL.replace('toyfinder', '')
+                let urlLink = document.URL.replace('/toyfinder', '/')
                 this.favoritesName = []
                 for (let i = 0; i < this.favorites.length; i++) {
                     favoritesURL.push(this.favorites[i]['Product Number'])
