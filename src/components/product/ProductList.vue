@@ -106,12 +106,13 @@
         watch: {
             addToURL() {
                 let favoritesURL = []
+                let urlLink = document.URL.replace('toyfinder', '')
                 this.favoritesName = []
                 for (let i = 0; i < this.favorites.length; i++) {
                     favoritesURL.push(this.favorites[i]['Product Number'])
                     this.favoritesName.push(this.favorites[i]['Product Name NL'])
                 }
-                this.wishListUrl = 'https://shaif.nl/lego-toyfinder/' + favoritesURL.join('-')
+                this.wishListUrl = urlLink + favoritesURL.join('-')
             },
         }
     }
