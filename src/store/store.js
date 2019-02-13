@@ -95,10 +95,6 @@ const store = new Vuex.Store({
                 text: 'Voertuigen',
             },
             {
-                url: require('../assets/images/survey/free.png'),
-                text: 'Vrije tijd',
-            },
-            {
                 url: require('../assets/images/survey/building.png'),
                 text: 'Bouwstenen',
             },
