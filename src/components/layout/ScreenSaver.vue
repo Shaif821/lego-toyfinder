@@ -36,7 +36,7 @@
 
       <div class="screensaver__tagline">
         <p class="screensaver__tagline--text">
-          Wat wil jij van Lego? Maak snel jouw verlanglijstje
+          Wat wil jij van LEGO? Maak snel jouw verlanglijstje
         </p>
       </div>
 

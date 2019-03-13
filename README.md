@@ -1,4 +1,4 @@
-# lego-toyfinder
+# LEGO Toyfinder
 
 ## Project setup
 
