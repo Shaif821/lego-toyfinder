@@ -1,7 +1,7 @@
 <?php
 header("allow-control-access-origin: *");
 
-$data = json_decode(file_get_contents("php://input"), TRUE);
+$data = json_decode(file_get_contents("php://input"), true);
 $email = $data['email'];
 
 $headers = "From: " . strip_tags($email) . "\r\n";
@@ -15,7 +15,7 @@ $headers .= "Content-Type: text/html; charset=UTF-8\r\n";
 $favoritesList = $data['favorites'];
 $favorites = ' ';
 
-for($i = 0; $i < count($favoritesList); $i++){
+for ($i = 0; $i < count($favoritesList); $i++) {
     $favorites .= '<li>' . $favoritesList[$i] . '</li>';
 }
 
@@ -32,4 +32,3 @@ $emailContent = "<div style='display:flex; flex-direction: column; justify-conte
 
 
 mail($email, 'Lego wenslijstje', $emailContent, $headers);
-

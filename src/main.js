@@ -1,24 +1,24 @@
-import Vue from 'vue'
-import router from './router'
-import App from './App.vue'
-import store from './store/store'
-import VAnimateCss from 'v-animate-css';
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import VeeValidate from 'vee-validate'
-import VModal from 'vue-js-modal'
+import Vue from "vue";
+import router from "./router";
+import App from "./App.vue";
+import store from "./store/store";
+import VAnimateCss from "v-animate-css";
+import VueAwesomeSwiper from "vue-awesome-swiper";
+import VeeValidate from "vee-validate";
+import VModal from "vue-js-modal";
 import { VLazyImagePlugin } from "v-lazy-image";
 
 Vue.use(VAnimateCss);
 Vue.use(VLazyImagePlugin);
 Vue.use(VueAwesomeSwiper);
 Vue.use(VeeValidate);
-Vue.use(VModal)
+Vue.use(VModal);
 
-Vue.config.productionTip = false
-Vue.config.performance = true
+Vue.config.productionTip = false;
+Vue.config.performance = true;
 
 new Vue({
-    router,
-    store,
-    render: h => h(App),
-}).$mount('#app')
+  router,
+  store,
+  render: h => h(App)
+}).$mount("#app");

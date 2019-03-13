@@ -1,4 +1,5 @@
 /* eslint-env node */
+/* eslint-disable import/no-commonjs, import/no-nodejs-modules */
 const path = require("path");
 const express = require("express");
 const serveStatic = require("serve-static");
@@ -25,5 +26,5 @@ app.use("*", function(req, resp) {
 });
 
 app.listen(port, "0.0.0.0", () => {
-  return console.log("Server successfully deployed at port: " + port);
+  console.log("Server successfully deployed at port: " + port); // eslint-disable-line
 });
