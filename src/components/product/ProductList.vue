@@ -24,15 +24,33 @@
                         </button>
                     </div>
                 </div>
+
+                <div class="full__list-header">
+                    <p v-if="favoritesName.length === 5" class="full__list animated fadeInRight">
+                        Je lijstje zit vol
+                    </p>
+
+                    <div v-if="favoritesName.length === 1" class="full__list--animation-wrapper">
+                        <img class="animate--star lg-star" src="../../assets/images/layout/favorited_star.png">
+                        <!--<img class="animate&#45;&#45;star md-star"  src="../../assets/images/layout/favorited_star.png">-->
+                        <!--<img class="animate&#45;&#45;star sm-star"  src="../../assets/images/layout/favorited_star.png">-->
+                    </div>
+                </div>
             </div>
 
             <div class="filler_second"></div>
 
-            <ProductItem :productSort="productType" class="product__list__item"></ProductItem>
+            <div class="product__section-wrapper">
+                <ProductItem :productSort="productType" class="product__list__item"></ProductItem>
 
-            <div class="product__list__filler"></div>
+                <div class="product__list__filler">
+                    <p v-if="favoritesName.length === 5" class="full__list animated fadeInDown">
+                        - Je lijstje zit vol, verwijder eerst een product -
+                    </p>
+                </div>
 
-            <ProductButtons class="product__list__buttons"></ProductButtons>
+                <ProductButtons class="product__list__buttons"></ProductButtons>
+            </div>
         </div>
         <ShareList v-if="shareListActive" :isOpen="shareListActive"
                    :url="wishListUrl" :favorites="favoritesName">
@@ -44,6 +62,7 @@
     const WishList = () => import('./WishList')
     const ShareList = () => import('./ShareList')
     import ProductItem from './ProductItem'
+
     const ProductButtons = () => import('./ProductButtons')
 
     export default {
@@ -66,19 +85,6 @@
         },
 
         methods: {
-            addToFavorite(index) {
-                let pos = undefined;
-                if (this.$store.state.favorites.includes(index)) {
-                    pos = this.$store.state.favorites.indexOf(index)
-                    this.$store.state.favorites.splice(pos, 1)
-                }
-                else {
-                    if (this.$store.state.favorites.length <= 4) {
-                        this.$store.state.favorites.push(index)
-                    }
-                }
-            },
-
             removeFavorite() {
                 this.$store.state.favorites = []
             },
@@ -95,7 +101,7 @@
                 this.productType = type
             },
 
-            qrCode(){
+            qrCode() {
                 let favoritesURL = []
                 let urlLink = document.URL.replace('/toyfinder', '/')
                 this.favoritesName = []
@@ -135,15 +141,14 @@
         font-family: Ubuntu, sans-serif;
     }
 
-    .filler_first {
-        height: 61px;
-    }
-
     .filler_second {
-        height: 76px;
+        height: 64px;
     }
 
     .product__list__header {
+        margin-top: 11px;
+        display: flex;
+        justify-content: space-between;
         height: 48px;
     }
 
@@ -211,8 +216,110 @@
         align-items: center;
     }
 
-    .product__list__filler {
-        height: 92px;
+    .full__list {
+        font-size: 28px;
+        font-weight: bold;
+        font-style: normal;
+        font-stretch: normal;
+        letter-spacing: normal;
+        color: #496078;
+        margin: 0;
+        padding: 0;
     }
+
+    .product__section-wrapper {
+        height: 890px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .full__list-header {
+        padding-right: 150px;
+    }
+
+    .full__list-header:first-child {
+        padding: 0;
+        margin: 0;
+    }
+
+    .full__list--animation-wrapper {
+        position: absolute;
+    }
+
+    .lg-star {
+        width: 80px;
+        height: 80px;
+    }
+
+    .md-star {
+        width: 59px;
+        height: 59px;
+    }
+
+    .sm-star {
+        width: 43px;
+        height: 43px;
+    }
+
+    .animate--star {
+        position: absolute;
+        z-index: 6;
+        border: 2px solid red;
+        transform: translate3D(150px, 150px, 0);
+        /*animation: spiral 2s linear;*/
+    }
+
+    @keyframes spiral {
+        0% {
+            transform: translate3D(150px, 150px, 0);
+        }
+        5% {
+            transform: translate3D(150px, 150px, 0);
+            border: 2px solid red;
+        }
+
+
+
+
+
+
+
+        /*0% {*/
+            /*top:200px;*/
+            /*left: 150px;*/
+            /*border: 2px solid red;*/
+        /*}*/
+        /*5% {*/
+            /*left: 10px;*/
+            /*border: 2px solid blue;*/
+        /*}*/
+        /*10% {*/
+            /*top: 150px;*/
+            /*left: -80px;*/
+            /*border: 2px solid green;*/
+        /*}*/
+        /*15% {*/
+            /*top: 80px;*/
+            /*left: -90px;*/
+            /*border: 2px solid purple;*/
+        /*}*/
+        /*20% {*/
+            /*top: -10px;*/
+            /*left: -100px;*/
+            /*border: 2px solid black;*/
+        /*}*/
+        /*25% {*/
+            /*top: -50px;*/
+            /*left: -50px;*/
+            /*border: 2px solid orange;*/
+        /*}*/
+        /*100% {*/
+            /*top: -50px;*/
+            /*left: -50px;*/
+            /*border: 2px solid red;*/
+        /*}*/
+    }
+
 
 </style>
