@@ -1,10 +1,10 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /lego-toyfinder
+  RewriteBase /toychamp
   RewriteCond %{HTTPS} !=on
   RewriteRule ^/?(.*) https://%{SERVER_NAME}/$1 [R,L]
-  RewriteRule ^lego-toyfinder/index\.html$ - [L]
+  RewriteRule ^toychamp/index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /lego-toyfinder/index.html [L]
+  RewriteRule . /toychamp/index.html [L]
 </IfModule>
