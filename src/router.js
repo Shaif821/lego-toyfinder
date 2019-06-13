@@ -26,6 +26,9 @@ export default new Router({
             path: '/',
             name: 'list-page-no',
             component: ListPage
+        },
+        { //404 page, redirects back to home (= /)
+            path: '*', redirect: '/'
         }
     ]
 })

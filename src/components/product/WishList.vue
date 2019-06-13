@@ -3,17 +3,31 @@
          class="wishlist__container">
         <div @click="openWishList()" style="cursor: pointer;" class="wishlist__clipboard__container">
             <div class="wishlist__clipboard">
-                <transition enter-active-class="animated bounceIn"
-                            leave-active-class="animated bounceOut"
-                            mode="out-in">
-                    <img class="wishlist__star" :key="1" v-if="$store.state.favorites.length > 0"
-                         src="../../assets/images/layout/star-icon-mini.png">
-                    <img class="wishlist__star wishlist__star--un" :key="2" v-else
-                         src="../../assets/images/layout/un)star.png">
-                </transition>
+
+                    <span v-if="$store.state.favorites.length > 0" :key="1">
+                        <img class="wishlist__star animated fadeIn" style="animation-delay: 1s;"
+                             src="../../assets/images/layout/star-icon-mini.png">
+
+                          <div class="wishlist__star full__list--animation-wrapper">
+                              <img alt="large star" class="animate--star lg-star"
+                                   src="../../assets/images/layout/favorited_star.png">
+                              <img class="animate--star md-star" src="../../assets/images/layout/favorited_star.png">
+                              <img class="animate--star sm-star" src="../../assets/images/layout/favorited_star.png">
+                          </div>
+                    </span>
+
+                <span v-else :key="2">
+                          <img class="wishlist__star  wishlist__star--un animated fadeIn"
+                               src="../../assets/images/layout/un)star.png">
+                        <div class="wishlist__star full__list--animation-wrapper">
+                          </div>
+                    </span>
+
                 <img src="../../assets/images/layout/list-icon.png">
             </div>
             <img src="../../assets/images/layout/wishlist.png">
+
+
         </div>
 
         <div class="wishlist__phone__container" :class="{add__shadow: isActiveWishList}">
@@ -29,13 +43,15 @@
                         <transition enter-active-class="animated flipInX" leave-active-class="animated flipOutX"
                                     class="contain_favorite_text" mode="out-in">
 
-                            <span class="is_favorited" :key="$store.state.favorites[i - 1]['Product Name NL']" v-if="$store.state.favorites[i - 1]">
+                            <span class="is_favorited" :key="$store.state.favorites[i - 1]['Product Name NL']"
+                                  v-if="$store.state.favorites[i - 1]">
                                     <p>{{$store.state.favorites[i - 1]['Product Name NL']}}</p>
                                     <img style="cursor: pointer" @click="removeFavorited($store.state.favorites[i - 1])"
                                          src="../../assets/images/layout/close-yellow.png">
                             </span>
 
-                            <span :key="i + ' -not_favorited'" v-else-if="!$store.state.favorites[i - 1] && index === 0">
+                            <span :key="i + ' -not_favorited'"
+                                  v-else-if="!$store.state.favorites[i - 1] && index === 0">
                                   <p class="not_favorited">Je lijstje is nog leeg</p>
                             </span>
 
@@ -101,7 +117,7 @@
 
         watch: {
             favorited(newValue) {
-                if(this.$store.state.favorites.length === 5) {
+                if (this.$store.state.favorites.length === 5) {
                     this.notActiveWishList = true
                     this.isActiveWishList = true
                 }
@@ -153,6 +169,7 @@
     .wishlist__clipboard__container {
         position: absolute;
         z-index: 5;
+        margin-top: -10px;
         left: 0;
     }
 
@@ -168,7 +185,7 @@
         z-index: 7;
         position: absolute;
         margin-top: -3px;
-        margin-left: -15px;
+        margin-left: -35px;
     }
 
     .wishlist__star--un {
@@ -337,5 +354,97 @@
         color: #297fca;
         background: url('../../assets/images/layout/path-copy-3.png') no-repeat center;
     }
+
+    .full__list--animation-wrapper {
+        position: relative;
+    }
+
+    .lg-star {
+        max-width: 80px;
+        width: 100%;
+        max-height: 80px;
+        height: 100%;
+        animation: lg-star 2s infinite ease-in-out;
+    }
+
+    .md-star {
+        max-width: 59px;
+        width: 100%;
+        max-height: 59px;
+        height: 100%;
+        animation: md-star 2s infinite ease-in-out;
+        animation-delay: 0.3s;
+    }
+
+    .sm-star {
+        max-width: 43px;
+        width: 100%;
+        max-height: 43px;
+        height: 100%;
+        animation: sm-star 2s infinite ease-in-out;
+        animation-delay: 0.5s;
+
+    }
+
+    .animate--star {
+        position: absolute;
+        z-index: 6;
+    }
+
+
+    @-webkit-keyframes lg-star {
+        0% {
+            width: 80px;
+            height: 80px;
+            transform: rotate(240deg) translate(200px) rotate(-240deg);
+        }
+        75% {
+            opacity: 0.5;
+            transform: rotate(600deg) translate(40px) rotate(-600deg);
+        }
+        100% {
+            opacity: 0;
+            width: 28px;
+            height: 29px;
+            transform: translate(-20px);
+        }
+    }
+
+    @-webkit-keyframes md-star {
+        0% {
+            width: 59px;
+            height: 59px;
+            transform: rotate(240deg) translate(200px) rotate(-240deg);
+        }
+        75% {
+            opacity: 0.5;
+            transform: rotate(600deg) translate(40px) rotate(-600deg);
+        }
+        100% {
+            opacity: 0;
+            width: 20px;
+            height: 20px;
+            transform: translate(-20px);
+        }
+    }
+
+    @-webkit-keyframes sm-star {
+        0% {
+            width: 43px;
+            height: 43px;
+            transform: rotate(240deg) translate(200px) rotate(-240deg);
+        }
+        75% {
+            opacity: 0.5;
+            transform: rotate(600deg) translate(40px) rotate(-600deg);
+        }
+        100% {
+            opacity: 0;
+            width: 15px;
+            height: 15px;
+            transform: translate(-20px);
+        }
+    }
+
 
 </style>

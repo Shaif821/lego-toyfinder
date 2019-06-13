@@ -21,7 +21,7 @@
                 LEGO®
                 {{ this.$store.state.themeChoice.theme }}
             </span>
-            <span class="product-buttons__text" v-else>Bekijk het productenoverzicht</span>
+            <span class="product-buttons__text" v-else>Kies een thema</span>
         </div>
     </div>
 </template>

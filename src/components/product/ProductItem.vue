@@ -37,7 +37,7 @@
                                 Bekijk dit product
                             </div>
 
-                            <div class="product_favorite" @click.stop="$parent.addToFavorite(i)">
+                            <div class="product_favorite" @click.stop="addToFavorite(i)">
                                 <transition enter-active-class="animated bounceIn"
                                             mode="out-in">
                                     <img key="1" v-if="$store.state.favorites.includes(i)"
@@ -112,7 +112,7 @@
                             </div>
                         </div>
 
-                        <div @click.stop="$parent.addToFavorite(i)" class="product_details_footer">
+                        <div @click.stop="addToFavorite(i)" class="product_details_footer">
                             <p>Voeg toe aan verlanglijstje</p>
 
                             <div>
@@ -176,6 +176,24 @@
         },
 
         methods: {
+            addToFavorite(index) {
+                let pos = undefined;
+                if (this.$store.state.favorites.includes(index)) {
+                    pos = this.$store.state.favorites.indexOf(index)
+                    this.$store.state.favorites.splice(pos, 1)
+                }
+                else {
+                    if (this.$store.state.favorites.length <= 4) {
+                        this.starFavorite(index)
+                        this.$store.state.favorites.push(index)
+                    }
+                }
+            },
+
+            starFavorite(id) {
+
+            },
+
             getProducts() {
                 let counter = 0;
                 let length = 0; //De totale aantal van de producten (Wordt weergegeven op de pagina, links boven)
@@ -378,6 +396,7 @@
 </script>
 
 <style scoped>
+
     .product_wrapper {
         box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
         width: 457px !important;
@@ -720,5 +739,7 @@
     .product_list_section-3_filler {
         height: 92px;
     }
+
+
 
 </style>
