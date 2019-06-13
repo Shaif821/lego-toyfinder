@@ -153,7 +153,6 @@
     .wishlist__clipboard__container {
         position: absolute;
         z-index: 5;
-        margin-top:-10px;
         left: 0;
     }
 

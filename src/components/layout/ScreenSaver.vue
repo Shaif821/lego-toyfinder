@@ -42,7 +42,7 @@
                 </div>
                 <div @click="toThemes" class="screensaver__footer--text">
                     <div style="cursor: pointer" class="screensaver__footer--text-wrapper">
-                        <p class="screensaver__footer--title">Bekijk alle thema’s</p>
+                        <p class="screensaver__footer--title">Productoverzicht</p>
                         <div class="screensaver__footer--button">
                             <img class="animated" src="../../assets/images/layout/activity-icon-02.png">
                         </div>

@@ -158,8 +158,8 @@
         },
 
         mounted() {
-            // this.idleTimer()
-            // this.disableRightClick()
+            this.idleTimer()
+            this.disableRightClick()
         },
 
         computed: {
