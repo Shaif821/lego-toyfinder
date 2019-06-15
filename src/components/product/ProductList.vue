@@ -29,9 +29,9 @@
                     <transition enter-active-class="animated fadeInLeft"
                                 leave-active-class="animated fadeOutLeft"
                                 mode="out-in">
-                    <p v-if="favoritesName.length === 5" class="full__list ">
-                        Je lijstje zit vol
-                    </p>
+                        <p v-if="favoritesName.length === 5" class="full__list ">
+                            Je lijstje zit vol
+                        </p>
                     </transition>
 
 
@@ -90,7 +90,7 @@
 
         methods: {
             removeFavorite() {
-                this.$store.state.favorites = []
+
             },
 
             productLength(length) {

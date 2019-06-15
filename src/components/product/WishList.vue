@@ -9,10 +9,9 @@
                              src="../../assets/images/layout/star-icon-mini.png">
 
                           <div class="wishlist__star full__list--animation-wrapper">
-                              <img v-if="animate"  alt="large star" class="animate--star lg-star"
-                                   src="../../assets/images/layout/favorited_star.png">
-                              <img v-if="animate"  class="animate--star md-star" src="../../assets/images/layout/favorited_star.png">
-                              <img v-if="animate" class="animate--star sm-star" src="../../assets/images/layout/favorited_star.png">
+                              <img :class="{'animate--star-lg': animate}"  alt="large star" class=" lg-star" src="../../assets/images/layout/favorited_star.png">
+                              <img alt="md-star" :class="{'animate--star-md': animate}" class=" md-star" src="../../assets/images/layout/favorited_star.png">
+                              <img alt="sm-star" :class="{'animate--star-sm': animate}" class="sm-star" src="../../assets/images/layout/favorited_star.png">
                           </div>
                     </span>
 
@@ -111,16 +110,22 @@
             },
 
             removeFavorited(index) {
-                this.$parent.addToFavorite(index)
+                let pos = undefined;
+                if (this.$store.state.favorites.includes(index)) {
+                    pos = this.$store.state.favorites.indexOf(index)
+                    this.$store.state.favorites.splice(pos, 1)
+                } else {
+                    if (this.$store.state.favorites.length <= 4) {
+                        this.starFavorite(index)
+                        this.$store.state.favorites.push(index)
+                    }
+                }
             },
 
             activeAnimate() {
-                this.animate = false
-                let vm = this
-                setInterval(function () {
-                    vm.animate = true
-                }, 3000)
-                this.animate = false
+                let self = this;
+                self.animate = true;
+                setTimeout(function(){ self.animate = false; }, 1600);
             }
         },
 
@@ -382,37 +387,47 @@
     }
 
     .lg-star {
+        opacity: 0;
+        position: absolute;
+        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
         width: 80px;
         height: 80px;
-        animation: lg-star 3s forwards;
+
     }
 
     .md-star {
-        opacity: 1;
+        opacity: 0;
+        position: absolute;
+        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
         width: 59px;
         height: 59px;
-        animation: md-star 3s forwards;
-        animation-delay: 0.3s;
+
     }
 
     .sm-star {
-        opacity: 1;
+        opacity: 0;
+        position: absolute;
+        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
         width: 43px;
         height: 43px;
-        animation: sm-star 3s forwards;
-        animation-delay: 0.2s;
-
     }
 
-    .animate--star {
-        position: absolute;
-        z-index: 6;
-        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+    .animate--star-lg {
+        animation: lg-star 1.5s forwards;
+    }
+    .animate--star-md {
+        animation: md-star 1.5s forwards;
+        animation-delay: 0.3s;
+    }
+    .animate--star-sm {
+        animation: sm-star 1.5s forwards;
+        animation-delay: 0.2s;
     }
 
 
     @-webkit-keyframes lg-star {
         0% {
+            opacity: 1;
             width: 80px;
             height: 80px;
             transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
@@ -435,13 +450,11 @@
 
     @-webkit-keyframes md-star {
         0% {
+            opacity: 1;
             width: 59px;
             height: 59px;
             transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
         }
-        /*25% {*/
-            /*transform: rotate(34deg) translate(-100px, -130px) rotate(-240deg);*/
-        /*}*/
         50% {
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
@@ -455,13 +468,11 @@
 
     @-webkit-keyframes sm-star {
         0% {
+            opacity: 1;
             width: 43px;
             height: 43px;
             transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
         }
-        /*25% {*/
-            /*transform: rotate(34deg) translate(-100px, -130px) rotate(-240deg);*/
-        /*}*/
         50% {
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
