@@ -9,10 +9,10 @@
                              src="../../assets/images/layout/star-icon-mini.png">
 
                           <div class="wishlist__star full__list--animation-wrapper">
-                              <img alt="large star" class="animate--star lg-star"
+                              <img v-if="animate"  alt="large star" class="animate--star lg-star"
                                    src="../../assets/images/layout/favorited_star.png">
-                              <img class="animate--star md-star" src="../../assets/images/layout/favorited_star.png">
-                              <img class="animate--star sm-star" src="../../assets/images/layout/favorited_star.png">
+                              <img v-if="animate"  class="animate--star md-star" src="../../assets/images/layout/favorited_star.png">
+                              <img v-if="animate" class="animate--star sm-star" src="../../assets/images/layout/favorited_star.png">
                           </div>
                     </span>
 
@@ -90,6 +90,7 @@
             return {
                 isActiveWishList: false,
                 notActiveWishList: false,
+                animate: false,
             }
         },
 
@@ -111,7 +112,22 @@
 
             removeFavorited(index) {
                 this.$parent.addToFavorite(index)
+            },
+
+            activeAnimate() {
+                this.animate = false
+                let vm = this
+                setInterval(function () {
+                    vm.animate = true
+                }, 3000)
+                this.animate = false
             }
+        },
+
+        computed: {
+          starAnimate() {
+              return this.$store.state.favorites.length
+          }
         },
 
 
@@ -120,6 +136,12 @@
                 if (this.$store.state.favorites.length === 5) {
                     this.notActiveWishList = true
                     this.isActiveWishList = true
+                }
+            },
+
+            starAnimate(newVal, oldVal) {
+                if(newVal >= oldVal) {
+                    this.activeAnimate()
                 }
             }
         }

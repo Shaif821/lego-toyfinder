@@ -26,8 +26,8 @@
                 </div>
 
                 <div class="full__list-header">
-                    <transition enter-active-class="animated fadeInRight"
-                                leave-active-class="animated fadeOutRight"
+                    <transition enter-active-class="animated fadeInLeft"
+                                leave-active-class="animated fadeOutLeft"
                                 mode="out-in">
                     <p v-if="favoritesName.length === 5" class="full__list ">
                         Je lijstje zit vol
@@ -44,8 +44,8 @@
                 <ProductItem :productSort="productType" class="product__list__item"></ProductItem>
 
                 <div class="product__list__filler">
-                    <transition enter-active-class="animated fadeInDown"
-                                leave-active-class="animated fadeOutDown"
+                    <transition enter-active-class="animated fadeIn"
+                                leave-active-class="animated fadeOut"
                                 mode="out-in">
                         <p v-if="favoritesName.length === 5" class="full__list">
                             - Je lijstje zit vol, verwijder eerst een product -
