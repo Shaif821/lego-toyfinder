@@ -29,8 +29,8 @@
                     <transition enter-active-class="animated fadeInLeft"
                                 leave-active-class="animated fadeOutLeft"
                                 mode="out-in">
-                        <p v-if="favoritesName.length === 5" class="full__list ">
-                            Je lijstje zit vol
+                        <p v-if="favoritesName.length === 5" class="full__list list__arrow">
+                            Je lijstje zit vol <img class="arrow__full" src="../../assets/images/layout/arrow-right.svg">
                         </p>
                     </transition>
 
@@ -230,6 +230,19 @@
         margin: 0;
         padding: 0;
     }
+
+    .list__arrow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .arrow__full {
+        margin-left: 20px;
+        width: 22px;
+        height: 54px;
+    }
+
 
     .product__section-wrapper {
         height: 890px;

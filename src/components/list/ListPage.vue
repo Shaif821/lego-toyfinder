@@ -1,28 +1,28 @@
 <template>
     <div class="list">
         <Snowf
-                :amount="7"
-                :size="50"
-                :speed="4"
-                :wind="2"
-                :opacity="1"
-                :swing="2"
-                :image="require('../../assets/images/layout/legosteen.png')"
-                :zIndex="null"
-                :resize="true"
-                color="#fff"
+        :amount="7"
+        :size="50"
+        :speed="4"
+        :wind="2"
+        :opacity="1"
+        :swing="2"
+        :image="require('../../assets/images/layout/legosteen.png')"
+        :zIndex="null"
+        :resize="true"
+        color="#fff"
         />
         <Snowf
-                :amount="5"
-                :size="50"
-                :speed="2"
-                :wind="-1"
-                :opacity="0.8"
-                :swing="10"
-                :image="require('../../assets/images/layout/list-star2x.png')"
-                :zIndex="null"
-                :resize="true"
-                color="#fff"
+        :amount="5"
+        :size="50"
+        :speed="2"
+        :wind="-1"
+        :opacity="0.8"
+        :swing="10"
+        :image="require('../../assets/images/layout/list-star2x.png')"
+        :zIndex="null"
+        :resize="true"
+        color="#fff"
         />
         <modal v-if="window.width < 785" name="productItem"
                :width="'70%'"
@@ -225,7 +225,7 @@
                                 require('../../assets/images/products/' + this.allProducts[j]['Product Number'] + '_box1_in.png')
                                 this.products.push(this.allProducts[j])
                             } catch (e) {
-                                this.noProducts.push(1)
+                                this.noProducts.push(this.allProducts[j]['Product Number'])
                             }
                         }
                     }
@@ -237,8 +237,7 @@
                     this.image = this.products[0]['Product Number']
                     this.url = this.products[0]['Link Toychamp']
                     this.selected = index
-                }
-                else {
+                } else {
                     this.image = id
                     this.url = link
                     this.selected = index
@@ -271,8 +270,7 @@
                     if (this.products[i]['Product Number'] === id && (i + 1) !== this.products.length) {
                         this.image = this.products[i + 1]['Product Number']
                         this.url = this.products[i + 1]['Link Toychamp']
-                    }
-                    else if (this.products[i]['Product Number'] === id && (i + 1) === this.products.length) {
+                    } else if (this.products[i]['Product Number'] === id && (i + 1) === this.products.length) {
                         this.image = this.products[0]['Product Number']
                         this.url = this.products[0]['Link Toychamp']
                     }
@@ -284,8 +282,7 @@
                     if (this.products[i]['Product Number'] === id && i !== 0) {
                         this.image = this.products[i - 1]['Product Number']
                         this.url = this.products[i - 1]['Link Toychamp']
-                    }
-                    else if (i === 0) {
+                    } else if (i === 0) {
                         this.image = this.products[(this.products.length - 1)]['Product Number']
                         this.url = this.products[(this.products.length - 1)]['Link Toychamp']
                     }
@@ -423,7 +420,7 @@
         max-width: 100%;
         max-height: 100%;
         width: 70%;
-        min-width: 70%;
+        min-width: 500px;
         min-height: 90%;
         height: 100%;
     }
@@ -484,7 +481,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         min-width: 300px;
         max-height: 100%;
@@ -494,8 +491,6 @@
 
     .share__title {
         padding: 0;
-        margin-bottom: -12%;
-        flex: 1;
     }
 
     .share__title__text {
@@ -713,7 +708,7 @@
     }
 
 
-    @media screen and (max-width: 1220px) {
+    @media screen and (max-width: 1320px) {
         .wishlist__container {
             height: auto;
             width: 90%;
@@ -869,7 +864,12 @@
         }
     }
 
-    @media screen and (max-width: 785px) {
+
+    @media screen and (max-width: 1030px) {
+        .share__container {
+            justify-content: center;
+        }
+
 
         .copy__link__text {
             font-size: 20px;
@@ -1029,6 +1029,7 @@
         }
 
     }
+
 
     @media screen and (max-width: 616px) {
         .no__products {
