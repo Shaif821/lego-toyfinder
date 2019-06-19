@@ -90,6 +90,9 @@
                 isActiveWishList: false,
                 notActiveWishList: false,
                 animate: false,
+                dataObject: {
+                    'event' : 'Klik wenslijst open'
+                }
             }
         },
 
@@ -97,6 +100,7 @@
             openWishList() {
                 this.$parent.qrCode()
                 if (this.isActiveWishList) {
+                    dataLayer.push()
                     this.isActiveWishList = false
                     this.notActiveWishList = true
                 } else {
@@ -225,7 +229,7 @@
         width: 520px;
         position: relative;
         z-index: 2;
-        margin-top: -67px;
+        margin-top: -65px;
         right: 0;
         margin-left: 89px;
         background: white url('../../assets/images/layout/border-left.png') left no-repeat;
@@ -413,14 +417,14 @@
     }
 
     .animate--star-lg {
-        animation: lg-star 1.5s forwards;
+        animation: lg-star 1.5s ease-in-out;
     }
     .animate--star-md {
-        animation: md-star 1.5s forwards;
+        animation: md-star 1.5s ease-in-out;
         animation-delay: 0.3s;
     }
     .animate--star-sm {
-        animation: sm-star 1.5s forwards;
+        animation: sm-star 1.5s ease-in-out;
         animation-delay: 0.2s;
     }
 
@@ -430,14 +434,9 @@
             opacity: 1;
             width: 80px;
             height: 80px;
-            transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+            transform: rotate(34deg) translate(300px, 30px) rotate(-240deg);
         }
-        /*25% {*/
-        /*border: 3px solid blue;*/
-        /*transform: rotate(34deg) translate(-100px, -130px) rotate(-240deg);*/
-        /*}*/
-        50% {
-            opacity: 0.5;
+        60% {
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
         100% {
@@ -453,9 +452,9 @@
             opacity: 1;
             width: 59px;
             height: 59px;
-            transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+            transform: rotate(34deg) translate(300px, 30px) rotate(-240deg);
         }
-        50% {
+        60% {
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
         100% {
@@ -471,9 +470,9 @@
             opacity: 1;
             width: 43px;
             height: 43px;
-            transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+            transform: rotate(34deg) translate(300px, 30px) rotate(-240deg);
         }
-        50% {
+        60% {
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
         100% {

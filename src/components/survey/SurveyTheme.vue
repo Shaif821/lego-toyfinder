@@ -14,8 +14,8 @@
                               v-for="(legoTheme, indexTheme) in this.$store.state.themes"
                               :key="indexTheme + 'STH'">
 
-                    <div class="survey__theme__images" @click="$parent.changeView(legoTheme)">
-                        <v-lazy-image class="survey__theme__lego__img  swiper-lazy" :src="legoTheme.url"/>
+                    <div class="survey__theme__images" :class="legoTheme.theme" @click="$parent.changeView(legoTheme)">
+                        <v-lazy-image class="survey__theme__lego__img  swiper-lazy" :class="legoTheme.theme" :src="legoTheme.url"/>
                         <img class="swiper-lazy" src="../../assets/images/layout/border.png">
                     </div>
 

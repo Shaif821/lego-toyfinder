@@ -77,6 +77,7 @@
                 currentSlide: null,
                 fixSlideOrder: 0,
                 reset: false,
+                startSession: false,
             }
         },
 
@@ -122,7 +123,7 @@
 
             idleTimer() {
                 let t;
-                //window.onload = resetTimer;
+                window.onload = resetTimer;
                 window.onmousemove = resetTimer; // catches mouse movements
                 window.onmousedown = resetTimer; // catches mouse movements
                 window.onclick = resetTimer;     // catches mouse clicks
@@ -158,8 +159,8 @@
         },
 
         mounted() {
-            // this.idleTimer()
-            // this.disableRightClick()
+            this.idleTimer()
+            this.disableRightClick()
         },
 
         computed: {

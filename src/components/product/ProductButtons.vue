@@ -74,6 +74,8 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        margin-top: 1
+        px;
     }
 
     .product-buttons__text {
