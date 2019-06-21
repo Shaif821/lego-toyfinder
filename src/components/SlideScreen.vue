@@ -98,6 +98,14 @@
                 if (this.isFullScreen) { //Als de pagina in fullscreen weergegeven wordt
                     this.$nextTick(() => {
                         this.$store.state.loadSurvey = true
+
+                        //Start de sessie
+                        this.$gtm.trackEvent({
+                            event: 'start_session',
+                            action: 'click',
+                            value: true,
+                        })
+
                         this.swiper.slideTo(0, 1500, false);    //Scroll dan naar de survey pagina toe
                         let v = this
                         setTimeout(function () {
@@ -142,6 +150,8 @@
 
                 function resetTimer() {
                     clearTimeout(t);
+                    //End de sessie
+
                     t = setTimeout(reload, 30000);  // time is in milliseconds (1000 is 1 second)
                 }
             },

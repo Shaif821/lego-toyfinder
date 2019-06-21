@@ -11,9 +11,9 @@
                  :key="indexAge + 'SA'">
                 <div :style="{animationDelay: '1.' + indexAge + 's'}"
                      class="animated survey__age__images flipInY" style="animation-duration: 1.7s;">
-                    <div :class="legoAge.text" @click="$parent.changeView(legoAge)">
+                    <div :class="legoAge.text" :id="legoAge.text" @click="$parent.changeView(legoAge)">
                         <img class="survey__age__lego__img"
-                             :src="legoAge.url" :class="legoAge.text"
+                             :src="legoAge.url" :class="legoAge.text" :id="legoAge.text"
                              :style="{margin: legoAge.pos}">
                         <img src="../../assets/images/layout/bitmap.png">
                     </div>

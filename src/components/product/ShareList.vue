@@ -148,6 +148,12 @@
                                     this.isSending = false,
                                         this.userMail = ''
                                     this.mailResponse = true
+
+                                    this.$gtm.trackEvent({
+                                        event: 'send_mail', // Event type [default = 'interaction'] (Optional)
+                                        action: 'click',
+                                        value: true,
+                                    })
                                 }
                             })
                             .catch(error => {
@@ -172,6 +178,7 @@
         transform: translateY(10px);
         height: 1080px;
         width: 1920px;
+        margin-top: -11px;
     }
 
     .sharelist-container__animation-open {

@@ -67,7 +67,7 @@
 
                 <div class="wishlist_share" style="cursor: pointer;"
                      :class="[$store.state.favorites.length > 0 ? 'favorited' : 'un_favorited']">
-                    <p @click="openShareList()" v-if="$store.state.favorites.length > 0">
+                    <p @click="openShareList()" class="deelijst_rechthoek" v-if="$store.state.favorites.length > 0">
                         Deel het verlanglijstje
                     </p>
 
@@ -90,9 +90,6 @@
                 isActiveWishList: false,
                 notActiveWishList: false,
                 animate: false,
-                dataObject: {
-                    'event' : 'Klik wenslijst open'
-                }
             }
         },
 
@@ -100,16 +97,33 @@
             openWishList() {
                 this.$parent.qrCode()
                 if (this.isActiveWishList) {
-                    dataLayer.push()
                     this.isActiveWishList = false
                     this.notActiveWishList = true
+
+                    this.$gtm.trackEvent({
+                        event: 'close_wishlist', // Event type [default = 'interaction'] (Optional)
+                        action: 'click',
+                        value: this.notActiveWishList,
+                    })
                 } else {
                     this.notActiveWishList = true
                     this.isActiveWishList = true
+
+                    this.$gtm.trackEvent({
+                        event: 'open_wishlist', // Event type [default = 'interaction'] (Optional)
+                        action: 'click',
+                        value: this.isActiveWishList,
+                    })
+
                 }
             },
 
             openShareList() {
+                this.$gtm.trackEvent({
+                    event: 'share_list_app', // Event type [default = 'interaction'] (Optional)
+                    action: 'click',
+                    value: 'clicked',
+                })
                 this.$parent.shareListState()
             },
 
