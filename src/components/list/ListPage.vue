@@ -132,16 +132,16 @@
 
                     <p v-if="$router.currentRoute.name === 'list-page'" class="text__share">Deel jouw lijstje</p>
                     <div v-if="$router.currentRoute.name === 'list-page'" class="share__social">
-                        <a target="_blank" class="social_link"
+                        <a @click="addGA('Facebook')" target="_blank" class="social_link"
                            :href="'https://www.facebook.com/sharer/sharer.php?u=' + siteUrl">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a target="_blank"
+                        <a @click="addGA('Twitter')" target="_blank"
                            :href="'https://twitter.com/intent/tweet?text=Bekijk%20mijn%20LEGO®%20wenslijstje:%20' + siteUrl +'%20'"
                            class="social_link">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a target="_blank" class="social_link"
+                        <a @click="addGA('Mail')" target="_blank" class="social_link"
                            :href="'mailto:?subject=LEGO® Wenslijstje&body=Bekijk mijn  LEGO® Wenslijstje: ' + siteUrl"
                            title="LEGO® Wenslijstje">
                             <i class="fas fa-envelope"></i>
@@ -230,6 +230,10 @@
                         }
                     }
                 }
+            },
+
+            addGA(platform) {
+                this.$ga.event('Social media', 'share', platform)
             },
 
             showImage(id, link, index) {

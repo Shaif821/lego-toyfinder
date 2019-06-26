@@ -78,6 +78,9 @@
                         this.age = choice
                         this.$store.state.interestChoice = null
                         this.$store.state.themeChoice = null
+
+                        this.$ga.event('Leeftijd', 'click', choice.text)
+
                         if(this.age.text === '1 - 3 jaar'){
                             this.nextSlide()
                         }
@@ -85,11 +88,16 @@
                     case 'SurveyInterest':
                         this.$store.state.themeChoice = null
                         this.$store.state.interestChoice = choice
+                        this.$ga.event('Interesse', 'click', choice.text)
+
                         break;
                     case 'SurveyTheme':
                         this.$store.state.interestChoice = null
                         this.$store.state.ageChoice = null
                         this.$store.state.themeChoice = choice
+
+                        this.$ga.event('Thema', 'click', choice.theme)
+
                         break;
                 }
                 if (loadProduct) {               //Ga door naar de next slide (Als je dus vanuit de producten pagina komt)

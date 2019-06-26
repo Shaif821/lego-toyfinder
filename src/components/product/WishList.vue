@@ -99,31 +99,18 @@
                 if (this.isActiveWishList) {
                     this.isActiveWishList = false
                     this.notActiveWishList = true
+                    this.$ga.event('close wishlist', 'click', true)
 
-                    this.$gtm.trackEvent({
-                        event: 'close_wishlist', // Event type [default = 'interaction'] (Optional)
-                        action: 'click',
-                        value: this.notActiveWishList,
-                    })
                 } else {
                     this.notActiveWishList = true
                     this.isActiveWishList = true
-
-                    this.$gtm.trackEvent({
-                        event: 'open_wishlist', // Event type [default = 'interaction'] (Optional)
-                        action: 'click',
-                        value: this.isActiveWishList,
-                    })
-
+                    this.$ga.event('open wishlist', 'click', true)
                 }
             },
 
             openShareList() {
-                this.$gtm.trackEvent({
-                    event: 'share_list_app', // Event type [default = 'interaction'] (Optional)
-                    action: 'click',
-                    value: 'clicked',
-                })
+                this.$ga.event('open wishlist', 'click', true)
+
                 this.$parent.shareListState()
             },
 

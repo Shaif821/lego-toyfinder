@@ -148,12 +148,8 @@
                                     this.isSending = false,
                                         this.userMail = ''
                                     this.mailResponse = true
+                                    this.$ga.event('send mail', 'post', true)
 
-                                    this.$gtm.trackEvent({
-                                        event: 'send_mail', // Event type [default = 'interaction'] (Optional)
-                                        action: 'click',
-                                        value: true,
-                                    })
                                 }
                             })
                             .catch(error => {

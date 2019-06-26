@@ -99,12 +99,8 @@
                     this.$nextTick(() => {
                         this.$store.state.loadSurvey = true
 
-                        //Start de sessie
-                        this.$gtm.trackEvent({
-                            event: 'start_session',
-                            action: 'click',
-                            value: true,
-                        })
+                        this.$ga.event('Start sessie', 'click', true)
+
 
                         this.swiper.slideTo(0, 1500, false);    //Scroll dan naar de survey pagina toe
                         let v = this
