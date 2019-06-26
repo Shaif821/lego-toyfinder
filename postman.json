@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"to\": \"bob@noprotocol.nl\",\n\t\"items\": [{\n\t  \"image\": \"http://placehold.it/500x500\",\n\t  \"title\": \"Titel\",\n\t  \"description\": \"Description\"\n\t}]\n}"
+					"raw": "{\n\t\"to\": \"bob@noprotocol.nl\",\n\t\"items\": [{\n\t  \"image\": \"http://placehold.it/500x500\",\n\t  \"title\": \"Titel\",\n\t  \"description\": \"Description\",\n\t  \"link\": \"http://noprotocol.nl/\"\n\t}]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/mail",

@@ -4,6 +4,7 @@ const path = require("path");
 const express = require("express");
 const serveStatic = require("serve-static");
 const history = require("connect-history-api-fallback");
+const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
 const mailgun = require("nodemailer-mailgun-transport");
 const fs = require("fs");
@@ -16,11 +17,9 @@ const distDir = path.join(__dirname, "dist");
 const transport = nodemailer.createTransport(
   mailgun({
     auth: {
-      api_key: "key-1234123412341234",
-      domain:
-        "one of your domain names listed at your https://mailgun.com/app/domains"
-    },
-    proxy: "http://user:pass@localhost:8080" // optional proxy, default is false
+      api_key: "8893d6af8ebe9310e8de487f0cb72285-16ffd509-57a2bc62",
+      domain: "sandboxaa8596055ceb43c983a2f4556d7cd862.mailgun.org"
+    }
   })
 );
 
@@ -29,8 +28,8 @@ const transport = nodemailer.createTransport(
  */
 app.use(serveStatic(path.join(distDir)));
 
+// Email template test
 app.get("/api/mail", function(req, res) {
-  // Test template
   fs.readFile(__dirname + "/src/mail.handlebars", "utf8", (err, template) => {
     if (err) {
       return res.status(500).send(err.message);
@@ -42,27 +41,31 @@ app.get("/api/mail", function(req, res) {
           {
             image: "http://placehold.it/500x500",
             title: "Titel",
-            description: "Description"
+            description: "Description",
+            link: "https://noprotocol.nl/"
           }
         ]
       })
     );
   });
 });
+app.use(bodyParser.json());
 app.post("/api/mail", function(req, res) {
-  transport.sendMail({
-    //   from: "myemail@example.com",
-    //   to: "recipient@domain.com", // An array if you have multiple recipients.
-    //   cc: "second@domain.com",
-    //   bcc: "secretagent@company.gov",
-    //   subject: "Hey you, awesome!",
-    //   "h:Reply-To": "reply2this@company.com",
-    //   //You can use "html:" to send HTML email content. It's magic!
-    //   html: "<b>Wow Big powerful letters</b>",
-    //   //You can use "text:" to send plain-text content. It's oldschool!
-    //   text: "Mailgun rocks, pow pow!"
+  fs.readFile(__dirname + "/src/mail.handlebars", "utf8", (err, template) => {
+    if (err) {
+      return res.status(500).send(err.message);
+    }
+    transport.sendMail({
+      from: "tester@sandboxaa8596055ceb43c983a2f4556d7cd862.mailgun.org",
+      to: req.body.to,
+      subject: "Lego test",
+      html: Mustache.render(template, {
+        base: process.env.EMAIL_BASE || "https://lego-toyfinder.herokuapp.com/",
+        items: req.body.items
+      })
+    });
+    res.send({ send: true });
   });
-  res.send({ send: true });
 });
 
 /**
