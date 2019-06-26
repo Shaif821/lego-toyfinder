@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "9b0aa3a7-0843-4fa8-a976-95bdac22ec5f",
+		"name": "Lego Toyfinder",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Mail",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/javascript",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"to\": \"bob@noprotocol.nl\",\n\t\"items\": [{\n\t  \"image\": \"http://placehold.it/500x500\",\n\t  \"title\": \"Titel\",\n\t  \"description\": \"Description\"\n\t}]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/mail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"mail"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

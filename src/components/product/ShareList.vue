@@ -138,7 +138,7 @@
                     if (result) {
                         this.isSending = true
                         axios
-                            .post('/mail/index.php', {
+                            .post('/mail/', {
                                 email: this.userMail,
                                 favorites: this.$store.state.favorites,
                                 url: this.url
