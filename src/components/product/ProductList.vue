@@ -1,81 +1,97 @@
 <template>
-    <div>
-        <WishList ></WishList>
-        <div class="product__list__container">
-            <div class="product__list__header">
-                <div class="product__list__header__wrapper">
-                    <p class="product__list__header__count">{{productCount}} resultaten</p>
-                    <div class="header__filter__container">
-                        <button @click="changFilter('AlphaA')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'AlphaA'}">
-                            <p class="header__filter__button--text">Alfabetisch A-Z</p>
-                        </button>
-                        <button @click="changFilter('AlphaZ')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'AlphaZ'}">
-                            <p class="header__filter__button--text">Alfabetisch Z-A</p>
-                        </button>
-                        <button @click="changFilter('PriceL')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'PriceL'}">
-                            <p class="header__filter__button--text">Prijs oplopend</p>
-                        </button>
-                        <button @click="changFilter('PriceH')" class="header__filter__button"
-                                :class="{header__filter__button__active : productType === 'PriceH'}">
-                            <p class="header__filter__button--text">Prijs aflopend</p>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="full__list-header">
-                    <transition enter-active-class="animated fadeInLeft"
-                                leave-active-class="animated fadeOutLeft"
-                                mode="out-in">
-                        <p v-if="favoritesName.length === 5" class="full__list list__arrow">
-                            Je lijstje zit vol <img class="arrow__full" src="../../assets/images/layout/arrow-right.svg">
-                        </p>
-                    </transition>
-
-
+    <div class="product__list__container">
+        <WishList></WishList>
+        <div class="product__list__header">
+            <div class="product__list__header__wrapper">
+                <p class="product__list__header__count">
+                    {{ productCount }} resultaten
+                </p>
+                <div class="header__filter__container">
+                    <button class="header__filter__button"
+                            :class="{header__filter__button__active: productType === 'AlphaA'}"
+                            @click="changFilter('AlphaA')">
+                        <p class="header__filter__button--text">Alfabetisch A-Z</p>
+                    </button>
+                    <button
+                            class="header__filter__button"
+                            :class="{header__filter__button__active: productType === 'AlphaZ'}"
+                            @click="changFilter('AlphaZ')">
+                        <p class="header__filter__button--text">Alfabetisch Z-A</p>
+                    </button>
+                    <button
+                            class="header__filter__button"
+                            :class="{header__filter__button__active: productType === 'PriceL'}"
+                            @click="changFilter('PriceL')">
+                        <p class="header__filter__button--text">Prijs oplopend</p>
+                    </button>
+                    <button
+                            class="header__filter__button"
+                            :class="{header__filter__button__active: productType === 'PriceH'}"
+                            @click="changFilter('PriceH')">
+                        <p class="header__filter__button--text">Prijs aflopend</p>
+                    </button>
                 </div>
             </div>
 
-            <div class="filler_second"></div>
-
-            <div class="product__section-wrapper">
-                <ProductItem :productSort="productType" class="product__list__item"></ProductItem>
-
-                <div class="product__list__filler">
-                    <transition enter-active-class="animated fadeIn"
-                                leave-active-class="animated fadeOut"
-                                mode="out-in">
-                        <p v-if="favoritesName.length === 5" class="full__list">
-                            - Je lijstje zit vol, verwijder eerst een product -
-                        </p>
-                    </transition>
-                </div>
-
-                <ProductButtons class="product__list__buttons"></ProductButtons>
+            <div class="full__list-header">
+                <transition
+                        enter-active-class="animated fadeInLeft"
+                        leave-active-class="animated fadeOutLeft"
+                        mode="out-in">
+                    <p v-if="productFull" class="full__list list__arrow">
+                        Je lijstje zit vol
+                        <img class="arrow__full"
+                             src="../../assets/images/layout/arrow-right.svg"/>
+                    </p>
+                </transition>
             </div>
         </div>
-        <ShareList v-if="shareListActive" :isOpen="shareListActive"
-                   :url="wishListUrl" :favorites="favoritesName">
+
+        <div class="filler_second">
+        </div>
+
+        <div class="product__section-wrapper">
+            <ProductItem
+                    :product-sort="productType"
+                    class="product__list__item"
+            ></ProductItem>
+
+            <div class="product__list__filler">
+                <transition
+                        enter-active-class="animated fadeIn"
+                        leave-active-class="animated fadeOut"
+                        mode="out-in">
+                    <p v-if="productFull" class="full__list">
+                        - Je lijstje zit vol, verwijder eerst een product -
+                    </p>
+                </transition>
+            </div>
+            <ProductButtons class="product__list__buttons"></ProductButtons>
+        </div>
+        <ShareList
+                v-if="shareListActive"
+                :is-open="shareListActive"
+                :url="wishListUrl"
+                :favorites="favoritesName"
+        >
         </ShareList>
     </div>
 </template>
 
 <script>
-    const WishList = () => import('./WishList')
-    const ShareList = () => import('./ShareList')
-    import ProductItem from './ProductItem'
+    const WishList = () => import("./WishList");
+    const ShareList = () => import("./ShareList");
+    import ProductItem from "./ProductItem";
 
-    const ProductButtons = () => import('./ProductButtons')
+    const ProductButtons = () => import("./ProductButtons");
 
     export default {
         name: "ProductList",
         components: {
-            'WishList': WishList,
-            'ShareList': ShareList,
-            'ProductItem': ProductItem,
-            'ProductButtons': ProductButtons
+            WishList: WishList,
+            ShareList: ShareList,
+            ProductItem: ProductItem,
+            ProductButtons: ProductButtons
         },
 
         data() {
@@ -84,17 +100,34 @@
                 wishListUrl: null,
                 favoritesName: [],
                 productCount: null,
-                productType: 'AlphaA',
-            }
+                productType: "AlphaA",
+                productFull: false,
+            };
+        },
+
+        computed: {
+            addToURL() {
+                return this.$store.state.favorites;
+            },
+        },
+
+        watch: {
+            addToURL() {
+                this.qrCode();
+            },
         },
 
         methods: {
-            removeFavorite() {
-
+            animateStar() {
+                this.productFull = true
+                let vm = this;
+                setTimeout(function() {
+                    vm.productFull = false
+                }, 4000);
             },
 
             productLength(length) {
-                this.productCount = length
+                this.productCount = length;
             },
 
             shareListState() {
@@ -102,37 +135,28 @@
             },
 
             changFilter(type) {
-                this.productType = type
+                this.productType = type;
             },
 
             qrCode() {
-                let favoritesURL = []
-                let urlLink = document.URL.replace('/toyfinder', '/')
-                this.favoritesName = []
+                let favoritesURL = [];
+                let urlLink = document.URL.replace("/toyfinder", "/");
+                this.favoritesName = [];
                 for (let i = 0; i < this.$store.state.favorites.length; i++) {
-                    favoritesURL.push(this.$store.state.favorites[i]['Product Number'])
-                    this.favoritesName.push(this.$store.state.favorites[i]['Product Name NL'])
+                    favoritesURL.push(this.$store.state.favorites[i]["Product Number"]);
+                    this.favoritesName.push(
+                        this.$store.state.favorites[i]["Product Name NL"]
+                    );
                 }
-                this.wishListUrl = urlLink + favoritesURL.join('-')
+                this.wishListUrl = urlLink + favoritesURL.join("-");
             }
-        },
-
-        computed: {
-            addToURL() {
-                return this.$store.state.favorites
-            },
-        },
-
-        watch: {
-            addToURL() {
-                this.qrCode()
-            },
         }
-    }
+    };
 </script>
 
 <style scoped>
-    .zoomOut, .zoomIn {
+    .zoomOut,
+    .zoomIn {
         -webkit-animation-duration: 0.4s;
         animation-duration: 0.4s;
         -webkit-animation-fill-mode: both;
@@ -218,6 +242,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-bottom: -1px;
     }
 
     .full__list {
@@ -242,7 +267,6 @@
         width: 22px;
         height: 54px;
     }
-
 
     .product__section-wrapper {
         height: 890px;

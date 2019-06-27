@@ -16,19 +16,19 @@ Vue.use(VeeValidate);
 Vue.use(VModal);
 
 Vue.use(VueAnalytics, {
-    id: 'UA-75574525-5',
-    debug: {
-        enabled: true, // default value
-        trace: false, // default value
-        sendHitTask: true // default value
-    }
+  id: "UA-75574525-5",
+  // debug: {
+  //   enabled: true, // default value
+  //   trace: false, // default value
+  //   sendHitTask: true // default value
+  // }
 });
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
 
 new Vue({
-    router,
-    store,
-    render: h => h(App)
+  router,
+  store,
+  render: h => h(App)
 }).$mount("#app");

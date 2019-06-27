@@ -3,30 +3,26 @@
          class="wishlist__container">
         <div @click="openWishList()" style="cursor: pointer;" class="wishlist__clipboard__container">
             <div class="wishlist__clipboard">
+                <span v-if="$store.state.favorites.length > 0" :key="1">
+                    <img class="wishlist__star animated fadeIn" style="animation-delay: 1s;"
+                         src="../../assets/images/layout/star-icon-mini.png">
 
-                    <span v-if="$store.state.favorites.length > 0" :key="1">
-                        <img class="wishlist__star animated fadeIn" style="animation-delay: 1s;"
-                             src="../../assets/images/layout/star-icon-mini.png">
-
-                          <div class="wishlist__star full__list--animation-wrapper">
-                              <img :class="{'animate--star-lg': animate}"  alt="large star" class=" lg-star" src="../../assets/images/layout/favorited_star.png">
-                              <img alt="md-star" :class="{'animate--star-md': animate}" class=" md-star" src="../../assets/images/layout/favorited_star.png">
-                              <img alt="sm-star" :class="{'animate--star-sm': animate}" class="sm-star" src="../../assets/images/layout/favorited_star.png">
-                          </div>
-                    </span>
+                    <div class="wishlist__star full__list--animation-wrapper">
+                        <img :class="{'animate--star-lg': animate}" alt="large star" class=" lg-star"
+                             src="../../assets/images/layout/favorited_star.png">
+                        <img alt="md-star" :class="{'animate--star-md': animate}" class=" md-star" src="../../assets/images/layout/favorited_star.png">
+                        <img alt="sm-star" :class="{'animate--star-sm': animate}" class="sm-star" src="../../assets/images/layout/favorited_star.png">
+                    </div>
+                </span>
 
                 <span v-else :key="2">
                           <img class="wishlist__star  wishlist__star--un animated fadeIn"
                                src="../../assets/images/layout/un)star.png">
-                        <div class="wishlist__star full__list--animation-wrapper">
-                          </div>
-                    </span>
-
+                        <div class="wishlist__star full__list--animation-wrapper"></div>
+                </span>
                 <img src="../../assets/images/layout/list-icon.png">
             </div>
             <img src="../../assets/images/layout/wishlist.png">
-
-
         </div>
 
         <div class="wishlist__phone__container" :class="{add__shadow: isActiveWishList}">
@@ -68,16 +64,15 @@
                 <div class="wishlist_share" style="cursor: pointer;"
                      :class="[$store.state.favorites.length > 0 ? 'favorited' : 'un_favorited']">
                     <p @click="openShareList()" class="deelijst_rechthoek" v-if="$store.state.favorites.length > 0">
-                        Deel het verlanglijstje
+                        Deel jouw verlanglijstje
                     </p>
 
                     <p v-else>
-                        Deel het verlanglijstje
+                        Deel jouw verlanglijstje
                     </p>
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -89,40 +84,60 @@
             return {
                 isActiveWishList: false,
                 notActiveWishList: false,
-                animate: false,
+                animate: false
+            };
+        },
+
+        computed: {
+            starAnimate() {
+                return this.$store.state.favorites.length;
+            }
+        },
+
+        watch: {
+            favorited(newValue) {
+                if (this.$store.state.favorites.length === 5) {
+                    this.notActiveWishList = true;
+                    this.isActiveWishList = true;
+                }
+            },
+
+            starAnimate(newVal, oldVal) {
+                if (newVal >= oldVal) {
+                    this.activeAnimate();
+                }
             }
         },
 
         methods: {
             openWishList() {
-                this.$parent.qrCode()
+                this.$parent.qrCode();
                 if (this.isActiveWishList) {
-                    this.isActiveWishList = false
-                    this.notActiveWishList = true
-                    this.$ga.event('close wishlist', 'click', true)
-
+                    this.isActiveWishList = false;
+                    this.notActiveWishList = true;
+                    this.$ga.event("close wishlist", "click", true);
                 } else {
-                    this.notActiveWishList = true
-                    this.isActiveWishList = true
-                    this.$ga.event('open wishlist', 'click', true)
+                    this.notActiveWishList = true;
+                    this.isActiveWishList = true;
+                    this.$ga.event("open wishlist", "click", true);
                 }
             },
 
             openShareList() {
-                this.$ga.event('open wishlist', 'click', true)
+                this.$ga.event("open wishlist", "click", true);
 
-                this.$parent.shareListState()
+                this.$parent.shareListState();
             },
 
             removeFavorited(index) {
                 let pos = undefined;
                 if (this.$store.state.favorites.includes(index)) {
-                    pos = this.$store.state.favorites.indexOf(index)
-                    this.$store.state.favorites.splice(pos, 1)
+                    pos = this.$store.state.favorites.indexOf(index);
+                    this.$store.state.favorites.splice(pos, 1);
                 } else {
                     if (this.$store.state.favorites.length <= 4) {
-                        this.starFavorite(index)
-                        this.$store.state.favorites.push(index)
+                        this.starFavorite(index);
+                        this.$store.state.favorites.push(index);
                     }
                 }
             },
@@ -130,32 +145,12 @@
             activeAnimate() {
                 let self = this;
                 self.animate = true;
-                setTimeout(function(){ self.animate = false; }, 1600);
-            }
-        },
-
-        computed: {
-          starAnimate() {
-              return this.$store.state.favorites.length
-          }
-        },
-
-
-        watch: {
-            favorited(newValue) {
-                if (this.$store.state.favorites.length === 5) {
-                    this.notActiveWishList = true
-                    this.isActiveWishList = true
-                }
-            },
-
-            starAnimate(newVal, oldVal) {
-                if(newVal >= oldVal) {
-                    this.activeAnimate()
-                }
+                setTimeout(function () {
+                    self.animate = false;
+                }, 1600);
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
@@ -394,9 +389,10 @@
     .lg-star {
         opacity: 0;
         position: absolute;
-        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+        /*transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);*/
         width: 80px;
         height: 80px;
+        margin-bottom: 5px;
 
     }
 
@@ -418,14 +414,16 @@
     }
 
     .animate--star-lg {
-        animation: lg-star 1.5s ease-in-out;
+        animation: lg-star 2s forwards ;
     }
+
     .animate--star-md {
-        animation: md-star 1.5s ease-in-out;
+        animation: md-star 2s ease-in-out infinite;
         animation-delay: 0.3s;
     }
+
     .animate--star-sm {
-        animation: sm-star 1.5s ease-in-out;
+        animation: sm-star 2s ease-in-out infinite;
         animation-delay: 0.2s;
     }
 
@@ -441,10 +439,10 @@
             transform: rotate(600deg) translate(40px) rotate(-600deg);
         }
         100% {
-            opacity: 0;
+            opacity: 1;
             width: 28px;
             height: 29px;
-            transform: translate(-20px);
+            transform: translate(0);
         }
     }
 
