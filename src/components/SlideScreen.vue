@@ -135,8 +135,8 @@ export default {
   },
 
   mounted() {
-    // this.idleTimer();
-    // this.disableRightClick();
+    this.idleTimer();
+    this.disableRightClick();
   },
 
   methods: {
