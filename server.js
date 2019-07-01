@@ -29,26 +29,6 @@ const transport = nodemailer.createTransport(
 app.use(serveStatic(path.join(distDir)));
 
 // Email template test
-app.get("/api/mail", function(req, res) {
-  fs.readFile(__dirname + "/src/mail.handlebars", "utf8", (err, template) => {
-    if (err) {
-      return res.status(500).send(err.message);
-    }
-    res.send(
-      Mustache.render(template, {
-        base: process.env.EMAIL_BASE || "https://lego-toyfinder.herokuapp.com/",
-        items: [
-          {
-            image: "http://placehold.it/500x500",
-            title: "Titel",
-            description: "Description",
-            link: "https://noprotocol.nl/"
-          }
-        ]
-      })
-    );
-  });
-});
 app.use(bodyParser.json());
 app.post("/api/mail", function(req, res) {
   fs.readFile(__dirname + "/src/mail.handlebars", "utf8", (err, template) => {
