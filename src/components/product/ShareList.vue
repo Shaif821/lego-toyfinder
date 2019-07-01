@@ -111,7 +111,7 @@
             return {
                 writeMail: false,
                 test: true,
-                userMail: "",
+                userMail: "bob@noprotocol.nl",
                 mailResponse: false,
                 isSending: false,
                 mailFailed: false
@@ -122,7 +122,7 @@
             closeShareList() {
                 let vm = this;
                 this.test = false;
-                this.userMail = "test";
+                this.userMail = "";
 
                 setTimeout(function () {
                     vm.$parent.shareListState();
@@ -136,22 +136,17 @@
 
             sendMail() {
                 this.$validator.validateAll().then(result => {
+                    console.log(this.$store.state.favorites)
                     if (result) {
                         this.isSending = true;
-                        axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
-                        axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-                        axios({
-                            method: 'post',
-                            url: "http://localhost:5000/api/mail",
-                            auth: {
-                                username: 'sandboxaa8596055ceb43c983a2f4556d7cd862.mailgun.org',
-                                password: '8893d6af8ebe9310e8de487f0cb72285-16ffd509-57a2bc62'
-                            },
-                            params: {
-                                title: this.$store.state.favorites[0]['Product Number'] ,
-                                description: "Description",
-                                link: "https://noprotocol.nl/"
-                            }
+                        axios.post("/api/mail", {
+                            to: this.userMail,
+                            items: this.$store.state.favorites.map(item => ({
+                                image: require('../../assets/images/products/' + item['Product Number'] + '_box1_in.png'),
+                                title: item['Product Name NL'],
+                                description: item['Product Description NL'],
+                                link: item['Link Toychamp']
+                            })),
                         }).then(
                             response => {
                                 this.isSending = false;
