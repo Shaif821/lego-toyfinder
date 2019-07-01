@@ -31,7 +31,7 @@ app.use(serveStatic(path.join(distDir)));
 // Email template test
 app.use(bodyParser.json());
 app.post("/api/mail", function(req, res) {
-  fs.readFile(__dirname + "/src/mail.handlebars", "utf8", (err, template) => {
+  fs.readFile(__dirname + "/mail.handlebars", "utf8", (err, template) => {
     if (err) {
       return res.status(500).send(err.message);
     }
