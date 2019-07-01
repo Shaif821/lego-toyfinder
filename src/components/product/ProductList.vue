@@ -140,7 +140,7 @@
 
             qrCode() {
                 let favoritesURL = [];
-                let urlLink = document.URL.replace("/toyfinder", "/");
+                let urlLink = document.URL.replace("/toyfinder", "");
                 this.favoritesName = [];
                 for (let i = 0; i < this.$store.state.favorites.length; i++) {
                     favoritesURL.push(this.$store.state.favorites[i]["Product Number"]);

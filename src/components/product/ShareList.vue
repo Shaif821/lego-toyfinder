@@ -111,7 +111,7 @@
             return {
                 writeMail: false,
                 test: true,
-                userMail: "bob@noprotocol.nl",
+                userMail: "",
                 mailResponse: false,
                 isSending: false,
                 mailFailed: false
