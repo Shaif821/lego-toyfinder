@@ -141,6 +141,7 @@
                         this.isSending = true;
                         axios.post("/api/mail", {
                             to: this.userMail,
+                            url: this.url,
                             items: this.$store.state.favorites.map(item => ({
                                 image: require('../../assets/images/products/' + item['Product Number'] + '_box1_in.png'),
                                 title: item['Product Name NL'],

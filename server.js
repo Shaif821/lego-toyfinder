@@ -41,6 +41,7 @@ app.post("/api/mail", function(req, res) {
       subject: "Lego test",
       html: Mustache.render(template, {
         base: process.env.EMAIL_BASE || "https://lego-toyfinder.herokuapp.com/",
+        url: req.body.url,
         items: req.body.items
       })
     });
