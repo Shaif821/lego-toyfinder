@@ -24,61 +24,36 @@
       :resize="true"
       color="#fff"
     />
-    <modal
-      v-if="window.width < 785"
-      name="productItem"
-      :width="'70%'"
-      :height="'auto'"
-      :max-width="200"
-      :max-height="300"
-      :min-height="200"
-      class="animated pulse"
-    >
-      <div class="modal__close__container" @click="$modal.hide('productItem')">
-        <img
-          class="animated pulse modal__close__image"
-          style="transition: 0.7s ease-in-out"
-          src="../../assets/images/layout/close.png"
-        />
+    <modal v-if="window.width < 785" name="productItem"
+           :width="'70%'"
+           :height="'auto'"
+           :max-width="200"
+           :max-height="300"
+           :min-height="200"
+           class="animated pulse">
+      <div @click="$modal.hide('productItem')" class="modal__close__container">
+        <img class="animated pulse modal__close__image" style="transition: 0.7s ease-in-out"
+             src="../../assets/images/layout/close.png">
       </div>
       <div class="modal__container">
         <div class="filler__modal"></div>
         <div class="modal__image__wrapper">
-          <i
-            class="fas modal__arrows--left fa-angle-left"
-            @click="prevProduct(image)"
-          ></i>
-          <transition
-            enter-active-class="animated bounceInRight delayAnimation"
-            leave-active-class="animated bounceOutLeft delayAnimation"
-            mode="out-in"
-          >
-            <img
-              v-if="!noImage"
-              :key="image"
-              class="image__product modal__image"
-              :src="
-                require('../../assets/images/products/' +
-                  image +
-                  '_box1_in.png')
-              "
-            />
+          <i @click="prevProduct(image)" class="fas modal__arrows--left fa-angle-left"></i>
+          <transition enter-active-class="animated bounceInRight delayAnimation"
+                      leave-active-class="animated bounceOutLeft delayAnimation"
+                      mode="out-in">
+            <img v-if="!noImage" class="image__product modal__image" :key="image"
+                 :src="require('../../assets/images/products/' + image +  '_box1_in.png')">
           </transition>
-          <i
-            class="fas modal__arrows--right fa-angle-right"
-            @click="nextProduct(image)"
-          ></i>
+          <i @click="nextProduct(image)" class="fas modal__arrows--right fa-angle-right"></i>
         </div>
-        <a
-          :href="url !== null ? url : '#'"
-          target="_blank"
-          class="products__text__link products__text__link--image"
-        >
-          <p style="font-size: 50px !important;"><u>Bekijk het product</u></p>
+        <a :href="url !== null ? url : '#'" target="_blank"
+           style="text-decoration: underline;"
+           class="products__text__link products__text__link--image">
+          Bekijk het product
         </a>
       </div>
     </modal>
-
     <modal name="copyLink" :width="300" :height="70" class="animated pulse">
       <div class="copy__link__container">
         <p class="copy__link__text">De link is gekopieerd</p>
@@ -741,6 +716,7 @@ export default {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  padding: 30px 0;
 }
 
 .filler {
@@ -782,8 +758,7 @@ export default {
 
 .modal__close__container {
   position: absolute;
-  top: -7%;
-  right: -12%;
+  top: 5%;
 }
 
 .modal__close__image {
@@ -1262,8 +1237,7 @@ export default {
   }
 
   .modal__close__container {
-    top: -8%;
-    right: -15%;
+    right: -8%;
   }
 
   .modal__close__image {
