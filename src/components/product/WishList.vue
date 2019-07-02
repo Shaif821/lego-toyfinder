@@ -399,7 +399,7 @@
     .md-star {
         opacity: 0;
         position: absolute;
-        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+        /*transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);*/
         width: 59px;
         height: 59px;
 
@@ -408,7 +408,7 @@
     .sm-star {
         opacity: 0;
         position: absolute;
-        transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);
+        /*transform: rotate(34deg) translate(100px, 30px) rotate(-240deg);*/
         width: 43px;
         height: 43px;
     }
@@ -418,12 +418,12 @@
     }
 
     .animate--star-md {
-        animation: md-star 2s ease-in-out infinite;
+        animation: md-star 2s forwards;
         animation-delay: 0.3s;
     }
 
     .animate--star-sm {
-        animation: sm-star 2s ease-in-out infinite;
+        animation: sm-star 2s forwards;
         animation-delay: 0.2s;
     }
 

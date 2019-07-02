@@ -136,7 +136,6 @@
 
             sendMail() {
                 this.$validator.validateAll().then(result => {
-                    console.log(this.$store.state.favorites)
                     if (result) {
                         this.isSending = true;
                         axios.post("/api/mail", {

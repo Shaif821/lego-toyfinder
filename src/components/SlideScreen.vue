@@ -194,9 +194,11 @@ export default {
       window.onscroll = resetTimer; // catches scrolling
       window.onkeypress = resetTimer; //catches keyboard actions
 
+
       let vm = this;
 
       function reload() {
+        this.$ga.event("Einde sessie", "click", true);
         vm.reset = true;
         let v = vm;
         setTimeout(function() {
