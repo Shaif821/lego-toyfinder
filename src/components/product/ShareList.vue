@@ -40,7 +40,7 @@
                       class="section-3-row"
                       @click="writeMail = true"
                       :class="{'section-3-row__center' : writeMail}">
-                    <p class="section-3-row__title">Deel over de mail:</p>
+                    <p class="section-3-row__title">Deel per mail:</p>
 
                     <transition mode="out-in" enter-active-class="animated flipInX"
                                 leave-active-class="animated flipOutX">
@@ -60,8 +60,7 @@
                             geldige
                             emailadres in</p>
                         <p :key="2" v-else class="section-3-row__bottom-title">
-                            Vul hierboven jouw emailadres is en druk op verstuur en ontvang direct jouw lijstje in je
-                            mailbox.
+                            Vul hierboven jouw emailadres in en druk op verstuur. Dan ontvang je jouw lijstje direct in je mailbox.
                         </p>
                     </transition>
                 </form>
@@ -159,7 +158,7 @@
                             }
                         )
                     }
-                });
+                })
             }
         }
     };

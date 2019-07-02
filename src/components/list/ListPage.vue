@@ -74,7 +74,7 @@
           target="_blank"
           class="products__text__link products__text__link--image"
         >
-          <p><u>Bekijk het product</u></p>
+          <p style="font-size: 50px !important;"><u>Bekijk het product</u></p>
         </a>
       </div>
     </modal>
@@ -171,7 +171,7 @@
             v-if="$router.currentRoute.name === 'list-page'"
             class="share__title"
           >
-            <h1 class="share__title__text">Wenslijstje</h1>
+            <h1 class="share__title__text">Verlanglijstje</h1>
             <img
               class="share__title__star"
               src="../../assets/images/layout/star.png"

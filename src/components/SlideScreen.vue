@@ -210,7 +210,7 @@ export default {
         clearTimeout(t);
         //End de sessie
 
-        t = setTimeout(reload, 30000); // time is in milliseconds (1000 is 1 second)
+        t = setTimeout(reload, 40000); // time is in milliseconds (1000 is 1 second)
       }
     },
 

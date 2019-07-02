@@ -16,7 +16,7 @@ Vue.use(VeeValidate);
 Vue.use(VModal);
 
 Vue.use(VueAnalytics, {
-  id: "UA-138977338-2",
+  id: "UA-138977338-2 ",
   // debug: {
   //   enabled: true, // default value
   //   trace: false, // default value
